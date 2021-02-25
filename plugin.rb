@@ -27,6 +27,20 @@ after_initialize do
   end
 
   reloadable_patch do
+    User.class_eval do
+      has_many :given_user_endorsements, foreign_key: "user_id", class_name: "UserEndorsement"
+      has_many :recieved_user_endorsements, foreign_key: "endorsed_user_id", class_name: "UserEndorsement"
 
+      def given_user_endorsements_for(user)
+        given_user_endorsements.where(endorsed_user_id: user.id)
+      end
+    end
+  end
+
+  add_to_serializer(:user_card, :user_endorsements) do
+    return unless SiteSetting.enable_category_experts
+    return if !scope.current_user || scope.current_user == object
+
+    scope.current_user.given_user_endorsements_for(object)
   end
 end
