@@ -1,0 +1,15 @@
+{{#if siteSettings.enable_category_experts}}
+  <h3>{{i18n 'category_experts.title'}}</h3>
+  <section class='field'>
+    <label class="checkbox-label">
+      {{i18n 'category_experts.group'}}
+    </label>
+    <div class="controls">
+      {{combo-box
+        content=groupOptions
+        value=category.custom_fields.category_expert_group_id
+        onChange=(action "onChangeGroupId")
+        }}
+    </div>
+  </section>
+{{/if}}

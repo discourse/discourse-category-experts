@@ -1,0 +1,4 @@
+plugins:
+  enable_category_experts:
+    default: true
+    client: true
