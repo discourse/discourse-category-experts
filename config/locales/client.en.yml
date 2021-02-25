@@ -5,3 +5,5 @@ en:
       group: "Category experts group"
       no_group: "None"
       accepting_endorsements: "Currently accepting user endorsements"
+      endorse: "Endorse"
+      manage_endorsements: "Endorse user as a category expert"

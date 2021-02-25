@@ -1,3 +1,7 @@
-{{#unless loading}}
-
+{{#unless disabled}}
+  {{#if endorsements}}
+    {{log endorsements}}
+  {{else}}
+    {{d-button action=(action "openEndorsementModal") label="category_experts.endorse"}}
+  {{/if}}
 {{/unless}}
