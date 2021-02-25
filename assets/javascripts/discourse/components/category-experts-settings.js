@@ -1,6 +1,8 @@
 import Component from "@ember/component";
+import discourseComputed from "discourse-common/utils/decorators";
 import { action } from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
+import { empty } from "@ember/object/computed";
 
 export default Component.extend({
   init() {
@@ -8,7 +10,6 @@ export default Component.extend({
 
     ajax("/groups.json").then((response) => {
       const groupOptions = [];
-
       response.groups.forEach((group) => {
         if (!group.automatic) {
           groupOptions.push({
@@ -21,8 +22,15 @@ export default Component.extend({
     });
   },
 
+  noGroupSelected: empty("category.custom_fields.category_expert_group_id"),
+
   @action
   onChangeGroupId(value) {
     this.set("category.custom_fields.category_expert_group_id", value);
   },
+
+  @action
+  onChangeAcceptingExpertEndorsements(value) {
+    this.set("category.custom_fields.accepting_expert_endorsements", value ? "true" : "false");
+  }
 });

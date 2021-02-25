@@ -9,7 +9,7 @@
 
 after_initialize do
   [
-    # "../app/models/webinar",
+    "../app/models/user_endorsement",
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   module ::CategoryExperts
@@ -21,5 +21,12 @@ after_initialize do
     end
   end
 
-  Site.preloaded_category_custom_fields << "category_expert_group_id" if Site.respond_to? :preloaded_category_custom_fields
+  if Site.respond_to? :preloaded_category_custom_fields
+    Site.preloaded_category_custom_fields << "category_expert_group_id"
+    Site.preloaded_category_custom_fields << "accepting_expert_endorsements"
+  end
+
+  reloadable_patch do
+
+  end
 end

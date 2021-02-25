@@ -3,3 +3,5 @@ en:
     category_experts:
       title: "Category Experts"
       group: "Category experts group"
+      no_group: "None"
+      accepting_endorsements: "Currently accepting user endorsements"
