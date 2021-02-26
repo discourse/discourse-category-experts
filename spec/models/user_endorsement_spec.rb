@@ -26,4 +26,22 @@ describe UserEndorsement do
       expect(endorsement.errors[:user_id]).to be_present
     end
   end
+
+  describe "callbacks" do
+    it "creates a reviewable if the new endorsement count matches the site setting" do
+      SiteSetting.category_expert_suggestion_threshold = 1
+
+      expect {
+        UserEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
+      }.to change { Reviewable.count }.by (1)
+    end
+
+    it "does not create a reviewable if the new count does not match the site setting" do
+      SiteSetting.category_expert_suggestion_threshold = 3
+
+      expect {
+        UserEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
+      }.to change { Reviewable.count }.by (0)
+    end
+  end
 end

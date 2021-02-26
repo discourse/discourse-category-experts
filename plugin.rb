@@ -13,6 +13,8 @@ after_initialize do
   [
     "../app/controllers/category_experts_controller",
     "../app/models/user_endorsement",
+    "../app/models/reviewable_category_expert_suggestion",
+    "../app/serializers/reviewable_category_expert_suggestion_serializer",
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   module ::CategoryExperts
@@ -25,6 +27,8 @@ after_initialize do
       isolate_namespace CategoryExperts
     end
   end
+
+  register_reviewable_type ReviewableCategoryExpertSuggestion
 
   if Site.respond_to? :preloaded_category_custom_fields
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_GROUP_ID

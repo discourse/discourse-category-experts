@@ -1,0 +1,29 @@
+<h3 class="reviewable-category-experts-header">
+  {{i18n "category_experts.review.title"}}
+</h3>
+<div class="row">
+  {{avatar reviewable.user imageSize="small"}}
+  {{i18n "category_experts.review.endorsed_count" username=reviewable.user.username count=reviewable.endorsed_count}}
+  {{category-link reviewable.category}}
+</div>
+
+<div class="row">
+
+  <table class="endorsed-by-table">
+    <thead>
+      <tr>
+        <td>{{i18n "category_experts.review.endorsed_by" count=reviewable.endorsed_count}}</td>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each reviewable.endorsed_by as |user|}}
+      <tr>
+        <td class="endorser">
+        {{avatar user imageSize="tiny"}}
+        {{#link-to "user" user}}{{user.username}}{{/link-to}}
+        </td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</div>

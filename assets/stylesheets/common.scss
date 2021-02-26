@@ -7,3 +7,22 @@
     text-decoration: underline;
   }
 }
+
+.reviewable-category-expert-suggestion {
+  .reviewable-category-experts-header {
+    width: 100%;
+  }
+
+  .row {
+    width: calc(100% - 2em);
+    margin: 0.5em 0 0 2em;
+
+    .endorsed-by-table {
+      width: 100%;
+
+      .endorser {
+        padding: 0.35em 0;
+      }
+    }
+  }
+}

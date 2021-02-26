@@ -11,3 +11,13 @@ en:
       manage_endorsements:
         title: "Endorse user"
         subtitle: "What are %{username}'s strengths?"
+      review:
+        approve: "Add To Category Expert Group"
+        deny: "Ignore"
+        title: "Category Expert Suggestion"
+        endorsed_count: "%{username} has been endorsed %{count} time(s) for "
+        endorsed_by: "Endorsed by (%{count})"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Category Expert Suggestion"
