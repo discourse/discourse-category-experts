@@ -8,7 +8,7 @@ export default {
 
   initialize() {
     Category.reopen({
-      allowingUserEndorsements: and("custom_fields.category_expert_group_id", "custom_fields.accepting_expert_endorsements")
+      allowingUserEndorsements: and("custom_fields.category_expert_group_id", "custom_fields.category_accepting_endorsements")
     });
   },
 };

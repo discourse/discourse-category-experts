@@ -1,0 +1,24 @@
+{{#d-modal-body}}
+  <h3>{{i18n "category_experts.manage_endorsements.subtitle" username=user.username}}</h3>
+  {{#each categories as |category|}}
+    <label class="category-experts-endorsement-row">
+      <input
+        type="checkbox"
+        name="category"
+        class="category-endorsement-checkbox"
+        value={{category.id}}
+        id="category-endorsement-{{category.id}}"
+        {{action "checkboxChanged" category.id}}
+      />
+      {{category.name}}
+    </label>
+  {{/each}}
+{{/d-modal-body}}
+
+<div class="modal-footer">
+  {{d-button
+    class="btn-primary"
+    action=(action "save")
+    disabled=saveDisabled
+    label="category_experts.endorse"}}
+</div>

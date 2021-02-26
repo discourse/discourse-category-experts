@@ -32,11 +32,11 @@ export default Component.extend({
 
     showModal("endorse-user", {
       model: {
-        categories: this.categoriesAllowingEndorsement,
+        categories: this.categoriesAllowingEndorsements,
         user: this.user,
         endorsements: this.endorsements,
       },
-      title: "category_experts.manage_endorsements",
+      title: "category_experts.manage_endorsements.title",
     });
   },
 
@@ -51,5 +51,6 @@ export default Component.extend({
         return category_ids.includes(endorsement.category_id);
       })
     );
+    this.set("endorsementsCount", this.endorsements.length);
   },
 });

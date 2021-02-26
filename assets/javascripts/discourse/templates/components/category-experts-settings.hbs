@@ -14,15 +14,17 @@
     </div>
   </section>
 
-  <section class='field'>
-    <label class="checkbox-label">
-      {{input
-        type="checkbox"
-        checked=(readonly category.custom_fields.accepting_expert_endorsements)
-        change=(action "onChangeAcceptingExpertEndorsements" value="target.checked")
-        disabled=noGroupSelected
-      }}
-      {{i18n 'category_experts.accepting_endorsements'}}
-    </label>
-  </section>
+  {{#if category.custom_fields.category_expert_group_id}}
+    <section class='field'>
+      <label class="checkbox-label">
+        {{input
+          type="checkbox"
+          checked=(readonly category.custom_fields.category_accepting_endorsements)
+          change=(action "onChangeAcceptingExpertEndorsements" value="target.checked")
+          disabled=noGroupSelected
+        }}
+        {{i18n 'category_experts.accepting_endorsements'}}
+      </label>
+    </section>
+  {{/if}}
 {{/if}}

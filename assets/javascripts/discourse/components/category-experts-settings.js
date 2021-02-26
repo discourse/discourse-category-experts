@@ -31,6 +31,7 @@ export default Component.extend({
 
   @action
   onChangeAcceptingExpertEndorsements(value) {
-    this.set("category.custom_fields.accepting_expert_endorsements", value ? "true" : "false");
+    console.log(value)
+    this.set("category.custom_fields.category_accepting_endorsements", value ? "true" : null);
   }
 });
