@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe UserEndorsement do
+describe CategoryExpertEndorsement do
   fab!(:user) { Fabricate(:user) }
   fab!(:endorsee) { Fabricate(:user) }
   fab!(:other) { Fabricate(:user) }
@@ -11,17 +11,17 @@ describe UserEndorsement do
 
   describe "#given_endorsements_for" do
     it "returns the proper records" do
-      UserEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
-      UserEndorsement.create(user: user, endorsed_user: endorsee, category: category2)
+      CategoryExpertEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
+      CategoryExpertEndorsement.create(user: user, endorsed_user: endorsee, category: category2)
 
-      expect(user.given_user_endorsements_for(other)).to eq([])
-      expect(user.given_user_endorsements_for(endorsee).count).to eq(2)
+      expect(user.given_category_expert_endorsements_for(other)).to eq([])
+      expect(user.given_category_expert_endorsements_for(endorsee).count).to eq(2)
     end
   end
 
   describe "valdations" do
     it "validates that the user_id and endorsed_user_id are different" do
-      endorsement = UserEndorsement.new(user: user, endorsed_user: user, category: category1)
+      endorsement = CategoryExpertEndorsement.new(user: user, endorsed_user: user, category: category1)
       endorsement.valid?
       expect(endorsement.errors[:user_id]).to be_present
     end
@@ -32,7 +32,7 @@ describe UserEndorsement do
       SiteSetting.category_expert_suggestion_threshold = 1
 
       expect {
-        UserEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
+        CategoryExpertEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
       }.to change { Reviewable.count }.by (1)
     end
 
@@ -40,7 +40,7 @@ describe UserEndorsement do
       SiteSetting.category_expert_suggestion_threshold = 3
 
       expect {
-        UserEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
+        CategoryExpertEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
       }.to change { Reviewable.count }.by (0)
     end
   end

@@ -5,8 +5,16 @@ import { ajax } from "discourse/lib/ajax";
 import { empty } from "@ember/object/computed";
 
 export default Component.extend({
+  groupIds: null,
+
   init() {
     this._super(...arguments);
+    this.set(
+      "groupIds",
+      this.category.custom_fields.category_expert_group_ids
+        ? this.category.custom_fields.category_expert_group_ids.split("|")
+        : []
+    );
 
     ajax("/groups.json").then((response) => {
       const groupOptions = [];
@@ -22,16 +30,20 @@ export default Component.extend({
     });
   },
 
-  noGroupSelected: empty("category.custom_fields.category_expert_group_id"),
-
   @action
-  onChangeGroupId(value) {
-    this.set("category.custom_fields.category_expert_group_id", value);
+  onChangeGroupIds(value) {
+    this.set("groupIds", value);
+    this.set(
+      "category.custom_fields.category_expert_group_ids",
+      value.join("|")
+    );
   },
 
   @action
   onChangeAcceptingExpertEndorsements(value) {
-    console.log(value)
-    this.set("category.custom_fields.category_accepting_endorsements", value ? "true" : null);
-  }
+    this.set(
+      "category.custom_fields.category_accepting_endorsements",
+      value ? "true" : null
+    );
+  },
 });

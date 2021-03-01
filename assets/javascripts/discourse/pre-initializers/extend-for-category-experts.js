@@ -1,5 +1,6 @@
 import Category from "discourse/models/category";
 import { and } from "@ember/object/computed";
+import { withPluginApi } from "discourse/lib/plugin-api";
 
 export default {
   name: "extend-for-category-experts",
@@ -8,7 +9,11 @@ export default {
 
   initialize() {
     Category.reopen({
-      allowingUserEndorsements: and("custom_fields.category_expert_group_id", "custom_fields.category_accepting_endorsements")
+      allowingCategoryExpertEndorsements: and("custom_fields.category_expert_group_ids", "custom_fields.category_accepting_endorsements")
+    });
+
+    withPluginApi("0.8.31", (api) => {
+      api.addPluginReviewableParam("group_id");
     });
   },
 };

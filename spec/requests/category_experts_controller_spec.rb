@@ -46,20 +46,20 @@ describe CategoryExpertsController do
         expect(response.status).to eq(400)
       end
 
-      it "creates new UserEndorsement records for each category" do
+      it "creates new CategoryExpertEndorsement records for each category" do
         expect {
           put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id, category2.id] })
-        }.to change { UserEndorsement.count }.by(2)
+        }.to change { CategoryExpertEndorsement.count }.by(2)
       end
 
-      it "does not duplicate existing UserEndorsement records" do
+      it "does not duplicate existing CategoryExpertEndorsement records" do
         [category1, category2].each do |category|
-          UserEndorsement.create(user: user, endorsed_user: endorsee, category: category)
+          CategoryExpertEndorsement.create(user: user, endorsed_user: endorsee, category: category)
         end
 
         expect {
           put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id, category2.id] })
-        }.to change { UserEndorsement.count }.by(0)
+        }.to change { CategoryExpertEndorsement.count }.by(0)
         expect(response.status).to eq(200)
       end
     end

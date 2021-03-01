@@ -12,13 +12,13 @@ class CategoryExpertsController < ApplicationController
 
     categories = Category.where(id: category_ids)
     categories.each do |category|
-      raise Discourse::InvalidParameters unless category.accepting_user_endorsements?
+      raise Discourse::InvalidParameters unless category.accepting_category_expert_endorsements?
 
-      user_endorsement = UserEndorsement.find_or_create_by(user: current_user, endorsed_user: user, category: category)
+      CategoryExpertEndorsement.find_or_create_by(user: current_user, endorsed_user: user, category: category)
     end
 
     render json: {
-      user_endorsements: current_user.given_user_endorsements_for(user)
+      category_expert_endorsements: current_user.given_category_expert_endorsements_for(user)
     }.to_json
   end
 end

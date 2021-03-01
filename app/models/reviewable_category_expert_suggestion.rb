@@ -8,6 +8,7 @@ class ReviewableCategoryExpertSuggestion < Reviewable
 
     actions.add(:approve_category_expert) do |action|
       action.icon = 'thumbs-up'
+      action.custom_modal = 'expert-group-chooser'
       action.label = "js.category_experts.review.approve"
     end
 
@@ -18,13 +19,19 @@ class ReviewableCategoryExpertSuggestion < Reviewable
     end
   end
 
-  def perform_approve_category_expert(performed_by, _args)
+  def perform_approve_category_expert(performed_by, args)
+    group_id = args["group_id"]
 
-    create_result(:success, :approve)
+    possible_group_ids = target.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].split("|").map(&:to_i)
+    raise Discourse::NotFound unless possible_group_ids.include?(group_id.to_i)
+
+    group = Group.find_by(id: group_id)
+    group.add(target.endorsed_user)
+
+    create_result(:success, :approved)
   end
 
   def perform_deny_category_expert(performed_by, _args)
-
     create_result(:success, :deleted)
   end
 end

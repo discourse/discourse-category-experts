@@ -14,6 +14,10 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
+    if (!this.endorsements) {
+      this.set('endorsements', []);
+    }
+
     this.set(
       "startingCategoryIds",
       this.endorsements.length
@@ -51,7 +55,10 @@ export default Component.extend({
       },
     })
       .then((response) => {
-        this.user.set("user_endorsements", response.user_endorsements);
+        this.user.set(
+          "category_expert_endorsements",
+          response.category_expert_endorsements
+        );
         this.afterSave();
       })
       .catch(popupAjaxError);

@@ -6,7 +6,7 @@ class ReviewableCategoryExpertSuggestionSerializer < ReviewableSerializer
   attributes :endorsed_by, :endorsed_count, :category, :user
 
   def endorsed_users
-    @endorsed_users ||= UserEndorsement
+    @endorsed_users ||= CategoryExpertEndorsement
       .includes(:user)
       .where(category_id: object.target.category_id, endorsed_user_id: object.target.endorsed_user_id)
       .map(&:user)
@@ -25,7 +25,7 @@ class ReviewableCategoryExpertSuggestionSerializer < ReviewableSerializer
   end
 
   def category
-    BasicCategorySerializer.new(object.target.category, root: false).as_json
+    CategorySerializer.new(object.target.category, root: false).as_json
   end
 
   def user

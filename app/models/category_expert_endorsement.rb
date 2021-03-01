@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserEndorsement < ActiveRecord::Base
+class CategoryExpertEndorsement < ActiveRecord::Base
   belongs_to :user
   belongs_to :endorsed_user, class_name: "User"
   belongs_to :category
@@ -12,7 +12,7 @@ class UserEndorsement < ActiveRecord::Base
   private
 
   def create_reviewable
-    endorsements_for_category = UserEndorsement.where(endorsed_user: endorsed_user, category: category).count
+    endorsements_for_category = CategoryExpertEndorsement.where(endorsed_user: endorsed_user, category: category).count
     if endorsements_for_category == SiteSetting.category_expert_suggestion_threshold
       ReviewableCategoryExpertSuggestion.needs_review!(
         created_by: user,
