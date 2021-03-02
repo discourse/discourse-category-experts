@@ -20,7 +20,7 @@ class ReviewableCategoryExpertSuggestion < Reviewable
   end
 
   def perform_approve_category_expert(performed_by, args)
-    group_id = args["group_id"]
+    group_id = args.symbolize_keys[:group_id]
 
     possible_group_ids = target.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].split("|").map(&:to_i)
     raise Discourse::NotFound unless possible_group_ids.include?(group_id.to_i)
@@ -32,6 +32,6 @@ class ReviewableCategoryExpertSuggestion < Reviewable
   end
 
   def perform_deny_category_expert(performed_by, _args)
-    create_result(:success, :deleted)
+    create_result(:success, :rejected)
   end
 end

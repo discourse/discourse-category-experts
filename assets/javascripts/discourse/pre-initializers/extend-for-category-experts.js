@@ -13,7 +13,7 @@ export default {
     });
 
     withPluginApi("0.8.31", (api) => {
-      api.addPluginReviewableParam("group_id");
+      api.addPluginReviewableParam("ReviewableCategoryExpertSuggestion", "group_id");
     });
   },
 };
