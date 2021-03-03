@@ -1,0 +1,34 @@
+.category-expert-existing-endorsements {
+  font-size: $font-down-2;
+
+  .endorse-link {
+    color: $tertiary;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.reviewable-category-expert-suggestion {
+  .reviewable-category-experts-header {
+    width: 100%;
+  }
+
+  .row {
+    width: calc(100% - 2em);
+    margin: 0.5em 0 0 2em;
+
+    .endorsed-by-table {
+      width: 100%;
+
+      .endorsed-by {
+        padding: 0.35em 0;
+      }
+    }
+  }
+}
+.endorsement-successful {
+  text-align: center;
+  color: $success;
+  font-size: 5em;
+  line-height: 1em;
+}

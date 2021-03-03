@@ -2,3 +2,6 @@ plugins:
   enable_category_experts:
     default: true
     client: true
+  category_expert_suggestion_threshold:
+    default: 3
+    min: 1

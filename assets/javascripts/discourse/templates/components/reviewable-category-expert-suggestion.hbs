@@ -1,0 +1,33 @@
+<div class="row">
+
+  {{#link-to "user" reviewable.user.username}}
+    {{avatar reviewable.user imageSize="small"}}
+    {{reviewable.user.username}}
+  {{/link-to}}
+  {{count-i18n key="category_experts.review.endorsed_count" count=reviewable.endorsed_count}}
+  {{category-link reviewable.category}}
+</div>
+
+<div class="row">
+
+  <table class="endorsed-by-table">
+    <thead>
+      <tr>
+        <td>{{i18n "category_experts.review.endorsed_by" count=reviewable.endorsed_count}}</td>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each reviewable.endorsed_by as |user|}}
+      <tr>
+        <td class="endorsed-by">
+          {{#link-to "user" user.username}}
+            {{avatar user imageSize="tiny"}}
+            {{user.username}}
+          {{/link-to}}
+        </td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</div>
+{{log reviewable}}

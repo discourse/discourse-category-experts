@@ -5,11 +5,24 @@
       {{i18n 'category_experts.group'}}
     </label>
     <div class="controls">
-      {{combo-box
-        content=groupOptions
-        value=category.custom_fields.category_expert_group_id
-        onChange=(action "onChangeGroupId")
+        {{multi-select
+          value=groupIds
+          content=groupOptions
+          onSelect=(action onChangeGroupIds)
         }}
     </div>
   </section>
+
+  {{#if category.custom_fields.category_expert_group_ids}}
+    <section class='field'>
+      <label class="checkbox-label">
+        {{input
+          type="checkbox"
+          checked=(readonly category.custom_fields.category_accepting_endorsements)
+          change=(action "onChangeAcceptingExpertEndorsements" value="target.checked")
+        }}
+        {{i18n 'category_experts.accepting_endorsements'}}
+      </label>
+    </section>
+  {{/if}}
 {{/if}}

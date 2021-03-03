@@ -1,0 +1,16 @@
+{{#unless disabled}}
+  {{#if endorsements}}
+    <div class="category-expert-existing-endorsements">
+      {{i18n "category_experts.existing_endorsements" count=endorsementsCount}}
+      <span onclick={{action "openEndorsementModal"}} class="endorse-link">
+        {{i18n "category_experts.edit"}}
+      </span>
+    </div>
+  {{else}}
+    {{d-button
+      action=(action "openEndorsementModal")
+      class="category-expert-endorse-btn"
+      label="category_experts.endorse"
+    }}
+  {{/if}}
+{{/unless}}

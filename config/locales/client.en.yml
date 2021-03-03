@@ -3,3 +3,25 @@ en:
     category_experts:
       title: "Category Experts"
       group: "Category experts group"
+      no_group: "None"
+      accepting_endorsements: "Currently accepting user endorsements"
+      endorse: "Endorse"
+      existing_endorsements: "Endorsed in %{count} categories."
+      edit: "Edit"
+      manage_endorsements:
+        title: "Endorse user"
+        subtitle: "What are %{username}'s strengths?"
+      review:
+        approve: "Approve"
+        deny: "Ignore"
+        title: "Category Expert Suggestion"
+        endorsed_count:
+          one: "has been endorsed %{count} time for "
+          other: "has been endorsed %{count} times for "
+        endorsed_by: "Endorsed by (%{count})"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Category Expert Suggestion"
+      expert-group-chooser:
+        title: "Choose an expert group for the user"
