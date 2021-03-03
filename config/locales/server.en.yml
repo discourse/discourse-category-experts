@@ -1,4 +1,4 @@
 en:
   site_settings:
     enable_category_experts: "Enable category experts plugin"
-    category_expert_suggestion_threshold: "After a user recieves this number of user endorsements for a category, a new category expert suggestion will be created in the review queue."
+    category_expert_suggestion_threshold: "Suggest category experts after this many endorsements."

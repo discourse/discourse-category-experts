@@ -8,7 +8,7 @@ class CategoryExpertsController < ApplicationController
 
     category_ids = params[:categoryIds]&.reject(&:blank?)
 
-    raise Discourse::InvalidParameters if !category_ids || category_ids.blank?
+    raise Discourse::InvalidParameters if category_ids.blank?
 
     categories = Category.where(id: category_ids)
     categories.each do |category|

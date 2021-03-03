@@ -7,6 +7,10 @@
       </span>
     </div>
   {{else}}
-    {{d-button action=(action "openEndorsementModal") label="category_experts.endorse"}}
+    {{d-button
+      action=(action "openEndorsementModal")
+      class="category-expert-endorse-btn"
+      label="category_experts.endorse"
+    }}
   {{/if}}
 {{/unless}}

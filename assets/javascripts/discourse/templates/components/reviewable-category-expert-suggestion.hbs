@@ -4,7 +4,7 @@
     {{avatar reviewable.user imageSize="small"}}
     {{reviewable.user.username}}
   {{/link-to}}
-  {{i18n "category_experts.review.endorsed_count" count=reviewable.endorsed_count}}
+  {{count-i18n key="category_experts.review.endorsed_count" count=reviewable.endorsed_count}}
   {{category-link reviewable.category}}
 </div>
 
@@ -19,7 +19,7 @@
     <tbody>
     {{#each reviewable.endorsed_by as |user|}}
       <tr>
-        <td class="endorser">
+        <td class="endorsed-by">
           {{#link-to "user" user.username}}
             {{avatar user imageSize="tiny"}}
             {{user.username}}

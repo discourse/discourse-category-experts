@@ -9,10 +9,15 @@ export default Controller.extend(ModalFunctionality, {
   performDisabled: empty("groupId"),
 
   onShow() {
-    const groupIds = this.model.category.custom_fields.category_expert_group_ids.split("|")
+    const groupIds = this.model.category.custom_fields.category_expert_group_ids.split(
+      "|"
+    );
     ajax("/groups.json").then((response) => {
-      this.set('groupOptions', response.groups.filter(g => groupIds.includes(g.id.toString())))
-    })
+      this.set(
+        "groupOptions",
+        response.groups.filter((g) => groupIds.includes(g.id.toString()))
+      );
+    });
   },
 
   @action

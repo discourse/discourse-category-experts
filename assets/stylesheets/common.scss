@@ -20,9 +20,15 @@
     .endorsed-by-table {
       width: 100%;
 
-      .endorser {
+      .endorsed-by {
         padding: 0.35em 0;
       }
     }
   }
+}
+.endorsement-successful {
+  text-align: center;
+  color: $success;
+  font-size: 5em;
+  line-height: 1em;
 }

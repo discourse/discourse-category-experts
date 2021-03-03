@@ -1,21 +1,23 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import Component from "@ember/component";
 import { action } from "@ember/object";
-import { next } from "@ember/runloop";
+import { next, later } from "@ember/runloop";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 
 export default Component.extend({
   user: null,
+  saving: false,
   categories: null,
   endorsements: null,
   selectedCategoryIds: null,
   startingCategoryIds: null,
+  showingSuccess: false,
 
   didInsertElement() {
     this._super(...arguments);
     if (!this.endorsements) {
-      this.set('endorsements', []);
+      this.set("endorsements", []);
     }
 
     this.set(
@@ -34,9 +36,9 @@ export default Component.extend({
     });
   },
 
-  @discourseComputed("selectedCategoryIds", "startingCategoryIds")
-  saveDisabled(categoryIds, startingCategoryIds) {
-    if (!categoryIds) {
+  @discourseComputed("saving", "selectedCategoryIds", "startingCategoryIds")
+  saveDisabled(saving, categoryIds, startingCategoryIds) {
+    if (saving || !categoryIds) {
       return;
     }
     if (categoryIds.length === 0 && startingCategoryIds.length === 0) {
@@ -47,6 +49,8 @@ export default Component.extend({
 
   @action
   save() {
+    this.set("saving", true);
+
     let categories;
     ajax(`/category-experts/endorse/${this.user.username}.json`, {
       type: "PUT",
@@ -59,7 +63,15 @@ export default Component.extend({
           "category_expert_endorsements",
           response.category_expert_endorsements
         );
-        this.afterSave();
+
+        this.set("showingSuccess", true);
+        later(() => {
+          this.afterSave();
+          this.setProperties({
+            showingSuccess: false,
+            saving: false,
+          });
+        }, 300);
       })
       .catch(popupAjaxError);
   },

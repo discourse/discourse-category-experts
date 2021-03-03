@@ -9,11 +9,17 @@ export default {
 
   initialize() {
     Category.reopen({
-      allowingCategoryExpertEndorsements: and("custom_fields.category_expert_group_ids", "custom_fields.category_accepting_endorsements")
+      allowingCategoryExpertEndorsements: and(
+        "custom_fields.category_expert_group_ids",
+        "custom_fields.category_accepting_endorsements"
+      ),
     });
 
     withPluginApi("0.8.31", (api) => {
-      api.addPluginReviewableParam("ReviewableCategoryExpertSuggestion", "group_id");
+      api.addPluginReviewableParam(
+        "ReviewableCategoryExpertSuggestion",
+        "group_id"
+      );
     });
   },
 };
