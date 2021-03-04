@@ -5,3 +5,6 @@ plugins:
   category_expert_suggestion_threshold:
     default: 3
     min: 1
+  category_experts_posts_require_approval:
+    default: false
+    client: true

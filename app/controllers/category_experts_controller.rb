@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CategoryExpertsController < ApplicationController
+  before_action :find_post, :ensure_staff_and_enabled, only: [:approve_post, :unapprove_post]
 
   def endorse
     raise Discourse::NotFound unless current_user
@@ -20,5 +21,34 @@ class CategoryExpertsController < ApplicationController
     render json: {
       category_expert_endorsements: current_user.given_category_expert_endorsements_for(user)
     }.to_json
+  end
+
+  def approve_post
+    post_handler = CategoryExperts::PostHandler.new(post: @post)
+    post_handler.mark_post_as_approved
+
+    render json: success_json
+  end
+
+  def unapprove_post
+    post_handler = CategoryExperts::PostHandler.new(post: @post)
+    post_handler.mark_post_for_approval
+
+    render json: success_json
+  end
+
+  private
+
+  def ensure_staff_and_enabled
+    unless current_user && current_user.staff? && SiteSetting.category_experts_posts_require_approval
+      raise Discoures::NotFound
+    end
+  end
+
+  def find_post
+    post_id = params.require(:post_id)
+    @post = Post.find_by(id: post_id)
+
+    raise Discourse::NotFound unless @post
   end
 end
