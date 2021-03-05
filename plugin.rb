@@ -9,6 +9,8 @@
 
 register_asset "stylesheets/common.scss"
 
+enabled_site_setting :enable_category_experts
+
 after_initialize do
   [
     "../app/controllers/category_experts_controller",
