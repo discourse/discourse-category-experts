@@ -10,7 +10,7 @@ module CategoryExperts
     end
 
     def process_new_post
-      return ensure_correct_settings unless ensure_correct_settings
+      return unless ensure_correct_settings
 
       SiteSetting.category_experts_posts_require_approval ?
         mark_post_for_approval :

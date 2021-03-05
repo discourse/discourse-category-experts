@@ -8,7 +8,6 @@ function initializeWithApi(api) {
     .category_experts_posts_require_approval;
 
   if (requiresApproval) {
-    console.log("here too")
     const appEvents = api.container.lookup("service:app-events");
 
     api.includePostAttributes(
