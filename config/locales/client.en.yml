@@ -8,7 +8,7 @@ en:
       endorse: "Endorse"
       existing_endorsements: "Endorsed in %{count} categories."
       edit: "Edit"
-      approve: "Approve Category Expert Post"
+      approve: "Approve"
       unapprove: "Unapprove Category Expert Post"
       manage_endorsements:
         title: "Endorse user"

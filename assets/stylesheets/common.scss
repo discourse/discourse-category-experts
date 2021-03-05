@@ -32,3 +32,9 @@
   font-size: 5em;
   line-height: 1em;
 }
+
+article.category-expert-post {
+  .topic-body, .topic-avatar {
+    border-top: 4px solid $tertiary;
+  }
+}

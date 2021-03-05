@@ -22,7 +22,7 @@ after_initialize do
     PLUGIN_NAME ||= "discourse-category-experts".freeze
     CATEGORY_EXPERT_GROUP_IDS = "category_expert_group_ids"
     CATEGORY_ACCEPTING_ENDORSEMENTS = "category_accepting_endorsements"
-    IS_APPROVED_EXPERT_POST = "category_expert_post"
+    POST_APPROVED_GROUP_NAME = "category_expert_post"
     POST_PENDING_EXPERT_APPROVAL = "category_expert_post_pending"
     TOPIC_HAS_APPROVED_EXPERT_POST = "category_expert_topic_approved_post"
     TOPIC_NEEDS_EXPERT_POST_APPROVAL = "category_expert_topic_post_needs_approval"
@@ -37,7 +37,7 @@ after_initialize do
 
   add_permitted_reviewable_param(:reviewable_category_expert_suggestion, :group_id)
 
-  register_post_custom_field_type(CategoryExperts::IS_APPROVED_EXPERT_POST, :string)
+  register_post_custom_field_type(CategoryExperts::POST_APPROVED_GROUP_NAME, :string)
   register_post_custom_field_type(CategoryExperts::POST_PENDING_EXPERT_APPROVAL, :boolean)
 
   register_topic_custom_field_type(CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST, :boolean)
@@ -71,8 +71,8 @@ after_initialize do
     scope.current_user.given_category_expert_endorsements_for(object)
   end
 
-  add_to_serializer(:post, :category_expert_approved) do
-    object.custom_fields[CategoryExperts::IS_APPROVED_EXPERT_POST]
+  add_to_serializer(:post, :category_expert_approved_group) do
+    object.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
   end
 
   add_to_serializer(:post, :needs_category_expert_approval) do

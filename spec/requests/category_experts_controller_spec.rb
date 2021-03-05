@@ -5,13 +5,14 @@ require "rails_helper"
 describe CategoryExpertsController do
   fab!(:user) { Fabricate(:user) }
   fab!(:endorsee) { Fabricate(:user) }
+  fab!(:group) { Fabricate(:group) }
   fab!(:category1) { fabricate_category_with_category_experts }
   fab!(:category2) { fabricate_category_with_category_experts }
 
   def fabricate_category_with_category_experts
     category = Fabricate(:category)
     enable_accepting_questions_for(category)
-    set_expert_group_for_category(category, Fabricate(:group))
+    set_expert_group_for_category(category, group)
     category.save
     category
   end
@@ -21,7 +22,7 @@ describe CategoryExpertsController do
   end
 
   def set_expert_group_for_category(category, group)
-    category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_ID] = group.id
+    category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = group.id.to_s
   end
 
   describe "#endorse" do
@@ -61,6 +62,56 @@ describe CategoryExpertsController do
           put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id, category2.id] })
         }.to change { CategoryExpertEndorsement.count }.by(0)
         expect(response.status).to eq(200)
+      end
+    end
+  end
+
+  [:approve, :unapprove].each do |action|
+
+    describe "#approve_post" do
+      fab!(:topic) { Fabricate(:topic, category: category1) }
+      fab!(:admin) { Fabricate(:admin) }
+
+      before do
+        group.add(user)
+        create_post(topic_id: topic.id, user: user)
+      end
+
+      it "returns a 404 when regular user is signed in" do
+        sign_in(user)
+
+        SiteSetting.category_experts_posts_require_approval = true
+        post("/category-experts/#{action}.json", params: { post_id: topic.posts.last.id })
+        expect(response.status).to eq(404)
+      end
+
+      it "returns a 404 when `category_experts_post_require_approval` is false" do
+        sign_in(admin)
+
+        SiteSetting.category_experts_posts_require_approval = false
+        post("/category-experts/#{action}.json", params: { post_id: topic.posts.last.id })
+        expect(response.status).to eq(404)
+      end
+
+      context "Correctly configured" do
+        before do
+          sign_in(admin)
+          SiteSetting.category_experts_posts_require_approval = true
+        end
+
+        it "approves the post and returns the expert group name" do
+          last_post = topic.posts.last
+          post("/category-experts/#{action}.json", params: { post_id: last_post.id })
+
+          expect(response.status).to eq(200)
+
+          approved = action == :approve
+          if approved
+            expect(response.parsed_body["group_name"]).to eq(group.name)
+          end
+          expect(last_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(approved ? group.name : nil)
+          expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(!approved)
+        end
       end
     end
   end

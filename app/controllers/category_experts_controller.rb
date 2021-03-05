@@ -25,9 +25,9 @@ class CategoryExpertsController < ApplicationController
 
   def approve_post
     post_handler = CategoryExperts::PostHandler.new(post: @post)
-    post_handler.mark_post_as_approved
+    group_name = post_handler.mark_post_as_approved
 
-    render json: success_json
+    render json: { group_name: group_name }
   end
 
   def unapprove_post
@@ -41,7 +41,7 @@ class CategoryExpertsController < ApplicationController
 
   def ensure_staff_and_enabled
     unless current_user && current_user.staff? && SiteSetting.category_experts_posts_require_approval
-      raise Discoures::NotFound
+      raise Discourse::NotFound
     end
   end
 

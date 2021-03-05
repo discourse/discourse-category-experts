@@ -10,15 +10,17 @@ module CategoryExperts
     end
 
     def process_new_post
-      ensure_correct_settings
+      return ensure_correct_settings unless ensure_correct_settings
+
       SiteSetting.category_experts_posts_require_approval ?
         mark_post_for_approval :
         mark_post_as_approved
     end
 
     def mark_post_for_approval
-      ensure_correct_settings
-      post.custom_fields[CategoryExperts::IS_APPROVED_EXPERT_POST] = nil
+      raise Discourse::InvalidParameters unless ensure_correct_settings
+
+      post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = nil
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = true
       post.save
 
@@ -31,8 +33,9 @@ module CategoryExperts
     end
 
     def mark_post_as_approved
-      ensure_correct_settings
-      post.custom_fields[CategoryExperts::IS_APPROVED_EXPERT_POST] = users_expert_group.name
+      raise Discourse::InvalidParameters unless ensure_correct_settings
+
+      post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = nil
       post.save
 
@@ -40,12 +43,14 @@ module CategoryExperts
       topic.custom_fields[CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST] = true
       topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = nil
       topic.save
+
+      users_expert_group.name
     end
 
     private
 
     def ensure_correct_settings
-      raise Discourse::InvalidParameters if expert_group_ids.blank? || users_expert_group.nil?
+      expert_group_ids.length && users_expert_group
     end
 
     def expert_group_ids

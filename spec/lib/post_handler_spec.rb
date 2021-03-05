@@ -14,6 +14,7 @@ describe CategoryExperts::PostHandler do
     SiteSetting.category_expert_suggestion_threshold
     category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group.id}|#{group.id + 1}"
     category.save
+
   end
 
   describe "SiteSetting.category_experts_posts_require_approval enabled" do
@@ -51,7 +52,7 @@ describe CategoryExperts::PostHandler do
     it "marks posts as approved automatically" do
       result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
 
-      expect(result.post.custom_fields[CategoryExperts::IS_APPROVED_EXPERT_POST]).to eq(group.name)
+      expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST]).to eq(true)
 
       expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
