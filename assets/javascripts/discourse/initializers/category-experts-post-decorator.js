@@ -12,7 +12,7 @@ function initializeWithApi(api) {
 
     api.includePostAttributes(
       "needs_category_expert_approval",
-      "category_expert_approved",
+      "category_expert_approved_group",
       "can_manage_category_expert_posts"
     );
 
@@ -21,7 +21,7 @@ function initializeWithApi(api) {
 
       if (
         attrs.needs_category_expert_approval &&
-        !attrs.category_expert_approved
+        !attrs.category_expert_approved_group
       ) {
         return {
           action: "approveCategoryExpertPost",
@@ -32,7 +32,7 @@ function initializeWithApi(api) {
           position: "first",
         };
       } else if (
-        attrs.category_expert_approved &&
+        attrs.category_expert_approved_group &&
         !attrs.needs_category_expert_approval
       ) {
         return {
@@ -53,7 +53,7 @@ function initializeWithApi(api) {
         .then((response) => {
           post.setProperties({
             needs_category_expert_approval: !opts.approved,
-            category_expert_approved: opts.approved ? response.group_name : false,
+            category_expert_approved_group: opts.approved ? response.group_name : false,
           });
 
           appEvents.trigger("post-stream:refresh", { id: post.id });
@@ -78,10 +78,10 @@ function initializeWithApi(api) {
       );
       if (!article) return;
 
-      if (post.category_expert_approved) {
+      if (post.category_expert_approved_group) {
         article.classList.add("category-expert-post");
         article.classList.add(
-          `category-expert-${post.category_expert_approved}`
+          `category-expert-${post.category_expert_approved_group}`
         );
       } else if (post.needs_category_expert_approval) {
         article.classList.remove("category-expert-post");
