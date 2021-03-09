@@ -41,7 +41,7 @@ class CategoryExpertsController < ApplicationController
 
   def ensure_staff_and_enabled
     unless current_user && current_user.staff? && SiteSetting.category_experts_posts_require_approval
-      raise Discourse::NotFound
+      raise Discourse::InvalidAccess
     end
   end
 

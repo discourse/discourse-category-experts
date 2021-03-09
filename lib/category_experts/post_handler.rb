@@ -22,13 +22,13 @@ module CategoryExperts
 
       post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = nil
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = true
-      post.save
+      post.save!
 
       topic = post.topic
       unless topic.custom_fields[CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST]
         # Topic doesn't have any approved expert posts. Mark as needing approval
         topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = true
-        topic.save
+        topic.save!
       end
     end
 
@@ -37,12 +37,12 @@ module CategoryExperts
 
       post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = nil
-      post.save
+      post.save!
 
       topic = post.topic
       topic.custom_fields[CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST] = true
       topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = nil
-      topic.save
+      topic.save!
 
       users_expert_group.name
     end
@@ -64,9 +64,7 @@ module CategoryExperts
       return @users_expert_group if defined?(@users_expert_group) # memoizing a potentially falsy value
 
       group_id = ((expert_group_ids & user.group_ids) || []).first
-      return nil if group_id.nil?
-
-      @users_expert_group = Group.find_by(id: group_id)
+      @users_expert_group = group_id.nil? ? nil : Group.find_by(id: group_id)
     end
   end
 end

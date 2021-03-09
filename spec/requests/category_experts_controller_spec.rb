@@ -66,52 +66,89 @@ describe CategoryExpertsController do
     end
   end
 
-  [:approve, :unapprove].each do |action|
+  describe "#approve_post" do
+    fab!(:topic) { Fabricate(:topic, category: category1) }
+    fab!(:admin) { Fabricate(:admin) }
 
-    describe "#approve_post" do
-      fab!(:topic) { Fabricate(:topic, category: category1) }
-      fab!(:admin) { Fabricate(:admin) }
+    before do
+      group.add(user)
+      create_post(topic_id: topic.id, user: user)
+    end
 
+    it "returns a 403 when regular user is signed in" do
+      sign_in(user)
+
+      SiteSetting.category_experts_posts_require_approval = true
+      post("/category-experts/approve.json", params: { post_id: topic.posts.last.id })
+      expect(response.status).to eq(403)
+    end
+
+    it "returns a 403 when `category_experts_post_require_approval` is false" do
+      sign_in(admin)
+
+      SiteSetting.category_experts_posts_require_approval = false
+      post("/category-experts/approve.json", params: { post_id: topic.posts.last.id })
+      expect(response.status).to eq(403)
+    end
+
+    context "Correctly configured" do
       before do
-        group.add(user)
-        create_post(topic_id: topic.id, user: user)
-      end
-
-      it "returns a 404 when regular user is signed in" do
-        sign_in(user)
-
-        SiteSetting.category_experts_posts_require_approval = true
-        post("/category-experts/#{action}.json", params: { post_id: topic.posts.last.id })
-        expect(response.status).to eq(404)
-      end
-
-      it "returns a 404 when `category_experts_post_require_approval` is false" do
         sign_in(admin)
-
-        SiteSetting.category_experts_posts_require_approval = false
-        post("/category-experts/#{action}.json", params: { post_id: topic.posts.last.id })
-        expect(response.status).to eq(404)
+        SiteSetting.category_experts_posts_require_approval = true
       end
 
-      context "Correctly configured" do
-        before do
-          sign_in(admin)
-          SiteSetting.category_experts_posts_require_approval = true
-        end
+      it "approves the post and returns the expert group name" do
+        last_post = topic.posts.last
+        post("/category-experts/approve.json", params: { post_id: last_post.id })
 
-        it "approves the post and returns the expert group name" do
-          last_post = topic.posts.last
-          post("/category-experts/#{action}.json", params: { post_id: last_post.id })
+        expect(response.status).to eq(200)
 
-          expect(response.status).to eq(200)
+        expect(response.parsed_body["group_name"]).to eq(group.name)
+        expect(last_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+        expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
+      end
+    end
+  end
 
-          approved = action == :approve
-          if approved
-            expect(response.parsed_body["group_name"]).to eq(group.name)
-          end
-          expect(last_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(approved ? group.name : nil)
-          expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(!approved)
-        end
+  describe "#unapprove_post" do
+    fab!(:topic) { Fabricate(:topic, category: category1) }
+    fab!(:admin) { Fabricate(:admin) }
+
+    before do
+      group.add(user)
+      create_post(topic_id: topic.id, user: user)
+    end
+
+    it "returns a 403 when regular user is signed in" do
+      sign_in(user)
+
+      SiteSetting.category_experts_posts_require_approval = true
+      post("/category-experts/unapprove.json", params: { post_id: topic.posts.last.id })
+      expect(response.status).to eq(403)
+    end
+
+    it "returns a 403 when `category_experts_post_require_approval` is false" do
+      sign_in(admin)
+
+      SiteSetting.category_experts_posts_require_approval = false
+      post("/category-experts/unapprove.json", params: { post_id: topic.posts.last.id })
+      expect(response.status).to eq(403)
+    end
+
+    context "Correctly configured" do
+      before do
+        sign_in(admin)
+        SiteSetting.category_experts_posts_require_approval = true
+      end
+
+      it "unapproves the post and returns the expert group name" do
+        last_post = topic.posts.last
+        post("/category-experts/unapprove.json", params: { post_id: last_post.id })
+
+        expect(response.status).to eq(200)
+
+        expect(last_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
+        expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
       end
     end
   end

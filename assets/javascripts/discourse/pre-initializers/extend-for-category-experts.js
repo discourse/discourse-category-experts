@@ -1,5 +1,5 @@
 import Category from "discourse/models/category";
-import { and, equal } from "@ember/object/computed";
+import { and } from "@ember/object/computed";
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 export default {
