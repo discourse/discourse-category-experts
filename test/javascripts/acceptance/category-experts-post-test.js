@@ -76,7 +76,7 @@ acceptance(
 
       await click(lastArticle.querySelector("button.show-more-actions"));
 
-      const unapproveBtn = find(
+      const unapproveBtn = query(
         ".widget-button.unapprove-category-expert-post"
       );
       await click(unapproveBtn);
