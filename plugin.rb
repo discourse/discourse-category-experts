@@ -9,18 +9,25 @@
 
 register_asset "stylesheets/common.scss"
 
+enabled_site_setting :enable_category_experts
+
 after_initialize do
   [
     "../app/controllers/category_experts_controller",
     "../app/models/category_expert_endorsement",
     "../app/models/reviewable_category_expert_suggestion",
     "../app/serializers/reviewable_category_expert_suggestion_serializer",
+    "../lib/category_experts/post_handler",
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   module ::CategoryExperts
     PLUGIN_NAME ||= "discourse-category-experts".freeze
     CATEGORY_EXPERT_GROUP_IDS = "category_expert_group_ids"
     CATEGORY_ACCEPTING_ENDORSEMENTS = "category_accepting_endorsements"
+    POST_APPROVED_GROUP_NAME = "category_expert_post"
+    POST_PENDING_EXPERT_APPROVAL = "category_expert_post_pending"
+    TOPIC_HAS_APPROVED_EXPERT_POST = "category_expert_topic_approved_post"
+    TOPIC_NEEDS_EXPERT_POST_APPROVAL = "category_expert_topic_post_needs_approval"
 
     class Engine < ::Rails::Engine
       engine_name CategoryExperts::PLUGIN_NAME
@@ -29,7 +36,14 @@ after_initialize do
   end
 
   register_reviewable_type ReviewableCategoryExpertSuggestion
+
   add_permitted_reviewable_param(:reviewable_category_expert_suggestion, :group_id)
+
+  register_post_custom_field_type(CategoryExperts::POST_APPROVED_GROUP_NAME, :string)
+  register_post_custom_field_type(CategoryExperts::POST_PENDING_EXPERT_APPROVAL, :boolean)
+
+  register_topic_custom_field_type(CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST, :boolean)
+  register_topic_custom_field_type(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL, :boolean)
 
   if Site.respond_to? :preloaded_category_custom_fields
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
@@ -59,7 +73,32 @@ after_initialize do
     scope.current_user.given_category_expert_endorsements_for(object)
   end
 
+  add_to_serializer(:post, :category_expert_approved_group) do
+    object.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
+  end
+
+  add_to_serializer(:post, :needs_category_expert_approval) do
+    object.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]
+  end
+
+  add_to_serializer(:post, :can_manage_category_expert_posts) do
+    scope.is_staff?
+  end
+
+  NewPostManager.add_handler do |manager|
+    result = manager.perform_create_post
+
+    if result.success?
+      handler = CategoryExperts::PostHandler.new(post: result.post, user: manager.user)
+      handler.process_new_post
+    end
+
+    result
+  end
+
   Discourse::Application.routes.append do
     put "category-experts/endorse/:username" => "category_experts#endorse", constraints: { username: ::RouteFormat.username }
+    post "category-experts/approve" => "category_experts#approve_post"
+    post "category-experts/unapprove" => "category_experts#unapprove_post"
   end
 end
