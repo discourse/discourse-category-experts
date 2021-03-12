@@ -24,10 +24,12 @@ after_initialize do
     PLUGIN_NAME ||= "discourse-category-experts".freeze
     CATEGORY_EXPERT_GROUP_IDS = "category_expert_group_ids"
     CATEGORY_ACCEPTING_ENDORSEMENTS = "category_accepting_endorsements"
+    CATEGORY_ACCEPTING_QUESTIONS = "category_accepting_questions"
     POST_APPROVED_GROUP_NAME = "category_expert_post"
     POST_PENDING_EXPERT_APPROVAL = "category_expert_post_pending"
-    TOPIC_HAS_APPROVED_EXPERT_POST = "category_expert_topic_approved_post"
+    TOPIC_EXPERT_POST_GROUP_NAMES = "category_expert_topic_approved_group_names"
     TOPIC_NEEDS_EXPERT_POST_APPROVAL = "category_expert_topic_post_needs_approval"
+    TOPIC_IS_CATEGORY_EXPERT_QUESTION = "category_expert_topic_is_question"
 
     class Engine < ::Rails::Engine
       engine_name CategoryExperts::PLUGIN_NAME
@@ -42,12 +44,18 @@ after_initialize do
   register_post_custom_field_type(CategoryExperts::POST_APPROVED_GROUP_NAME, :string)
   register_post_custom_field_type(CategoryExperts::POST_PENDING_EXPERT_APPROVAL, :boolean)
 
-  register_topic_custom_field_type(CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST, :boolean)
+  register_topic_custom_field_type(CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES, :string)
   register_topic_custom_field_type(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL, :boolean)
+  register_topic_custom_field_type(CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION, :boolean)
+
+  TopicList.preloaded_custom_fields << CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES
+  TopicList.preloaded_custom_fields << CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL
+  TopicList.preloaded_custom_fields << CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION
 
   if Site.respond_to? :preloaded_category_custom_fields
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS
+    Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS
   end
 
   reloadable_patch do
@@ -61,9 +69,24 @@ after_initialize do
     given_category_expert_endorsements.where(endorsed_user_id: user.id)
   end
 
+  add_to_serializer(:current_user, :expert_for_category_ids) do
+    user_group_ids = object.group_ids
+    return [] if user_group_ids.empty?
+
+    CategoryCustomField
+      .where(name: CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
+      .select { |custom_field| (custom_field.value.split("|").map(&:to_i) & user_group_ids).count > 0 }
+      .map(&:category_id)
+  end
+
   add_to_class(:category, :accepting_category_expert_endorsements?) do
     custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] &&
       custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS]
+  end
+
+  add_to_class(:category, :accepting_category_expert_questions?) do
+    custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] &&
+      custom_fields[CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS]
   end
 
   add_to_serializer(:user_card, :category_expert_endorsements) do
@@ -85,12 +108,40 @@ after_initialize do
     scope.is_staff?
   end
 
+  add_to_class(:topic, :is_category_expert_question?) do
+    custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] &&
+      !category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].blank?
+  end
+
+  add_to_serializer(:topic_list_item, :needs_category_expert_post_approval) do
+    object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
+  end
+
+  add_to_serializer(:topic_list_item, :include_needs_category_expert_post_approval?) do
+    scope.is_staff?
+  end
+
+  add_to_serializer(:topic_list_item, :expert_post_group_names) do
+    object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|")
+  end
+
+  add_to_serializer(:topic_list_item, :include_expert_post_group_names?) do
+    !object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+  end
+
+  add_to_serializer(:topic_list_item, :is_category_expert_question) do
+    object.is_category_expert_question?
+  end
+
+  add_permitted_post_create_param(:is_category_expert_question)
+
   NewPostManager.add_handler do |manager|
     result = manager.perform_create_post
 
     if result.success?
       handler = CategoryExperts::PostHandler.new(post: result.post, user: manager.user)
       handler.process_new_post
+      handler.mark_topic_as_question if manager.args[:is_category_expert_question]
     end
 
     result

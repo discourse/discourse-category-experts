@@ -39,13 +39,34 @@
     border-top: 4px solid $success;
   }
 }
-
 article.category-expert-post {
   .topic-body, .topic-avatar {
     border-top: 4px solid $success;
   }
 }
 
+.category-expert-indicator .d-icon {
+  color: $success;
+}
+
 .post-controls .approve-category-expert-post .d-button-label {
   margin-left: 7px;
+}
+
+.topic-list-category-expert-tags > span,
+.topic-list-category-expert-needs-approval,
+.topic-list-category-expert-question {
+  font-size: $font-down-2;
+  padding: 0.3em 0.5em;
+  background: $success-low;
+  color: $primary-high;
+  border-radius: 1em;
+  margin-left: 4px;
+}
+
+.topic-list-category-expert-needs-approval {
+  background: $highlight-low;
+}
+.topic-list-category-expert-question {
+  background: $tertiary-low;
 }

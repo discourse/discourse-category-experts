@@ -46,4 +46,12 @@ export default Component.extend({
       value ? "true" : null
     );
   },
+
+  @action
+  onChangeAcceptingExpertQuestions(value) {
+    this.set(
+      "category.custom_fields.category_accepting_questions",
+      value ? "true" : null
+    );
+  },
 });

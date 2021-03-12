@@ -1,7 +1,8 @@
-import { withPluginApi } from "discourse/lib/plugin-api";
 import { ajax } from "discourse/lib/ajax";
-import { popupAjaxError } from "discourse/lib/ajax-error";
+import { iconNode } from "discourse-common/lib/icon-library";
 import { next } from "@ember/runloop";
+import { popupAjaxError } from "discourse/lib/ajax-error";
+import { withPluginApi } from "discourse/lib/plugin-api";
 
 function initializeWithApi(api) {
   const requiresApproval = api.container.lookup("site-settings:main")
@@ -53,9 +54,15 @@ function initializeWithApi(api) {
         .then((response) => {
           post.setProperties({
             needs_category_expert_approval: !opts.approved,
-            category_expert_approved_group: opts.approved ? response.group_name : false,
+            category_expert_approved_group: opts.approved
+              ? response.group_name
+              : false,
           });
-
+          post.topic.setProperties({
+            needs_category_expert_approval:
+              response.topic_needs_category_expert_approval,
+            expert_post_group_names: response.topic_expert_post_group_names,
+          });
           appEvents.trigger("post-stream:refresh", { id: post.id });
         })
         .catch(popupAjaxError);
@@ -87,6 +94,16 @@ function initializeWithApi(api) {
         article.classList.remove("category-expert-post");
       }
     });
+  });
+
+  api.decorateWidget("poster-name:after", (helper) => {
+    const post = helper.getModel();
+    if (post.category_expert_approved_group) {
+      return helper.h(
+        `span.category-expert-indicator.category-expert-${post.category_expert_approved_group}`,
+        iconNode("check-circle")
+      );
+    }
   });
 }
 

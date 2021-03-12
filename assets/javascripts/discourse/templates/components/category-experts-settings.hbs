@@ -24,5 +24,16 @@
         {{i18n 'category_experts.accepting_endorsements'}}
       </label>
     </section>
+
+    <section class='field'>
+      <label class="checkbox-label">
+        {{input
+          type="checkbox"
+          checked=(readonly category.custom_fields.category_accepting_questions)
+          change=(action "onChangeAcceptingExpertQuestions" value="target.checked")
+        }}
+        {{i18n 'category_experts.accepting_questions'}}
+      </label>
+    </section>
   {{/if}}
 {{/if}}
