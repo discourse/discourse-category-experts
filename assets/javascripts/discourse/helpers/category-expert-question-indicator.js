@@ -3,7 +3,7 @@ import { registerUnbound } from "discourse-common/lib/helpers";
 import { htmlSafe } from "@ember/template";
 
 export function categoryExpertQuestionIndicator(topic) {
-  if (!this.context.currentUser) return;
+  if (!this.context.currentUser || topic.expert_post_group_names) return;
 
   if (
     this.context.currentUser.expert_for_category_ids.includes(topic.category_id)

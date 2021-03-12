@@ -59,7 +59,7 @@ function initializeWithApi(api) {
               : false,
           });
           post.topic.setProperties({
-            needs_category_expert_approval:
+            needs_category_expert_post_approval:
               response.topic_needs_category_expert_approval,
             expert_post_group_names: response.topic_expert_post_group_names,
           });

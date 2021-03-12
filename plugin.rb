@@ -114,11 +114,11 @@ after_initialize do
   end
 
   add_to_serializer(:topic_list_item, :needs_category_expert_post_approval) do
-    object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
+    true
   end
 
   add_to_serializer(:topic_list_item, :include_needs_category_expert_post_approval?) do
-    scope.is_staff?
+    scope.is_staff? && object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
   end
 
   add_to_serializer(:topic_list_item, :expert_post_group_names) do
@@ -130,6 +130,10 @@ after_initialize do
   end
 
   add_to_serializer(:topic_list_item, :is_category_expert_question) do
+    true
+  end
+
+  add_to_serializer(:topic_list_item, :include_is_category_expert_question?) do
     object.is_category_expert_question?
   end
 
