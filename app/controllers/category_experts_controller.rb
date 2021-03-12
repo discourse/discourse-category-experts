@@ -27,17 +27,26 @@ class CategoryExpertsController < ApplicationController
     post_handler = CategoryExperts::PostHandler.new(post: @post)
     group_name = post_handler.mark_post_as_approved
 
-    render json: { group_name: group_name }
+    render json: {
+      group_name: group_name
+    }.merge(topic_custom_fields)
   end
 
   def unapprove_post
     post_handler = CategoryExperts::PostHandler.new(post: @post)
     post_handler.mark_post_for_approval
 
-    render json: success_json
+    render json: topic_custom_fields
   end
 
   private
+
+  def topic_custom_fields
+    {
+      topic_expert_post_group_names: @post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+      topic_needs_category_expert_approval: @post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
+    }
+  end
 
   def ensure_staff_and_enabled
     unless current_user && current_user.staff? && SiteSetting.category_experts_posts_require_approval

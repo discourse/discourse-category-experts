@@ -10,7 +10,7 @@ module CategoryExperts
     end
 
     def process_new_post
-      return unless ensure_correct_settings
+      return unless ensure_poster_is_category_expert
 
       SiteSetting.category_experts_posts_require_approval ?
         mark_post_for_approval :
@@ -18,38 +18,58 @@ module CategoryExperts
     end
 
     def mark_post_for_approval
-      raise Discourse::InvalidParameters unless ensure_correct_settings
+      raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
+
+      post_group_name = post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
 
       post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = nil
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = true
       post.save!
 
       topic = post.topic
-      unless topic.custom_fields[CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST]
-        # Topic doesn't have any approved expert posts. Mark as needing approval
-        topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = true
-        topic.save!
+      has_accepted_posts_from_same_group = PostCustomField.where(
+        post_id: topic.post_ids,
+        name: CategoryExperts::POST_APPROVED_GROUP_NAME,
+        value: post_group_name
+      ).exists?
+
+      unless has_accepted_posts_from_same_group
+        topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] =
+          (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) - [post_group_name]
       end
+
+      topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] =
+        topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+      topic.save!
     end
 
     def mark_post_as_approved
-      raise Discourse::InvalidParameters unless ensure_correct_settings
+      raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
 
       post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = nil
       post.save!
 
       topic = post.topic
-      topic.custom_fields[CategoryExperts::TOPIC_HAS_APPROVED_EXPERT_POST] = true
-      topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = nil
+      topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] =
+        (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []).push(users_expert_group.name).uniq
+      topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = false
       topic.save!
 
       users_expert_group.name
     end
 
+    def mark_topic_as_question
+      topic = post.topic
+      raise Discourse::InvalidParameters unless topic.category.accepting_category_expert_questions?
+
+      topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = true
+      topic.save!
+    end
+
     private
 
-    def ensure_correct_settings
+    def ensure_poster_is_category_expert
       expert_group_ids.length && users_expert_group
     end
 

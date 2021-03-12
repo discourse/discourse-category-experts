@@ -4,15 +4,17 @@ require "rails_helper"
 
 describe CategoryExpertsController do
   fab!(:user) { Fabricate(:user) }
+  fab!(:other_user) { Fabricate(:user) }
   fab!(:endorsee) { Fabricate(:user) }
-  fab!(:group) { Fabricate(:group) }
+  fab!(:group) { Fabricate(:group, users: [user]) }
+  fab!(:other_group) { Fabricate(:group, users: [other_user]) }
   fab!(:category1) { fabricate_category_with_category_experts }
   fab!(:category2) { fabricate_category_with_category_experts }
 
   def fabricate_category_with_category_experts
     category = Fabricate(:category)
     enable_accepting_questions_for(category)
-    set_expert_group_for_category(category, group)
+    set_expert_group_for_category(category, "#{group.id}|#{other_group.id}")
     category.save
     category
   end
@@ -21,8 +23,8 @@ describe CategoryExpertsController do
     category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = true
   end
 
-  def set_expert_group_for_category(category, group)
-    category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = group.id.to_s
+  def set_expert_group_for_category(category, group_ids)
+    category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = group_ids
   end
 
   describe "#endorse" do
@@ -71,7 +73,6 @@ describe CategoryExpertsController do
     fab!(:admin) { Fabricate(:admin) }
 
     before do
-      group.add(user)
       create_post(topic_id: topic.id, user: user)
     end
 
@@ -106,6 +107,23 @@ describe CategoryExpertsController do
         expect(response.parsed_body["group_name"]).to eq(group.name)
         expect(last_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
         expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
+
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
+        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(false)
+      end
+
+      it "adds the group names to the topic custom field when an approved post already exists" do
+        CategoryExperts::PostHandler.new(post: topic.first_post).mark_post_as_approved
+
+        post = create_post(topic_id: topic.id, user: other_user)
+        CategoryExperts::PostHandler.new(post: post).mark_post_for_approval
+
+        post("/category-experts/approve.json", params: { post_id: post.id })
+
+        expect(response.status).to eq(200)
+
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq([group.name, other_group.name])
+        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(false)
       end
     end
   end
@@ -115,7 +133,6 @@ describe CategoryExpertsController do
     fab!(:admin) { Fabricate(:admin) }
 
     before do
-      group.add(user)
       create_post(topic_id: topic.id, user: user)
     end
 
@@ -149,6 +166,23 @@ describe CategoryExpertsController do
 
         expect(last_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
         expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
+
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
+        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(true)
+      end
+
+      it "doesn't remove the group name from the topic custom field if another approved post exists" do
+        CategoryExperts::PostHandler.new(post: topic.first_post).mark_post_as_approved
+
+        post = create_post(topic_id: topic.id, user: user)
+        CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+
+        post("/category-experts/unapprove.json", params: { post_id: post.id })
+
+        expect(response.status).to eq(200)
+
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
+        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(false)
       end
     end
   end
