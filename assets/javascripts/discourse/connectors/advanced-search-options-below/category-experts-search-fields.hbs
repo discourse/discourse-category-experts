@@ -1,0 +1,27 @@
+<div class="control-group">
+  <label class="control-label">{{i18n "category_experts.title"}}</label>
+  <div class="controls">
+    <section class='field'>
+      <label>
+        {{input
+          type="checkbox"
+          class="with-category-expert-response"
+          checked=(readonly searchedTerms.withCategoryExpertResponse)
+          click=(action "onChangeCheckBox" "withCategoryExpertResponse" "updateWithCategoryExpertResponse")
+        }}
+        {{i18n "category_experts.search.expert_response"}}
+      </label>
+    </section>
+    <section class='field'>
+      <label>
+        {{input
+          type="checkbox"
+          class="is-category-expert-question"
+          checked=(readonly searchedTerms.isCategoryExpertQuestion)
+          click=(action "onChangeCheckBox" "isCategoryExpertQuestion" "updateIsCategoryExpertQuestion")
+        }}
+        {{i18n "category_experts.search.question"}}
+      </label>
+    </section>
+  </div>
+</div>

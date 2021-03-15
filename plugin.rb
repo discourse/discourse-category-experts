@@ -139,6 +139,38 @@ after_initialize do
 
   add_permitted_post_create_param(:is_category_expert_question)
 
+  if Search.respond_to? :preloaded_topic_custom_fields
+    Search.preloaded_topic_custom_fields << CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES
+    Search.preloaded_topic_custom_fields << CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION
+  end
+
+  register_search_advanced_filter(/with:category_expert_response/) do |posts|
+    posts.where("topics.id IN (
+        SELECT tc.topic_id
+        FROM topic_custom_fields tc
+        WHERE tc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
+                        tc.value IS NOT NULL
+        )")
+  end
+
+  register_search_advanced_filter(/is:category_expert_question/) do |posts|
+    posts.where(<<~SQL)
+      topics.id IN (
+        SELECT topics.id
+        FROM topics
+        INNER JOIN topic_custom_fields tc ON topics.id = tc.topic_id
+        WHERE tc.name = '#{CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION}' AND
+              tc.value IS NOT NULL
+        EXCEPT
+        SELECT topics.id
+        FROM topics
+        INNER JOIN topic_custom_fields tc ON topics.id = tc.topic_id
+        WHERE tc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
+            tc.value IS NOT NULL
+        )
+    SQL
+  end
+
   NewPostManager.add_handler do |manager|
     result = manager.perform_create_post
 

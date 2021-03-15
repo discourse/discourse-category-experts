@@ -27,6 +27,10 @@ en:
         response_by_group: "Expert response"
         needs_approval: "Needs approval"
         question: "Question for expert"
+      search:
+        expert_response: "With expert response"
+        question: "Question for expert"
+
     review:
       types:
         reviewable_category_expert_suggestion:
