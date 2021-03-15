@@ -39,14 +39,14 @@ function initialize(api) {
       this._updateSearchTerm(searchTerm);
     },
 
-    _updateWithCategoryExpertResponse() {
+    updateWithCategoryExpertResponse() {
       this._updateCategoryExpertTerm(
         this.searchedTerms.withCategoryExpertResponse,
         "with:category_expert_response"
       );
     },
 
-    _updateIsCategoryExpertQuestion() {
+    updateIsCategoryExpertQuestion() {
       this._updateCategoryExpertTerm(
         this.searchedTerms.isCategoryExpertQuestion,
         "is:category_expert_question"

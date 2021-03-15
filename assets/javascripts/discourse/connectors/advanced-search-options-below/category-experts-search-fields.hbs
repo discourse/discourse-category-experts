@@ -7,7 +7,7 @@
           type="checkbox"
           class="with-category-expert-response"
           checked=(readonly searchedTerms.withCategoryExpertResponse)
-          click=(action "onChangeCheckBox" "withCategoryExpertResponse" "_updateWithCategoryExpertResponse")
+          click=(action "onChangeCheckBox" "withCategoryExpertResponse" "updateWithCategoryExpertResponse")
         }}
         {{i18n "category_experts.search.expert_response"}}
       </label>
@@ -18,7 +18,7 @@
           type="checkbox"
           class="is-category-expert-question"
           checked=(readonly searchedTerms.isCategoryExpertQuestion)
-          click=(action "onChangeCheckBox" "isCategoryExpertQuestion" "_updateIsCategoryExpertQuestion")
+          click=(action "onChangeCheckBox" "isCategoryExpertQuestion" "updateIsCategoryExpertQuestion")
         }}
         {{i18n "category_experts.search.question"}}
       </label>
