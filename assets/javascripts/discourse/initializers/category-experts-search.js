@@ -29,24 +29,28 @@ function initialize(api) {
       });
     },
 
-    _updateWithCategoryExpertResponse() {
+    _updateCategoryExpertTerm(checked, term) {
       let searchTerm = this.searchTerm || "";
-      if (this.searchedTerms.withCategoryExpertResponse) {
-        searchTerm += " with:category_expert_response";
+      if (checked) {
+        searchTerm += ` ${term}`;
       } else {
-        searchTerm = searchTerm.replace("with:category_expert_response", "");
+        searchTerm = searchTerm.replace(term, "");
       }
       this._updateSearchTerm(searchTerm);
     },
 
+    _updateWithCategoryExpertResponse() {
+      this._updateCategoryExpertTerm(
+        this.searchedTerms.withCategoryExpertResponse,
+        "with:category_expert_response"
+      );
+    },
+
     _updateIsCategoryExpertQuestion() {
-      let searchTerm = this.searchTerm || "";
-      if (this.searchedTerms.isCategoryExpertQuestion) {
-        searchTerm += " is:category_expert_question";
-      } else {
-        searchTerm = searchTerm.replace("is:category_expert_question", "");
-      }
-      this._updateSearchTerm(searchTerm);
+      this._updateCategoryExpertTerm(
+        this.searchedTerms.isCategoryExpertQuestion,
+        "is:category_expert_question"
+      );
     },
   });
 
