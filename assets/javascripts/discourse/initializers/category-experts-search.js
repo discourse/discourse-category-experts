@@ -13,25 +13,26 @@ function initialize(api) {
 
     didReceiveAttrs() {
       this._super(...arguments);
-
-      const withCategoryExpertResponse = this.filterBlocks(REGEXP_WITH_CATEGORY_EXPERT_RESPONSE);
-      if (withCategoryExpertResponse.length !== 0) {
-        this.set("searchedTerms.categoryExpertsTerm", "with-category-expert-response");
-      }
-
-      const isCategoryExpertQuestion = this.filterBlocks(REGEXP_IS_CATEGORY_EXPERT_QUESTION);
-      if (isCategoryExpertQuestion.length !== 0) {
-        this.set("searchedTerms.categoryExpertsTerm", "is-category-expert-question");
-      }
-
-      console.log(this.searchedTerms.categoryExpertsTerm)
+      [
+        {
+          regex: REGEXP_WITH_CATEGORY_EXPERT_RESPONSE,
+          attr: "searchedTerms.withCategoryExpertResponse",
+        },
+        {
+          regex: REGEXP_IS_CATEGORY_EXPERT_QUESTION,
+          attr: "searchedTerms.isCategoryExpertQuestion",
+        },
+      ].forEach((search) => {
+        if (this.filterBlocks(search.regex).length !== 0) {
+          this.set(search.attr, true);
+        }
+      });
     },
 
     _updateWithCategoryExpertResponse() {
       let searchTerm = this.searchTerm || "";
-      if (this.searchedTerms.categoryExpertsTerm === "is-category-expert-question") {
+      if (this.searchedTerms.withCategoryExpertResponse) {
         searchTerm += " with:category_expert_response";
-        searchTerm = searchTerm.replace("is:category_expert_question", "");
       } else {
         searchTerm = searchTerm.replace("with:category_expert_response", "");
       }
@@ -40,15 +41,14 @@ function initialize(api) {
 
     _updateIsCategoryExpertQuestion() {
       let searchTerm = this.searchTerm || "";
-      if (this.searchedTerms.categoryExpertsTerm === "with-category-expert-response") {
+      if (this.searchedTerms.isCategoryExpertQuestion) {
         searchTerm += " is:category_expert_question";
-        searchTerm = searchTerm.replace("with:category_expert_response", "");
       } else {
         searchTerm = searchTerm.replace("is:category_expert_question", "");
       }
       this._updateSearchTerm(searchTerm);
     },
-  })
+  });
 
   api.registerConnectorClass(
     "advanced-search-options-below",
@@ -57,8 +57,8 @@ function initialize(api) {
       actions: {
         onChangeCheckBox(path, fn, event) {
           this.onChangeSearchedTermField(path, fn, event.target.checked);
-        }
-      }
+        },
+      },
     }
   );
 }
@@ -68,5 +68,5 @@ export default {
 
   initialize() {
     withPluginApi("0.8.31", initialize);
-  }
+  },
 };
