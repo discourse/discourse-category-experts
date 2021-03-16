@@ -15,5 +15,5 @@
 {{/if}}
 
 {{#if context.topic.is_category_expert_question}}
-  {{category-expert-question-indicator context.topic}}
+  {{category-expert-question-indicator context.topic context.currentUser}}
 {{/if}}
