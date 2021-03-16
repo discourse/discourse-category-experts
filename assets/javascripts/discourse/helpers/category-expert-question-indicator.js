@@ -2,11 +2,11 @@ import I18n from "I18n";
 import { registerUnbound } from "discourse-common/lib/helpers";
 import { htmlSafe } from "@ember/template";
 
-export function categoryExpertQuestionIndicator(topic) {
-  if (!this.context.currentUser || topic.expert_post_group_names) return;
+export function categoryExpertQuestionIndicator(topic, currentUser) {
+  if (!currentUser || topic.expert_post_group_names) return;
 
   if (
-    this.context.currentUser.expert_for_category_ids.includes(topic.category_id)
+    currentUser.expert_for_category_ids.includes(topic.category_id)
   ) {
     return htmlSafe(
       `<span class='topic-list-category-expert-question'>${I18n.t(

@@ -122,7 +122,7 @@ after_initialize do
   end
 
   add_to_serializer(:topic_list_item, :expert_post_group_names) do
-    object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|")
+    object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]
   end
 
   add_to_serializer(:topic_list_item, :include_expert_post_group_names?) do
