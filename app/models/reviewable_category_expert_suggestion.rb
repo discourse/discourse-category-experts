@@ -27,6 +27,7 @@ class ReviewableCategoryExpertSuggestion < Reviewable
 
     group = Group.find_by(id: group_id)
     group.add(target.endorsed_user)
+    group.notify_added_to_group(target.endorsed_user)
 
     create_result(:success, :approved)
   end
