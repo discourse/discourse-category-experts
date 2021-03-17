@@ -30,7 +30,9 @@ describe ReviewableCategoryExpertSuggestion do
   describe "#perform_approve_category_expert" do
     it "adds the user to the group" do
       expect(user.group_ids).to eq([])
-      reviewable.perform(admin, :approve_category_expert, group_id: group.id)
+      expect {
+        reviewable.perform(admin, :approve_category_expert, group_id: group.id)
+      }.to change { Topic.where(archetype: Archetype.private_message).count }.by(1)
 
       expect(user.reload.group_ids).to eq([group.id])
       expect(reviewable.status).to eq(Reviewable.statuses[:approved])
