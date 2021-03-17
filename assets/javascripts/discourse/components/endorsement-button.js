@@ -4,6 +4,7 @@ import discourseComputed from "discourse-common/utils/decorators";
 import showModal from "discourse/lib/show-modal";
 
 export default Component.extend({
+  tagName: "",
   disabled: true,
   user: null,
   endorsements: null,
