@@ -13,13 +13,14 @@ describe CategoryExpertsController do
 
   def fabricate_category_with_category_experts
     category = Fabricate(:category)
-    enable_accepting_questions_for(category)
+    enable_custom_fields_for(category)
     set_expert_group_for_category(category, "#{group.id}|#{other_group.id}")
     category.save
     category
   end
 
-  def enable_accepting_questions_for(category)
+  def enable_custom_fields_for(category)
+    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS] = true
     category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = true
   end
 
@@ -122,7 +123,7 @@ describe CategoryExpertsController do
 
         expect(response.status).to eq(200)
 
-        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq([group.name, other_group.name])
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq("#{group.name}|#{other_group.name}")
         expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(false)
       end
     end
@@ -183,6 +184,75 @@ describe CategoryExpertsController do
 
         expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
         expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(false)
+      end
+    end
+  end
+
+  describe "#mark_topic_as_question" do
+    fab!(:topic) { Fabricate(:topic, user: user, category: category1) }
+
+    describe "without permission" do
+      it "errors when the user can't edit the topic" do
+        sign_in(other_user)
+
+        post("/category-experts/mark-topic-as-question/#{topic.id}.json")
+        expect(response.status).to eq(403)
+
+        expect(topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION]).to eq(nil)
+      end
+
+      it "errors when the category is not accepting questions" do
+        sign_in(user)
+
+        topic.category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS] = false
+        topic.category.save!
+
+        post("/category-experts/mark-topic-as-question/#{topic.id}.json")
+        expect(response.status).to eq(400)
+
+        expect(topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION]).to eq(nil)
+      end
+    end
+
+    describe "with permission" do
+      it "marks the topic as a question" do
+        sign_in(user)
+
+        post("/category-experts/mark-topic-as-question/#{topic.id}.json")
+        expect(response.status).to eq(200)
+
+        expect(topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION]).to eq(true)
+      end
+    end
+  end
+
+  describe "#mark_topic_as_question" do
+    fab!(:topic) { Fabricate(:topic, user: user, category: category1) }
+
+    before do
+      topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = true
+      topic.save!
+    end
+
+    describe "without permission" do
+      it "errors when the user can't edit the topic" do
+        sign_in(other_user)
+
+        delete("/category-experts/unmark-topic-as-question/#{topic.id}.json")
+        expect(response.status).to eq(403)
+
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION]).to eq(true)
+      end
+    end
+
+    describe "with permission" do
+      it "marks the topic as a question" do
+        sign_in(user)
+
+        delete("/category-experts/unmark-topic-as-question/#{topic.id}.json")
+        expect(response.status).to eq(200)
+
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION]).to eq(false)
       end
     end
   end
