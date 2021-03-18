@@ -59,8 +59,8 @@ export default Component.extend({
       },
     })
       .then((response) => {
-        this.user.set(
-          "category_expert_endorsements",
+        this.set(
+          "user.category_expert_endorsements",
           response.category_expert_endorsements
         );
 
