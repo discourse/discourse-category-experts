@@ -52,6 +52,10 @@ after_initialize do
   TopicList.preloaded_custom_fields << CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL
   TopicList.preloaded_custom_fields << CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION
 
+  register_category_custom_field_type(CategoryExperts::CATEGORY_EXPERT_GROUP_IDS, :string)
+  register_category_custom_field_type(CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS, :boolean)
+  register_category_custom_field_type(CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS, :boolean)
+
   if Site.respond_to? :preloaded_category_custom_fields
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS
