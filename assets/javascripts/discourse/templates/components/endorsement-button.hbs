@@ -2,9 +2,9 @@
   {{#if endorsements}}
     <div class="category-expert-existing-endorsements">
       {{i18n "category_experts.existing_endorsements" count=endorsementsCount}}
-      <span onclick={{action "openEndorsementModal"}} class="endorse-link">
+      <a href {{action "openEndorsementModal"}} class="endorse-link">
         {{i18n "category_experts.edit"}}
-      </span>
+      </a>
     </div>
   {{else}}
     {{d-button
