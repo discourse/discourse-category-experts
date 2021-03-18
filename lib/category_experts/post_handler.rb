@@ -35,7 +35,7 @@ module CategoryExperts
 
       unless has_accepted_posts_from_same_group
         topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] =
-          (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) - [post_group_name]
+          ((topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) - [post_group_name]).join("|")
       end
 
       topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] =
@@ -52,7 +52,7 @@ module CategoryExperts
 
       topic = post.topic
       topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] =
-        (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []).push(users_expert_group.name).uniq
+        (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []).push(users_expert_group.name).uniq.join("|")
       topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = false
       topic.save!
 

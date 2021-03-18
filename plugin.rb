@@ -122,7 +122,7 @@ after_initialize do
   end
 
   add_to_serializer(:topic_list_item, :expert_post_group_names) do
-    object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]
+    object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|")
   end
 
   add_to_serializer(:topic_list_item, :include_expert_post_group_names?) do
@@ -135,6 +135,22 @@ after_initialize do
 
   add_to_serializer(:topic_list_item, :include_is_category_expert_question?) do
     object.is_category_expert_question?
+  end
+
+  add_to_serializer(:topic_view, :is_category_expert_question) do
+    true
+  end
+
+  add_to_serializer(:topic_view, :include_is_category_expert_question?) do
+    object.topic.is_category_expert_question?
+  end
+
+  add_to_serializer(:topic_view, :expert_post_group_names) do
+    object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|")
+  end
+
+  add_to_serializer(:topic_view, :include_expert_post_group_names?) do
+    !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
   end
 
   add_permitted_post_create_param(:is_category_expert_question)
@@ -187,5 +203,7 @@ after_initialize do
     put "category-experts/endorse/:username" => "category_experts#endorse", constraints: { username: ::RouteFormat.username }
     post "category-experts/approve" => "category_experts#approve_post"
     post "category-experts/unapprove" => "category_experts#unapprove_post"
+    post "category-experts/mark-topic-as-question/:topic_id" => "category_experts#mark_topic_as_question"
+    delete "category-experts/unmark-topic-as-question/:topic_id" => "category_experts#unmark_topic_as_question"
   end
 end

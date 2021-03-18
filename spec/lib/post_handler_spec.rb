@@ -67,7 +67,7 @@ describe CategoryExperts::PostHandler do
         expect(post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
 
         result = NewPostManager.new(second_expert, raw: 'this is a new post', topic_id: topic.id).perform
-        expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq([group.name, second_group.name])
+        expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq("#{group.name}|#{second_group.name}")
     end
   end
 end

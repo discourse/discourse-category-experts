@@ -6,6 +6,8 @@ export function categoryExpertQuestionIndicator(topic, currentUser) {
   if (!currentUser || topic.expert_post_group_names) return;
 
   if (
+    currentUser.staff ||
+    currentUser.topic.user_id === currentUser.id ||
     currentUser.expert_for_category_ids.includes(topic.category_id)
   ) {
     return htmlSafe(

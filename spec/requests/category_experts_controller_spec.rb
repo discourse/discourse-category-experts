@@ -122,7 +122,7 @@ describe CategoryExpertsController do
 
         expect(response.status).to eq(200)
 
-        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq([group.name, other_group.name])
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq("#{group.name}|#{other_group.name}")
         expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(false)
       end
     end

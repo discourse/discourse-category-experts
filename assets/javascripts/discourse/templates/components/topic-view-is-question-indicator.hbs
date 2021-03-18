@@ -1,0 +1,19 @@
+{{#if questionsEnabled}}
+  {{#unless topic.expert_post_group_names}}
+    {{#if topic.is_category_expert_question}}
+      <span onclick={{action "unmarkAsQuestion"}} class='topic-view-category-expert-question'>
+        {{i18n "category_experts.topic_list.question"}}
+        {{#if canEdit}}
+          <span class="remove-category-expert-question"> {{d-icon "times"}}
+          </span>
+        {{/if}}
+      </span>
+    {{else}}
+      {{#if canEdit}}
+        <a href {{action "markAsQuestion"}} class="topic-view-category-expert-mark-as-question">
+          {{i18n "category_experts.mark_as_question"}}
+        </a>
+      {{/if}}
+    {{/if}}
+  {{/unless}}
+{{/if}}
