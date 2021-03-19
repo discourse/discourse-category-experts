@@ -74,7 +74,7 @@ module CategoryExperts
     end
 
     def expert_group_ids
-      unsplit_group_ids = post.topic.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS]
+      unsplit_group_ids = post.topic.category&.custom_fields&.[](CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
       return [] if unsplit_group_ids.nil?
 
       unsplit_group_ids.split("|").map(&:to_i)
