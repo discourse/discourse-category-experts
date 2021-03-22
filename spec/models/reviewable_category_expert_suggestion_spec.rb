@@ -37,6 +37,14 @@ describe ReviewableCategoryExpertSuggestion do
       expect(user.reload.group_ids).to eq([group.id])
       expect(reviewable.status).to eq(Reviewable.statuses[:approved])
     end
+
+    it "grants the user the categories badge when present" do
+      badge = Badge.create!(name: 'a badge', badge_type_id: BadgeType::Bronze)
+      category.custom_fields[CategoryExperts::CATEGORY_BADGE_ID] = badge.id
+      reviewable.perform(admin, :approve_category_expert, group_id: group.id)
+
+      expect(UserBadge.find_by(user_id: user.id, badge_id: badge.id)).not_to eq(nil)
+    end
   end
 
   describe "#perform_deny_category_expert" do

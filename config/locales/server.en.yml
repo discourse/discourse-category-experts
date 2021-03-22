@@ -3,3 +3,11 @@ en:
     enable_category_experts: "Enable category experts plugin"
     category_expert_suggestion_threshold: "Suggest category experts after this many endorsements."
     category_experts_posts_require_approval: "Posts from category experts require staff approval for expert decoration."
+  system_messages:
+    user_add_as_category_expert:
+      title: "Congratulations, You are a category expert!"
+      subject_template: "Congratulations, You are a category expert!"
+      text_body_template: |
+        You are now a category expert for [%{category_name}](%{category_url}).
+
+        You have been added as a member of the [%{group_name}](%{base_url}%{group_path}) group. Members of this group are category experts for %{category_name}.

@@ -3,6 +3,8 @@ en:
     category_experts:
       title: "Category Experts"
       group: "Category experts group"
+      badge: "Badge"
+      no_badge: "None"
       no_group: "None"
       accepting_endorsements: "Currently accepting user endorsements"
       accepting_questions: "Currently accepting questions for category experts"
