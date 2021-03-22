@@ -25,6 +25,7 @@ after_initialize do
     CATEGORY_EXPERT_GROUP_IDS = "category_expert_group_ids"
     CATEGORY_ACCEPTING_ENDORSEMENTS = "category_accepting_endorsements"
     CATEGORY_ACCEPTING_QUESTIONS = "category_accepting_questions"
+    CATEGORY_BADGE_ID = "category_experts_badge_id"
     POST_APPROVED_GROUP_NAME = "category_expert_post"
     POST_PENDING_EXPERT_APPROVAL = "category_expert_post_pending"
     TOPIC_EXPERT_POST_GROUP_NAMES = "category_expert_topic_approved_group_names"
@@ -55,11 +56,13 @@ after_initialize do
   register_category_custom_field_type(CategoryExperts::CATEGORY_EXPERT_GROUP_IDS, :string)
   register_category_custom_field_type(CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS, :boolean)
   register_category_custom_field_type(CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS, :boolean)
+  register_category_custom_field_type(CategoryExperts::CATEGORY_BADGE_ID, :string)
 
   if Site.respond_to? :preloaded_category_custom_fields
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS
     Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS
+    Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_BADGE_ID
   end
 
   reloadable_patch do

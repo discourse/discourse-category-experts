@@ -28,6 +28,19 @@ export default Component.extend({
       });
       this.set("groupOptions", groupOptions);
     });
+
+    ajax("/badges.json").then((response) => {
+      const badgeOptions = [];
+      response.badges.forEach((badge) => {
+        if (badge.enabled) {
+          const tempBadge = Object.assign({}, badge);
+          tempBadge.id = tempBadge.id.toString();
+          badgeOptions.push(tempBadge);
+        }
+      });
+
+      this.set("badgeOptions", badgeOptions);
+    });
   },
 
   @action
