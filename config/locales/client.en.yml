@@ -34,6 +34,7 @@ en:
       search:
         expert_response: "With expert response"
         question: "Question for expert"
+        unapproved_post: "With unapproved post"
 
     review:
       types:
