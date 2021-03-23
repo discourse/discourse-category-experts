@@ -3,6 +3,7 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 function initialize(api) {
   const REGEXP_WITH_CATEGORY_EXPERT_RESPONSE = /^with:category_expert_response/gi;
   const REGEXP_IS_CATEGORY_EXPERT_QUESTION = /^is:category_expert_question/gi;
+  const REGEX_WITH_UNAPPROVED_POST = /^with:unapproved_ce_post/gi;
 
   api.modifyClass("component:search-advanced-options", {
     init() {
@@ -21,6 +22,10 @@ function initialize(api) {
         {
           regex: REGEXP_IS_CATEGORY_EXPERT_QUESTION,
           attr: "searchedTerms.isCategoryExpertQuestion",
+        },
+        {
+          regex: REGEX_WITH_UNAPPROVED_POST,
+          attr: "searchedTerms.withUnapprovedPost",
         },
       ].forEach((search) => {
         if (this.filterBlocks(search.regex).length !== 0) {
@@ -50,6 +55,13 @@ function initialize(api) {
       this._updateCategoryExpertTerm(
         this.searchedTerms.isCategoryExpertQuestion,
         "is:category_expert_question"
+      );
+    },
+
+    updateWithUnapprovedPost() {
+      this._updateCategoryExpertTerm(
+        this.searchedTerms.withUnapprovedPost,
+        "with:unapproved_ce_post"
       );
     },
   });

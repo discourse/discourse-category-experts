@@ -49,21 +49,24 @@ after_initialize do
   register_topic_custom_field_type(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL, :boolean)
   register_topic_custom_field_type(CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION, :boolean)
 
-  TopicList.preloaded_custom_fields << CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES
-  TopicList.preloaded_custom_fields << CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL
-  TopicList.preloaded_custom_fields << CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION
+  [
+    CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES,
+    CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL,
+    CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION
+  ].each do |field|
+    TopicList.preloaded_custom_fields << field
+    Search.preloaded_topic_custom_fields << field
+  end
 
   register_category_custom_field_type(CategoryExperts::CATEGORY_EXPERT_GROUP_IDS, :string)
   register_category_custom_field_type(CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS, :boolean)
   register_category_custom_field_type(CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS, :boolean)
   register_category_custom_field_type(CategoryExperts::CATEGORY_BADGE_ID, :string)
 
-  if Site.respond_to? :preloaded_category_custom_fields
-    Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
-    Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS
-    Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS
-    Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_BADGE_ID
-  end
+  Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
+  Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS
+  Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS
+  Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_BADGE_ID
 
   reloadable_patch do
     User.class_eval do
@@ -120,28 +123,32 @@ after_initialize do
       !category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].blank?
   end
 
-  add_to_serializer(:topic_list_item, :needs_category_expert_post_approval) do
-    true
-  end
+  reloadable_patch do
+    [:topic_list_item, :search_topic_list_item].each do |serializer|
+      add_to_serializer(serializer, :needs_category_expert_post_approval) do
+        true
+      end
 
-  add_to_serializer(:topic_list_item, :include_needs_category_expert_post_approval?) do
-    scope.is_staff? && object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
-  end
+      add_to_serializer(serializer, :include_needs_category_expert_post_approval?) do
+        scope.is_staff? && object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
+      end
 
-  add_to_serializer(:topic_list_item, :expert_post_group_names) do
-    object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|")
-  end
+      add_to_serializer(serializer, :expert_post_group_names) do
+        object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|")
+      end
 
-  add_to_serializer(:topic_list_item, :include_expert_post_group_names?) do
-    !object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
-  end
+      add_to_serializer(serializer, :include_expert_post_group_names?) do
+        !object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+      end
 
-  add_to_serializer(:topic_list_item, :is_category_expert_question) do
-    true
-  end
+      add_to_serializer(serializer, :is_category_expert_question) do
+        true
+      end
 
-  add_to_serializer(:topic_list_item, :include_is_category_expert_question?) do
-    object.is_category_expert_question?
+      add_to_serializer(serializer, :include_is_category_expert_question?) do
+        object.is_category_expert_question?
+      end
+    end
   end
 
   add_to_serializer(:topic_view, :is_category_expert_question) do
@@ -172,7 +179,7 @@ after_initialize do
         SELECT tc.topic_id
         FROM topic_custom_fields tc
         WHERE tc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
-                        tc.value IS NOT NULL
+              tc.value <> ''
         )")
   end
 
@@ -183,13 +190,26 @@ after_initialize do
         FROM topics
         INNER JOIN topic_custom_fields tc ON topics.id = tc.topic_id
         WHERE tc.name = '#{CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION}' AND
-              tc.value IS NOT NULL
+              tc.value = 't'
         EXCEPT
         SELECT topics.id
         FROM topics
+        INNER JOIN topic_custom_fields otc ON topics.id = otc.topic_id
+        WHERE otc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
+              otc.value <> '' AND
+              otc.value IS NOT NULL
+        )
+    SQL
+  end
+
+  register_search_advanced_filter(/with:unapproved_ce_post/) do |posts|
+    posts.where(<<~SQL)
+      topics.id IN (
+        SELECT topics.id
+        FROM topics
         INNER JOIN topic_custom_fields tc ON topics.id = tc.topic_id
-        WHERE tc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
-            tc.value IS NOT NULL
+        WHERE tc.name = '#{CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL}' AND
+              tc.value = 't'
         )
     SQL
   end
