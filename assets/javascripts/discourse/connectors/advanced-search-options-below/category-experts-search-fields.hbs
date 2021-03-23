@@ -1,6 +1,8 @@
 <div class="control-group">
   <label class="control-label">{{i18n "category_experts.title"}}</label>
   <div class="controls">
+
+    {{plugin-outlet name="inside-category-experts-search-fields" args=(hash searchedTerms=searchedTerms onChangeSearchedTermField=onChangeSearchedTermField)}}
     <section class='field with-category-expert-response-field'>
       <label>
         {{input
