@@ -12,27 +12,31 @@
         {{i18n "category_experts.search.expert_response"}}
       </label>
     </section>
-    <section class='field'>
-      <label>
-        {{input
-          type="checkbox"
-          class="is-category-expert-question"
-          checked=(readonly searchedTerms.isCategoryExpertQuestion)
-          click=(action "onChangeCheckBox" "isCategoryExpertQuestion" "updateIsCategoryExpertQuestion")
-        }}
-        {{i18n "category_experts.search.question"}}
-      </label>
-    </section>
-    <section class='field'>
-      <label>
-        {{input
-          type="checkbox"
-          class="with-unapproved-post"
-          checked=(readonly searchedTerms.withUnapprovedPost)
-          click=(action "onChangeCheckBox" "withUnapprovedPost" "updateWithUnapprovedPost")
-        }}
-        {{i18n "category_experts.search.unapproved_post"}}
-      </label>
-    </section>
+    {{#if canSeeIsQuestionFilter}}
+      <section class='field'>
+        <label>
+          {{input
+            type="checkbox"
+            class="is-category-expert-question"
+            checked=(readonly searchedTerms.isCategoryExpertQuestion)
+            click=(action "onChangeCheckBox" "isCategoryExpertQuestion" "updateIsCategoryExpertQuestion")
+          }}
+          {{i18n "category_experts.search.question"}}
+        </label>
+      </section>
+    {{/if}}
+    {{#if currentUser.staff}}
+      <section class='field'>
+        <label>
+          {{input
+            type="checkbox"
+            class="with-unapproved-post"
+            checked=(readonly searchedTerms.withUnapprovedPost)
+            click=(action "onChangeCheckBox" "withUnapprovedPost" "updateWithUnapprovedPost")
+          }}
+          {{i18n "category_experts.search.unapproved_post"}}
+        </label>
+      </section>
+    {{/if}}
   </div>
 </div>
