@@ -1,7 +1,7 @@
 <div class="control-group">
   <label class="control-label">{{i18n "category_experts.title"}}</label>
   <div class="controls">
-    <section class='field'>
+    <section class='field with-category-expert-response-field'>
       <label>
         {{input
           type="checkbox"
@@ -13,7 +13,7 @@
       </label>
     </section>
     {{#if canSeeIsQuestionFilter}}
-      <section class='field'>
+      <section class='field is-category-expert-question-field'>
         <label>
           {{input
             type="checkbox"
@@ -26,7 +26,7 @@
       </section>
     {{/if}}
     {{#if currentUser.staff}}
-      <section class='field'>
+      <section class='field with-unapproved-ce-post-field'>
         <label>
           {{input
             type="checkbox"
