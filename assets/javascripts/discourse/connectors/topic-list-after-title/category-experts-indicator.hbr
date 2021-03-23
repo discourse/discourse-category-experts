@@ -1,17 +1,19 @@
 {{#if context.topic.expert_post_group_names}}
   {{#each context.topic.expert_post_group_names as |groupName|}}
     <span class="topic-list-category-expert-tags">
-      <span class={{groupName}}>
+      <a href="/search?q=with:category_expert_response" class={{groupName}}>
         {{i18n "category_experts.topic_list.response_by_group" groupName=groupName}}
-      </span>
+      </a>
     </span>
   {{/each}}
 {{/if}}
 
-{{#if context.topic.needs_category_expert_post_approval}}
-  <span class="topic-list-category-expert-needs-approval">
-    {{i18n "category_experts.topic_list.needs_approval"}}
-  </span>
+{{#if context.currentUser.staff}}
+  {{#if context.topic.needs_category_expert_post_approval}}
+    <a href="/search?q=with:unapproved_ce_posts" class="topic-list-category-expert-needs-approval">
+      {{i18n "category_experts.topic_list.needs_approval"}}
+    </a>
+  {{/if}}
 {{/if}}
 
 {{#if context.topic.is_category_expert_question}}
