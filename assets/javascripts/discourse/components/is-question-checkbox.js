@@ -14,6 +14,6 @@ export default Component.extend({
   show(model, category) {
     if (!category || !category.allowingCategoryExpertQuestions) return false;
 
-    return model.editingFirstPost || model.creatingTopic
-  }
+    return model.editingFirstPost || model.creatingTopic;
+  },
 });
