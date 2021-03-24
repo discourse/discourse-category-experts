@@ -68,6 +68,14 @@ after_initialize do
   Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS
   Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_BADGE_ID
 
+  add_permitted_post_update_param(:is_category_expert_question) do |post, is_category_expert_question|
+    if post.is_first_post?
+      topic = post.topic
+      topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = is_category_expert_question.to_s == "true"
+      topic.save!
+    end
+  end
+
   reloadable_patch do
     User.class_eval do
       has_many :given_category_expert_endorsements, foreign_key: "user_id", class_name: "CategoryExpertEndorsement"
@@ -152,10 +160,6 @@ after_initialize do
   end
 
   add_to_serializer(:topic_view, :is_category_expert_question) do
-    true
-  end
-
-  add_to_serializer(:topic_view, :include_is_category_expert_question?) do
     object.topic.is_category_expert_question?
   end
 

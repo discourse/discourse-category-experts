@@ -1,1 +1,3 @@
-{{topic-view-is-question-indicator topic=topic}}
+{{#if topic.is_category_expert_question}}
+  {{category-expert-question-indicator topic currentUser}}
+{{/if}}
