@@ -1,11 +1,9 @@
-{{#if model.creatingTopic}}
-  {{#if model.category.allowingCategoryExpertQuestions}}
-    <label class="checkbox-label is-category-expert-question">
-      {{input
-        type="checkbox"
-        checked=model.is_category_expert_question
-      }}
-      {{i18n "category_experts.ask_category_expert"}}
-    </label>
-  {{/if}}
+{{#if show}}
+  <label class="checkbox-label is-category-expert-question">
+    {{input
+      type="checkbox"
+      checked=model.is_category_expert_question
+    }}
+    {{i18n "category_experts.ask_category_expert"}}
+  </label>
 {{/if}}

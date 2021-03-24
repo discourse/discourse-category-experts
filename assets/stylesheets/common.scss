@@ -55,8 +55,7 @@ article.category-expert-post {
 
 .topic-list-category-expert-tags > a,
 .topic-list-category-expert-needs-approval,
-.topic-list-category-expert-question,
-.topic-view-category-expert-question {
+.topic-list-category-expert-question {
   font-size: $font-down-2;
   padding: 0.3em 0.5em;
   background: $success-low;
@@ -65,37 +64,9 @@ article.category-expert-post {
   margin-left: 4px;
 }
 
-.topic-view-category-expert-question {
-  cursor: pointer;
-  background: $tertiary-low;
-  border: 2px solid $tertiary-low;
-  display: flex;
-
-  .remove-category-expert-question {
-    display: inline-block;
-    width: 0;
-    overflow: hidden;
-    margin-left: 0;
-    transition: all 0.2s;
-  }
-
-
-  &:hover {
-    border: 2px solid $primary-high;
-    .remove-category-expert-question {
-      width: 1em;
-      margin-left: 5px;
-    }
-  }
-}
-
 .topic-list-category-expert-needs-approval {
   background: $highlight-low;
 }
 .topic-list-category-expert-question {
   background: $tertiary-low;
-}
-
-.topic-view-category-expert-mark-as-question {
-  font-size: $font-down-2;
 }

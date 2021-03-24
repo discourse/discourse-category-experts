@@ -14,6 +14,11 @@ export default {
       "is_category_expert_question"
     );
 
+    Composer.serializeOnUpdate(
+      "is_category_expert_question",
+      "is_category_expert_question"
+    );
+
     Category.reopen({
       allowingCategoryExpertEndorsements: and(
         "custom_fields.category_expert_group_ids",

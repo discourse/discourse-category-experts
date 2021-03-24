@@ -2,7 +2,6 @@
 
 class CategoryExpertsController < ApplicationController
   before_action :find_post, :ensure_staff_and_enabled, only: [:approve_post, :unapprove_post]
-  before_action :find_topic, only: [:mark_topic_as_question, :unmark_topic_as_question]
 
   def endorse
     raise Discourse::NotFound unless current_user
@@ -40,25 +39,6 @@ class CategoryExpertsController < ApplicationController
     render json: topic_custom_fields
   end
 
-  def mark_topic_as_question
-    guardian.ensure_can_edit!(@topic)
-    raise Discourse::InvalidParameters unless @topic.category.accepting_category_expert_questions?
-
-    @topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = true
-    @topic.save!
-
-    render json: success_json
-  end
-
-  def unmark_topic_as_question
-    guardian.ensure_can_edit!(@topic)
-
-    @topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = false
-    @topic.save!
-
-    render json: success_json
-  end
-
   private
 
   def topic_custom_fields
@@ -79,12 +59,5 @@ class CategoryExpertsController < ApplicationController
     @post = Post.find_by(id: post_id)
 
     raise Discourse::NotFound unless @post
-  end
-
-  def find_topic
-    topic_id = params.require(:topic_id)
-    @topic = Topic.find_by(id: topic_id)
-
-    raise Discourse::NotFound unless @topic
   end
 end
