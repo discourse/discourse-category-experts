@@ -1,12 +1,24 @@
 .category-expert-existing-endorsements {
   font-size: $font-down-2;
 
-  .endorse-link {
+  .category-expert-endorse-edit {
+    display: inline-block;
+    width: unset;
+    min-width: unset;
+    padding: 2px;
     color: $tertiary;
     cursor: pointer;
+    font-weight: bold;
     text-decoration: underline;
   }
 }
+.user-card .first-row .usercard-controls .category-expert-endorse-edit, .group-card .first-row .usercard-controls .category-expert-endorse-edit {
+
+  width: unset;
+  min-width: unset;
+}
+
+
 
 .reviewable-category-expert-suggestion {
   .reviewable-category-experts-header {
