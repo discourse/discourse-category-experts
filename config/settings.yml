@@ -8,3 +8,8 @@ plugins:
   category_experts_posts_require_approval:
     default: false
     client: true
+  send_category_experts_reminder_pms:
+    default: false
+  send_admin_category_experts_posts_reminder_pm:
+    default: false
+

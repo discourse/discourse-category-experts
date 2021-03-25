@@ -32,6 +32,7 @@ en:
       search:
         expert_response: "With expert response"
         question: "Question for expert"
+        without_post: "Without category expert post"
         unapproved_post: "With unapproved post"
 
     review:

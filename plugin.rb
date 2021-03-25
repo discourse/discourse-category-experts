@@ -17,6 +17,7 @@ after_initialize do
     "../app/models/category_expert_endorsement",
     "../app/models/reviewable_category_expert_suggestion",
     "../app/serializers/reviewable_category_expert_suggestion_serializer",
+    "../app/jobs/scheduled/remind_admin_of_category_experts_posts_job",
     "../app/jobs/scheduled/remind_category_experts_job",
     "../lib/category_experts/post_handler",
   ].each { |path| require File.expand_path(path, __FILE__) }
@@ -200,11 +201,27 @@ after_initialize do
         SELECT topics.id
         FROM topics
         INNER JOIN topic_custom_fields otc ON topics.id = otc.topic_id
-        WHERE (otc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
+        WHERE otc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
               otc.value <> '' AND
-              otc.value IS NOT NULL)
-        OR (otc.name = '#{CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL}' AND
-              otc.value = 't')
+              otc.value IS NOT NULL
+      )
+    SQL
+  end
+
+  register_search_advanced_filter(/without:category_expert_post/) do |posts|
+    posts.where(<<~SQL)
+      topics.id IN (
+        SELECT topics.id
+        FROM topics
+        EXCEPT
+        SELECT topics.id
+        FROM topics
+        INNER JOIN topic_custom_fields tc ON topics.id = tc.topic_id
+        WHERE (tc.name = '#{CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL}' AND
+              tc.value = 't')
+        OR (tc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
+              tc.value <> '' AND
+              tc.value IS NOT NULL)
         )
     SQL
   end

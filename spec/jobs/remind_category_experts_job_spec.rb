@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe RemindCategoryExpertsJob do
+describe CategoryExperts::RemindCategoryExpertsJob do
   fab!(:user) { Fabricate(:user) }
   fab!(:expert1) { Fabricate(:user) }
   fab!(:expert2) { Fabricate(:user) }
@@ -44,6 +44,8 @@ describe RemindCategoryExpertsJob do
   end
 
   it "Sends out the correct PM to each category expert" do
+    SiteSetting.send_category_experts_reminder_pms = true
+
     expect {
       subject.execute()
     }.to change { Topic.count }.by (2) # Sent a PM to each expert
@@ -62,5 +64,12 @@ describe RemindCategoryExpertsJob do
 
     expect(split_raw.count).to eq(1)
     expect(split_raw.first.include?("There are [2 unanswered")).to eq(true)
+  end
+
+  it "Does nothing if the site setting is disabled" do
+    SiteSetting.send_category_experts_reminder_pms = false
+    expect {
+      subject.execute()
+    }.to change { Topic.count }.by (0)
   end
 end

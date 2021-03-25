@@ -3,6 +3,8 @@ en:
     enable_category_experts: "Enable category experts plugin"
     category_expert_suggestion_threshold: "Suggest category experts after this many endorsements."
     category_experts_posts_require_approval: "Posts from category experts require staff approval for expert decoration."
+    send_category_experts_reminder_pms: "Send reminder PMs to category experts, to reply to unanswered questions"
+    send_admin_category_experts_posts_reminder_pm: "Send reminder PMs to staff, to review unapproved category expert posts."
   system_messages:
     user_add_as_category_expert:
       title: "Congratulations, You are a category expert!"
@@ -17,3 +19,9 @@ en:
       raw_for_category: |
         There are [%{topic_count} unanswered questions](%{search_url}) for a category expert in the category [%{category_name}](%{category_url}).
 
+    admin_reminder:
+      title: "There are unapproved category expert posts for review."
+      body: |
+        There are [%{topic_count} category expert questions](%{search_url}) that have at least one unapproved category expert post.
+
+        Either approve at least one category expert post, or edit the first post to unmark it as question to remove it from this list.
