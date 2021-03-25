@@ -17,6 +17,7 @@ after_initialize do
     "../app/models/category_expert_endorsement",
     "../app/models/reviewable_category_expert_suggestion",
     "../app/serializers/reviewable_category_expert_suggestion_serializer",
+    "../app/jobs/scheduled/remind_category_experts_job",
     "../lib/category_experts/post_handler",
   ].each { |path| require File.expand_path(path, __FILE__) }
 
