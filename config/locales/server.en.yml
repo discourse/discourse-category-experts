@@ -11,3 +11,9 @@ en:
         You are now a category expert for [%{category_name}](%{category_url}).
 
         You have been added as a member of the [%{group_name}](%{base_url}%{group_path}) group. Members of this group are category experts for %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "There are unanswered questions for you to review."
+      raw_for_category: |
+        There are [%{topic_count} unanswered questions](%{search_url}) for a category expert in the category [%{category_name}](%{category_url}).
+
