@@ -7,7 +7,7 @@ export function categoryExpertQuestionIndicator(topic, currentUser) {
 
   if (
     currentUser.staff ||
-    topic.user_id === currentUser.id ||
+    topic.creator.id === currentUser.id ||
     currentUser.expert_for_category_ids.includes(topic.category_id)
   ) {
     return htmlSafe(
