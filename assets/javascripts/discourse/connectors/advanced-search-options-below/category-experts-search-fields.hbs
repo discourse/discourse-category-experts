@@ -26,6 +26,17 @@
           {{i18n "category_experts.search.question"}}
         </label>
       </section>
+      <section class='field without-category-expert-post-field'>
+        <label>
+          {{input
+            type="checkbox"
+            class="without-category-expert-post"
+            checked=(readonly searchedTerms.withoutCategoryExpertPost)
+            click=(action "onChangeCheckBox" "withoutCategoryExpertPost" "updateWithoutCategoryExpertPost")
+          }}
+          {{i18n "category_experts.search.without_post"}}
+        </label>
+      </section>
     {{/if}}
     {{#if currentUser.staff}}
       <section class='field with-unapproved-ce-post-field'>
