@@ -2,7 +2,7 @@
 
 module CategoryExperts
   class RemindAdminOfCategoryExpertsPostsJob < ::Jobs::Scheduled
-    every 1.day
+    every 1.week
 
     def execute(args = {})
       return unless SiteSetting.send_category_experts_reminder_pms
