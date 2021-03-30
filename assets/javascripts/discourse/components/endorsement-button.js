@@ -49,11 +49,20 @@ export default Component.extend({
       this.close();
     }
 
+    if (this.location) {
+      this.appEvents.trigger("category-experts:endorse-clicked", {
+        location: this.location,
+        user_id: this.currentUser.id,
+        endorsed_user_id: this.user.id,
+      });
+    }
+
     showModal("endorse-user", {
       model: {
         categories: this.categoriesAllowingEndorsements,
         user: this.user,
         endorsements: this.endorsements,
+        location: this.location
       },
       title: "category_experts.manage_endorsements.title",
     });

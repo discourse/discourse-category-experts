@@ -72,6 +72,15 @@ export default Component.extend({
             saving: false,
           });
         }, 300);
+
+        if (this.location) {
+          this.appEvents.trigger("category-experts:endorsement-given", {
+            location: this.location,
+            user_id: this.currentUser.id,
+            categoryIds: this.selectedCategoryIds,
+            endorsed_user_id: this.user.id,
+          });
+        }
       })
       .catch(popupAjaxError);
   },
