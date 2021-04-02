@@ -5,7 +5,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    if (this.model.topic && this.model.topic.is_category_expert_question) {
+    if ((this.model.creatingTopic || this.model.editingFirstPost) && this.model.topic && this.model.topic.is_category_expert_question) {
       this.set("model.is_category_expert_question", true);
     }
   },
