@@ -242,9 +242,10 @@ after_initialize do
     result = manager.perform_create_post
 
     if result.success?
-      handler = CategoryExperts::PostHandler.new(post: result.post, user: manager.user)
+      post = result.post
+      handler = CategoryExperts::PostHandler.new(post: post, user: manager.user)
       handler.process_new_post
-      handler.mark_topic_as_question if manager.args[:is_category_expert_question]
+      handler.mark_topic_as_question if manager.args[:is_category_expert_question] && post.is_first_post?
     end
 
     result
@@ -254,7 +255,5 @@ after_initialize do
     put "category-experts/endorse/:username" => "category_experts#endorse", constraints: { username: ::RouteFormat.username }
     post "category-experts/approve" => "category_experts#approve_post"
     post "category-experts/unapprove" => "category_experts#unapprove_post"
-    post "category-experts/mark-topic-as-question/:topic_id" => "category_experts#mark_topic_as_question"
-    delete "category-experts/unmark-topic-as-question/:topic_id" => "category_experts#unmark_topic_as_question"
   end
 end
