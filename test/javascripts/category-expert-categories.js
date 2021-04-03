@@ -27,4 +27,4 @@ export default [
     slug: "test-not-accepting-endorsements",
     permission: null,
   },
-]
+];
