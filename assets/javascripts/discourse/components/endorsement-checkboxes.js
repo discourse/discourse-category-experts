@@ -22,9 +22,7 @@ export default Component.extend({
 
     this.set(
       "startingCategoryIds",
-      this.endorsements.length
-        ? this.endorsements.map((e) => e.category_id)
-        : []
+      this.endorsements.map((e) => e.category_id)
     );
     this.set("selectedCategoryIds", [...this.startingCategoryIds]);
     this.endorsements.forEach((endorsement) => {
