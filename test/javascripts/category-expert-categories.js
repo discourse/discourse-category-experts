@@ -8,7 +8,6 @@ export default [
       category_expert_group_ids: "1",
       category_accepting_endorsements: "true",
     },
-    allowingCategoryExpertEndorsements: true,
   },
   {
     id: 6,
@@ -19,7 +18,6 @@ export default [
       category_expert_group_ids: "2|3",
       category_accepting_endorsements: "true",
     },
-    allowingCategoryExpertEndorsements: true,
   },
   {
     id: 7,
