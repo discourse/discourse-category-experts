@@ -1,8 +1,6 @@
 import Component from "@ember/component";
-import discourseComputed from "discourse-common/utils/decorators";
 import { action } from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
-import { empty } from "@ember/object/computed";
 
 export default Component.extend({
   groupIds: null,

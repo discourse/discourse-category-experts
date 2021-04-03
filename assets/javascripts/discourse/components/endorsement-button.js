@@ -34,11 +34,9 @@ export default Component.extend({
   endorsements(categoryExpertEndorsements) {
     let category_ids = this.categoriesAllowingEndorsements.map((c) => c.id);
 
-    let endorsements = this.user.category_expert_endorsements.filter(
-      (endorsement) => {
-        return category_ids.includes(endorsement.category_id);
-      }
-    );
+    let endorsements = categoryExpertEndorsements.filter((endorsement) => {
+      return category_ids.includes(endorsement.category_id);
+    });
     this.set("endorsementsCount", endorsements.length);
     return endorsements;
   },
@@ -62,7 +60,7 @@ export default Component.extend({
         categories: this.categoriesAllowingEndorsements,
         user: this.user,
         endorsements: this.endorsements,
-        location: this.location
+        location: this.location,
       },
       title: "category_experts.manage_endorsements.title",
     });

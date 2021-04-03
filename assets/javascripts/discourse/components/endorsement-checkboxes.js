@@ -1,7 +1,7 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import Component from "@ember/component";
 import { action } from "@ember/object";
-import { next, later } from "@ember/runloop";
+import { later, next } from "@ember/runloop";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 
@@ -51,7 +51,6 @@ export default Component.extend({
   save() {
     this.set("saving", true);
 
-    let categories;
     ajax(`/category-experts/endorse/${this.user.username}.json`, {
       type: "PUT",
       data: {
@@ -87,7 +86,9 @@ export default Component.extend({
 
   @action
   checkboxChanged(categoryId) {
-    if (this.startingCategoryIds.includes(categoryId)) return;
+    if (this.startingCategoryIds.includes(categoryId)) {
+      return;
+    }
 
     let checked;
     if (this.selectedCategoryIds.includes(categoryId)) {
