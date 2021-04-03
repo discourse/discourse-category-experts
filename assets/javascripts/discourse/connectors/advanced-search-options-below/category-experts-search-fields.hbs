@@ -3,7 +3,7 @@
   <div class="controls">
 
     {{plugin-outlet name="inside-category-experts-search-fields" args=(hash searchedTerms=searchedTerms onChangeSearchedTermField=onChangeSearchedTermField)}}
-    <section class='field with-category-expert-response-field'>
+    <section class="field with-category-expert-response-field">
       <label>
         {{input
           type="checkbox"
@@ -15,7 +15,7 @@
       </label>
     </section>
     {{#if canSeeIsQuestionFilter}}
-      <section class='field is-category-expert-question-field'>
+      <section class="field is-category-expert-question-field">
         <label>
           {{input
             type="checkbox"
@@ -26,7 +26,7 @@
           {{i18n "category_experts.search.question"}}
         </label>
       </section>
-      <section class='field without-category-expert-post-field'>
+      <section class="field without-category-expert-post-field">
         <label>
           {{input
             type="checkbox"
@@ -39,7 +39,7 @@
       </section>
     {{/if}}
     {{#if currentUser.staff}}
-      <section class='field with-unapproved-ce-post-field'>
+      <section class="field with-unapproved-ce-post-field">
         <label>
           {{input
             type="checkbox"
