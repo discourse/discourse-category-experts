@@ -16,7 +16,6 @@ describe CategoryExperts::PostHandler do
     SiteSetting.category_expert_suggestion_threshold
     category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group.id}|#{second_group.id}|#{group.id + 1}"
     category.save
-
   end
 
   describe "SiteSetting.category_experts_posts_require_approval enabled" do
