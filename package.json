@@ -1,0 +1,10 @@
+{
+  "name": "discourse-category-experts",
+  "version": "0.0.1",
+  "repository": "https://github.com/discourse/discourse-category-experts",
+  "author": "Mark VanLandingham",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint-config-discourse": "^1.1.8"
+  }
+}
