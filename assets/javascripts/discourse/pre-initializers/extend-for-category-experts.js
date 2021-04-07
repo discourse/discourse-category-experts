@@ -24,9 +24,6 @@ export default {
         "custom_fields.category_expert_group_ids",
         "custom_fields.category_accepting_endorsements"
       ),
-    });
-
-    Category.reopen({
       allowingCategoryExpertQuestions: and(
         "custom_fields.category_expert_group_ids",
         "custom_fields.category_accepting_questions"
