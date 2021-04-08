@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class CategoryExpertsController < ApplicationController
-  before_action :find_post, :ensure_staff_and_enabled, only: [:approve_post, :unapprove_post]
+  before_action :find_post, :ensure_staff, :ensure_needs_approval_enabled, only: [
+    :approve_post,
+    :unapprove_post,
+    :retroactive_approval?,
+  ]
+  before_action :ensure_needs_approval_enabled, only: [:approve_post, :unapprove_post]
 
   def endorse
     raise Discourse::NotFound unless current_user
@@ -39,7 +44,23 @@ class CategoryExpertsController < ApplicationController
     render json: topic_custom_fields
   end
 
+  def retroactive_approval?
+    render json: { can_be_approved: post_could_be_expert_answer(@post) }
+  end
+
   private
+
+  def post_could_be_expert_answer(post)
+    return false if post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
+
+    category = post.topic.category
+    return false unless category
+
+    expert_group_ids = category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].split("|").map(&:to_i)
+    return false unless expert_group_ids.count
+
+    (expert_group_ids & (post.user.group_ids || [])).count > 0
+  end
 
   def topic_custom_fields
     {
@@ -49,9 +70,13 @@ class CategoryExpertsController < ApplicationController
   end
 
   def ensure_staff_and_enabled
-    unless current_user && current_user.staff? && SiteSetting.category_experts_posts_require_approval
+    unless current_user && current_user.staff?
       raise Discourse::InvalidAccess
     end
+  end
+
+  def ensure_needs_approval_enabled
+    raise Discourse::InvalidAccess unless SiteSetting.category_experts_posts_require_approval
   end
 
   def find_post

@@ -12,13 +12,11 @@
     text-decoration: underline;
   }
 }
-.user-card .first-row .usercard-controls .category-expert-endorse-edit, .group-card .first-row .usercard-controls .category-expert-endorse-edit {
-
+.user-card .first-row .usercard-controls .category-expert-endorse-edit,
+.group-card .first-row .usercard-controls .category-expert-endorse-edit {
   width: unset;
   min-width: unset;
 }
-
-
 
 .reviewable-category-expert-suggestion {
   .reviewable-category-experts-header {
@@ -45,14 +43,15 @@
   line-height: 1em;
 }
 
-
-.time-gap+.topic-post article.category-expert-post {
-  .topic-body, .topic-avatar {
+.time-gap + .topic-post article.category-expert-post {
+  .topic-body,
+  .topic-avatar {
     border-top: 4px solid $success;
   }
 }
 article.category-expert-post {
-  .topic-body, .topic-avatar {
+  .topic-body,
+  .topic-avatar {
     border-top: 4px solid $success;
   }
 }
@@ -81,4 +80,8 @@ article.category-expert-post {
 }
 .topic-list-category-expert-question {
   background: $tertiary-low;
+}
+
+ul.category-experts-post-admin-menu-btn li {
+  border-top: 1px solid $primary-low !important;
 }

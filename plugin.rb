@@ -255,5 +255,6 @@ after_initialize do
     put "category-experts/endorse/:username" => "category_experts#endorse", constraints: { username: ::RouteFormat.username }
     post "category-experts/approve" => "category_experts#approve_post"
     post "category-experts/unapprove" => "category_experts#unapprove_post"
+    get "category-experts/retroactive-approval/:post_id" => "category_experts#retroactive_approval?"
   end
 end
