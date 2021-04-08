@@ -187,7 +187,7 @@ describe CategoryExpertsController do
     end
   end
 
-  describe "#post_can_receive_retroactive_approval" do
+  describe "#retroactive_approval?" do
     fab!(:topic) { Fabricate(:topic, category: category1) }
     fab!(:random_user) { Fabricate(:user) }
 
