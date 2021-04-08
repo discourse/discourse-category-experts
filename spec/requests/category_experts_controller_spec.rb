@@ -3,6 +3,7 @@
 require "rails_helper"
 
 describe CategoryExpertsController do
+  fab!(:admin) { Fabricate(:admin) }
   fab!(:user) { Fabricate(:user) }
   fab!(:other_user) { Fabricate(:user) }
   fab!(:endorsee) { Fabricate(:user) }
@@ -71,7 +72,6 @@ describe CategoryExpertsController do
 
   describe "#approve_post" do
     fab!(:topic) { Fabricate(:topic, category: category1) }
-    fab!(:admin) { Fabricate(:admin) }
 
     before do
       create_post(topic_id: topic.id, user: user)
@@ -131,7 +131,6 @@ describe CategoryExpertsController do
 
   describe "#unapprove_post" do
     fab!(:topic) { Fabricate(:topic, category: category1) }
-    fab!(:admin) { Fabricate(:admin) }
 
     before do
       create_post(topic_id: topic.id, user: user)
@@ -184,6 +183,58 @@ describe CategoryExpertsController do
 
         expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
         expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(false)
+      end
+    end
+  end
+
+  describe "#retroactive_approval?" do
+    fab!(:topic) { Fabricate(:topic, category: category1) }
+    fab!(:random_user) { Fabricate(:user) }
+
+    describe "non-staff user" do
+      before do
+        sign_in(user)
+      end
+
+      it "returns a 403" do
+        post = create_post(topic_id: topic.id, user: user)
+        get "/category-experts/retroactive-approval/#{post.id}.json"
+
+        expect(response.status).to eq(403)
+      end
+    end
+
+    describe "staff user signed in" do
+      before do
+        sign_in(admin)
+      end
+
+      it "return false when the post is not by a category expert" do
+        post = create_post(topic_id: topic.id, user: random_user)
+        get "/category-experts/retroactive-approval/#{post.id}.json"
+
+        expect(response.status).to eq(200)
+        expect(response.parsed_body["can_be_approved"]).to eq(false)
+      end
+
+      it "returns false when the post is already marked as an expert post" do
+        post = create_post(topic_id: topic.id, user: user)
+        post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = "some-group"
+        post.save
+
+        get "/category-experts/retroactive-approval/#{post.id}.json"
+
+        expect(response.status).to eq(200)
+        expect(response.parsed_body["can_be_approved"]).to eq(false)
+      end
+
+      it "returns the expert group name when the post can be approved" do
+        post = create_post(topic_id: topic.id, user: user)
+
+        get "/category-experts/retroactive-approval/#{post.id}.json"
+
+        expect(response.status).to eq(200)
+        expect(response.parsed_body["can_be_approved"]).to eq(true)
       end
     end
   end
