@@ -62,7 +62,7 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
 
     assert.equal(queryAll(".category-expert-existing-endorsements").length, 1);
 
-    await click(".endorse-link");
+    await click(".category-expert-endorse-edit");
 
     let checkboxes = queryAll(".category-experts-endorsement-row input");
     assert.equal(checkboxes.length, 2);
