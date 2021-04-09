@@ -209,6 +209,18 @@ describe CategoryExpertsController do
         sign_in(admin)
       end
 
+      it "return false when the category has no category expert groups" do
+        post = create_post(topic_id: topic.id, user: random_user)
+        CategoryCustomField.find_by(
+          category_id: post.topic.category.id,
+          name: CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
+        ).destroy
+        get "/category-experts/retroactive-approval/#{post.id}.json"
+
+        expect(response.status).to eq(200)
+        expect(response.parsed_body["can_be_approved"]).to eq(false)
+      end
+
       it "return false when the post is not by a category expert" do
         post = create_post(topic_id: topic.id, user: random_user)
         get "/category-experts/retroactive-approval/#{post.id}.json"
