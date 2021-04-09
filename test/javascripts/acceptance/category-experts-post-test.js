@@ -1,7 +1,6 @@
 import {
   acceptance,
   exists,
-  query,
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
 import topicFixtures from "discourse/tests/fixtures/topic";
@@ -75,11 +74,7 @@ acceptance(
       assert.ok(lastArticle.classList.contains(`category-expert-${groupName}`));
 
       await click(lastArticle.querySelector("button.show-more-actions"));
-
-      const unapproveBtn = query(
-        ".widget-button.unapprove-category-expert-post"
-      );
-      await click(unapproveBtn);
+      await click(".widget-button.unapprove-category-expert-post");
 
       assert.notOk(lastArticle.classList.contains("category-expert-post"));
     });
