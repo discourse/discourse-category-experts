@@ -12,7 +12,10 @@ acceptance("Discourse Category Experts - No endorsements", function (needs) {
   needs.site({ categories });
 
   needs.pretender((server, helper) => {
-    let cardResponse = Object.assign({}, userFixtures["/u/charlie/card.json"]);
+    // deep clone
+    let cardResponse = JSON.parse(
+      JSON.stringify(userFixtures["/u/charlie/card.json"])
+    );
     cardResponse.user.category_expert_endorsements = [];
     server.get("/u/charlie/card.json", () => helper.response(cardResponse));
   });
@@ -40,7 +43,10 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
   needs.site({ categories });
 
   needs.pretender((server, helper) => {
-    let cardResponse = Object.assign({}, userFixtures["/u/charlie/card.json"]);
+    // deep clone
+    let cardResponse = JSON.parse(
+      JSON.stringify(userFixtures["/u/charlie/card.json"])
+    );
     cardResponse.user.category_expert_endorsements = [
       {
         category_id: 517,

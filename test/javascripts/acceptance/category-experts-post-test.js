@@ -17,7 +17,10 @@ acceptance(
     });
 
     needs.pretender((server, helper) => {
-      let topicResponse = Object.assign({}, topicFixtures["/t/2480/1.json"]);
+      // deep clone
+      let topicResponse = JSON.parse(
+        JSON.stringify(topicFixtures["/t/2480/1.json"])
+      );
       topicResponse.post_stream.posts[2].category_expert_approved_group = groupName;
       server.get("/t/2480.json", () => helper.response(topicResponse));
     });
@@ -48,7 +51,10 @@ acceptance(
     });
 
     needs.pretender((server, helper) => {
-      let topicResponse = Object.assign({}, topicFixtures["/t/2480/1.json"]);
+      // deep clone
+      let topicResponse = JSON.parse(
+        JSON.stringify(topicFixtures["/t/2480/1.json"])
+      );
       topicResponse.post_stream.posts[1].needs_category_expert_approval = true;
       topicResponse.post_stream.posts[1].can_manage_category_expert_posts = true;
 
