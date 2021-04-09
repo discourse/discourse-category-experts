@@ -58,10 +58,6 @@ export default {
           helper.attrs
         );
       });
-      api.attachWidgetAction("post", "approveCategoryExpertPost", () => {
-        console.log("yeppers");
-        // setPostCategoryExpertAttributes(this.model, { approved: true });
-      });
     });
   },
 };
