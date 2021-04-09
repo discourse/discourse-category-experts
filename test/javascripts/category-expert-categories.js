@@ -1,6 +1,6 @@
 export default [
   {
-    id: 5,
+    id: 517,
     name: "test accepting endorsements 1",
     slug: "test-accepting-endorsements-1",
     permission: null,
@@ -10,7 +10,7 @@ export default [
     },
   },
   {
-    id: 6,
+    id: 612,
     name: "test accepting endorsements 2",
     slug: "test-accepting-endorsements-2",
     permission: null,
@@ -20,7 +20,7 @@ export default [
     },
   },
   {
-    id: 7,
+    id: 793,
     name: "test not accepting endorsements",
     slug: "test-not-accepting-endorsements",
     permission: null,

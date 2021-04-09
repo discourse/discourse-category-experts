@@ -42,7 +42,7 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
     let cardResponse = Object.assign({}, userFixtures["/u/charlie/card.json"]);
     cardResponse.user.category_expert_endorsements = [
       {
-        category_id: 5,
+        category_id: 517,
         endorsed_user_id: cardResponse.user.id,
         id: 1,
       },
