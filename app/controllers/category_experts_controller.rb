@@ -57,7 +57,7 @@ class CategoryExpertsController < ApplicationController
     return false unless category
 
     expert_group_ids = category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].split("|").map(&:to_i)
-    return false unless expert_group_ids.count
+    return false if expert_group_ids.count == 0
 
     (expert_group_ids & (post.user.group_ids || [])).count > 0
   end
