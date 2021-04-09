@@ -40,7 +40,7 @@ export default {
           this.load(attrs, state);
         } else if (state.show) {
           return this.attach("post-admin-menu-button", {
-            action: "approveCategoryExpertPostAdmin",
+            action: "approveCategoryExpertPost",
             title: "category_experts.approve",
             label: "category_experts.approve",
             icon: "thumbs-up",
@@ -55,9 +55,6 @@ export default {
           "category-experts-post-admin-menu-btn",
           helper.attrs
         );
-      });
-      api.attachWidgetAction("post", "approveCategoryExpertPostAdmin", () => {
-        // setPostCategoryExpertAttributes(this.model, { approved: true });
       });
     });
   },
