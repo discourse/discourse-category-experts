@@ -16,7 +16,9 @@ export default Component.extend({
 
   @discourseComputed("model", "model.category")
   show(model, category) {
-    if (!category || !category.allowingCategoryExpertQuestions) return false;
+    if (!category || !category.allowingCategoryExpertQuestions) {
+      return false;
+    }
 
     return model.editingFirstPost || model.creatingTopic;
   },

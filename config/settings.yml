@@ -12,4 +12,3 @@ plugins:
     default: false
   send_admin_category_experts_posts_reminder_pm:
     default: false
-

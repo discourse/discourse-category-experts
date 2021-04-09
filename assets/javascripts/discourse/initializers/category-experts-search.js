@@ -83,13 +83,16 @@ function initialize(api) {
     "category-experts-search-fields",
     {
       shouldRender(args, component) {
-        return (
-          component.siteSettings.enable_category_experts
-        );
+        return component.siteSettings.enable_category_experts;
       },
 
       setupComponent() {
-        this.set("canSeeIsQuestionFilter", (this.currentUser.staff || (this.currentUser.expert_for_category_ids && this.currentUser.expert_for_category_ids.length)));
+        this.set(
+          "canSeeIsQuestionFilter",
+          this.currentUser.staff ||
+            (this.currentUser.expert_for_category_ids &&
+              this.currentUser.expert_for_category_ids.length)
+        );
       },
 
       actions: {

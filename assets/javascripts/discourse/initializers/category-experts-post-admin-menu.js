@@ -1,13 +1,11 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { createWidget } from "discourse/widgets/widget";
 import { ajax } from "discourse/lib/ajax";
-import { h } from "virtual-dom";
-import { next } from "@ember/runloop";
 
 export default {
   name: "category-experts-post-admin-menu",
 
-  initialize(container) {
+  initialize() {
     createWidget("category-experts-post-admin-menu-btn", {
       tagName: "ul",
       buildClasses: () => "category-experts-post-admin-menu-btn",

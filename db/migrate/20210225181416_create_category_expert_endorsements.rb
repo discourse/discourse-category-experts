@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCategoryExpertEndorsements < ActiveRecord::Migration[6.0]
   def change
     create_table :category_expert_endorsements do |t|

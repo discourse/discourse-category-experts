@@ -16,7 +16,6 @@ describe CategoryExperts::PostHandler do
     SiteSetting.category_expert_suggestion_threshold
     category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group.id}|#{second_group.id}|#{group.id + 1}"
     category.save
-
   end
 
   describe "SiteSetting.category_experts_posts_require_approval enabled" do
@@ -62,7 +61,7 @@ describe CategoryExperts::PostHandler do
     end
 
     it "correctly adds the expert group names to the topic custom fields" do
-        post = create_post(topic_id: topic.id, user: expert)
+      post = create_post(topic_id: topic.id, user: expert)
         CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
         expect(post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
 

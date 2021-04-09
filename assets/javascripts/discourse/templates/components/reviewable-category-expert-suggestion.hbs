@@ -1,5 +1,4 @@
 <div class="row">
-
   {{#link-to "user" reviewable.user.username}}
     {{avatar reviewable.user imageSize="small"}}
     {{reviewable.user.username}}
@@ -9,25 +8,23 @@
 </div>
 
 <div class="row">
-
   <table class="endorsed-by-table">
     <thead>
-      <tr>
+      <th>
         <td>{{i18n "category_experts.review.endorsed_by" count=reviewable.endorsed_count}}</td>
-      </tr>
+      </th>
     </thead>
     <tbody>
-    {{#each reviewable.endorsed_by as |user|}}
-      <tr>
-        <td class="endorsed-by">
-          {{#link-to "user" user.username}}
-            {{avatar user imageSize="tiny"}}
-            {{user.username}}
-          {{/link-to}}
-        </td>
-      </tr>
-    {{/each}}
+      {{#each reviewable.endorsed_by as |user|}}
+        <tr>
+          <td class="endorsed-by">
+            {{#link-to "user" user.username}}
+              {{avatar user imageSize="tiny"}}
+              {{user.username}}
+            {{/link-to}}
+          </td>
+        </tr>
+      {{/each}}
     </tbody>
   </table>
 </div>
-{{log reviewable}}

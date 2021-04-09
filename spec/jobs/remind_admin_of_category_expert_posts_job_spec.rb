@@ -29,8 +29,6 @@ describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
     end
   end
 
-
-
   describe "with site setting enabled" do
     it 'sends a PM to staff and moderators with the proper topic count' do
       SiteSetting.send_category_experts_reminder_pms = true
