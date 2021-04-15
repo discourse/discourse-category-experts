@@ -85,7 +85,7 @@ describe CategoryExpertsController do
       end
 
       def expect_categories_in_response(response, categories)
-        category_ids = response.parsed_body["categories"].map {|c| c["id"]}.sort
+        category_ids = response.parsed_body["categories"].map { |c| c["id"] }.sort
         expect(category_ids).to eq(categories.map(&:id).sort)
       end
 
@@ -96,7 +96,6 @@ describe CategoryExpertsController do
         # Endorsee and current user cannot see the new category
         get("/category-experts/endorsable-categories/#{endorsee.username}.json")
         expect_categories_in_response(response, [category1, category2])
-
 
         # Endorsee added. Current user still cannot see the new category
         private_group.add(endorsee)
