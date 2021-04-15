@@ -7,11 +7,9 @@ class CategoryExpertsController < ApplicationController
     :retroactive_approval?,
   ]
   before_action :ensure_needs_approval_enabled, only: [:approve_post, :unapprove_post]
+  before_action :authenticate_and_find_user, only: [:endorse, :endorsable_categories]
 
   def endorse
-    raise Discourse::NotFound unless current_user
-    user = fetch_user_from_params
-
     category_ids = params[:categoryIds]&.reject(&:blank?)
 
     raise Discourse::InvalidParameters if category_ids.blank?
@@ -20,12 +18,38 @@ class CategoryExpertsController < ApplicationController
     categories.each do |category|
       raise Discourse::InvalidParameters unless category.accepting_category_expert_endorsements?
 
-      CategoryExpertEndorsement.find_or_create_by(user: current_user, endorsed_user: user, category: category)
+      CategoryExpertEndorsement.find_or_create_by(user: current_user, endorsed_user: @user, category: category)
     end
 
     render json: {
-      category_expert_endorsements: current_user.given_category_expert_endorsements_for(user)
+      category_expert_endorsements: current_user.given_category_expert_endorsements_for(@user)
     }.to_json
+  end
+
+  def endorsable_categories
+    endorsee_guardian = Guardian.new(@user)
+
+    categories = Category.where(<<~SQL)
+      id IN (
+        SELECT cf.category_id
+        FROM category_custom_fields cf, category_custom_fields ocf
+        WHERE cf.name = '#{CategoryExperts::CATEGORY_EXPERT_GROUP_IDS}' AND
+              cf.value <> '' AND
+              ocf.name = '#{CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS}' AND
+              ocf.value <> ''
+      )
+    SQL
+
+    categories = categories.select do |category|
+      guardian.can_see_category?(category) && endorsee_guardian.can_see_category?(category)
+    end
+
+    render json: ActiveModel::ArraySerializer.new(
+      categories,
+      each_serializer: BasicCategorySerializer,
+      scope: guardian,
+      root: :categories,
+    ).as_json
   end
 
   def approve_post
@@ -84,5 +108,11 @@ class CategoryExpertsController < ApplicationController
     @post = Post.find_by(id: post_id)
 
     raise Discourse::NotFound unless @post
+  end
+
+  def authenticate_and_find_user
+    raise Discourse::NotFound unless current_user
+
+    @user = fetch_user_from_params
   end
 end

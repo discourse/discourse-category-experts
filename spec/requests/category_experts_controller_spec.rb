@@ -70,6 +70,48 @@ describe CategoryExpertsController do
     end
   end
 
+  describe "#endorsable_categories" do
+    it "errors when the current user is not logged in" do
+      get("/category-experts/endorsable-categories/#{endorsee.username}.json")
+      expect(response.status).to eq(404)
+    end
+
+    context "logged in" do
+      fab!(:private_category) { fabricate_category_with_category_experts }
+      fab!(:private_group) { Fabricate(:group) }
+
+      before do
+        sign_in(user)
+      end
+
+      def expect_categories_in_response(response, categories)
+        category_ids = response.parsed_body["categories"].map { |c| c["id"] }.sort
+        expect(category_ids).to eq(categories.map(&:id).sort)
+      end
+
+      it "returns categories visible to the current user and endorsed user" do
+        private_category.set_permissions({ private_group.id => :full })
+        private_category.save
+
+        # Endorsee and current user cannot see the new category
+        get("/category-experts/endorsable-categories/#{endorsee.username}.json")
+        expect_categories_in_response(response, [category1, category2])
+
+        # Endorsee added. Current user still cannot see the new category
+        private_group.add(endorsee)
+
+        get("/category-experts/endorsable-categories/#{endorsee.username}.json")
+        expect_categories_in_response(response, [category1, category2])
+
+        # Both can now see the new category. It should be included
+        private_group.add(user)
+
+        get("/category-experts/endorsable-categories/#{endorsee.username}.json")
+        expect_categories_in_response(response, [category1, category2, private_category])
+      end
+    end
+  end
+
   describe "#approve_post" do
     fab!(:topic) { Fabricate(:topic, category: category1) }
 
