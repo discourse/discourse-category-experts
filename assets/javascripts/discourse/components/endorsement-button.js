@@ -57,7 +57,6 @@ export default Component.extend({
 
     showModal("endorse-user", {
       model: {
-        categories: this.categoriesAllowingEndorsements,
         user: this.user,
         endorsements: this.endorsements,
         location: this.location,

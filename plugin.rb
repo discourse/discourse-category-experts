@@ -256,5 +256,6 @@ after_initialize do
     post "category-experts/approve" => "category_experts#approve_post"
     post "category-experts/unapprove" => "category_experts#unapprove_post"
     get "category-experts/retroactive-approval/:post_id" => "category_experts#retroactive_approval?"
+    get "category-experts/endorsable-categories/:username" => "category_experts#endorsable_categories", constraints: { username: ::RouteFormat.username }
   end
 end

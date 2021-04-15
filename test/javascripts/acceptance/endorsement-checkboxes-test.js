@@ -12,12 +12,19 @@ acceptance("Discourse Category Experts - No endorsements", function (needs) {
   needs.site({ categories });
 
   needs.pretender((server, helper) => {
-    // deep clone
     let cardResponse = JSON.parse(
       JSON.stringify(userFixtures["/u/charlie/card.json"])
     );
     cardResponse.user.category_expert_endorsements = [];
     server.get("/u/charlie/card.json", () => helper.response(cardResponse));
+    server.get("/category-experts/endorsable-categories/charlie.json", () =>
+      helper.response({
+        categories: [
+          { id: 517, name: "Some Category" },
+          { id: 10, name: "A different one" },
+        ],
+      })
+    );
   });
 
   test("It allows the current user to endorse another via the user card", async (assert) => {
@@ -43,7 +50,6 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
   needs.site({ categories });
 
   needs.pretender((server, helper) => {
-    // deep clone
     let cardResponse = JSON.parse(
       JSON.stringify(userFixtures["/u/charlie/card.json"])
     );
@@ -60,6 +66,14 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
       },
     ];
     server.get("/u/charlie/card.json", () => helper.response(cardResponse));
+    server.get("/category-experts/endorsable-categories/charlie.json", () =>
+      helper.response({
+        categories: [
+          { id: 517, name: "Some Category" },
+          { id: 10, name: "A different one" },
+        ],
+      })
+    );
   });
 
   test("It shows the endorse button when the current user hasn't endorsed the user yet", async (assert) => {

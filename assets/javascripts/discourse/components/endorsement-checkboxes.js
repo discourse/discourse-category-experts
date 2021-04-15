@@ -13,25 +13,39 @@ export default Component.extend({
   selectedCategoryIds: null,
   startingCategoryIds: null,
   showingSuccess: false,
+  loading: true,
 
   didInsertElement() {
     this._super(...arguments);
+
     if (!this.endorsements) {
       this.set("endorsements", []);
     }
-
     this.set(
       "startingCategoryIds",
       this.endorsements.map((e) => e.category_id)
     );
-    this.set("selectedCategoryIds", [...this.startingCategoryIds]);
-    this.endorsements.forEach((endorsement) => {
-      const checkbox = this.element.querySelector(
-        `#category-endorsement-${endorsement.category_id}`
-      );
-      checkbox.checked = true;
-      checkbox.disabled = true;
-    });
+
+    ajax(`/category-experts/endorsable-categories/${this.user.username}.json`)
+      .then((response) => {
+        this.setProperties({
+          categories: response.categories,
+          selectedCategoryIds: [...this.startingCategoryIds],
+          loading: false,
+        });
+        next(() => {
+          this.endorsements.forEach((endorsement) => {
+            const checkbox = this.element.querySelector(
+              `#category-endorsement-${endorsement.category_id}`
+            );
+            if (checkbox) {
+              checkbox.checked = true;
+              checkbox.disabled = true;
+            }
+          });
+        });
+      })
+      .catch(popupAjaxError);
   },
 
   @discourseComputed("saving", "selectedCategoryIds", "startingCategoryIds")
