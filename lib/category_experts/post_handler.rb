@@ -22,7 +22,7 @@ module CategoryExperts
 
       post_group_name = post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
 
-      post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = nil
+      post.custom_fields.delete(CategoryExperts::POST_APPROVED_GROUP_NAME)
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = true
       post.save!
 
@@ -47,7 +47,7 @@ module CategoryExperts
       raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
 
       post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
-      post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = nil
+      post.custom_fields.delete(CategoryExperts::POST_PENDING_EXPERT_APPROVAL)
       post.save!
 
       topic = post.topic
