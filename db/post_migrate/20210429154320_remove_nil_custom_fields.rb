@@ -6,11 +6,6 @@ class RemoveNilCustomFields < ActiveRecord::Migration[6.1]
       DELETE FROM post_custom_fields
       WHERE name = 'category_expert_post' AND value IS NULL
     SQL
-
-    execute <<~SQL
-      DELETE FROM post_custom_fields
-      WHERE name = 'category_expert_post_pending' AND value IS NULL
-    SQL
   end
 
   def down
