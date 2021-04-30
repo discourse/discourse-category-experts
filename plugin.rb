@@ -44,6 +44,19 @@ after_initialize do
 
   add_permitted_reviewable_param(:reviewable_category_expert_suggestion, :group_id)
 
+  add_custom_reviewable_filter(
+    [
+      :endorsed_username,
+      Proc.new do |results, value|
+        user_id = User.find_by_username(value)&.id
+        return results if user_id.blank?
+        results
+          .joins("INNER JOIN category_expert_endorsements ON category_expert_endorsements.id = target_id")
+          .where("category_expert_endorsements.endorsed_user_id = ?", user_id)
+      end
+    ]
+  )
+
   register_post_custom_field_type(CategoryExperts::POST_APPROVED_GROUP_NAME, :string)
   register_post_custom_field_type(CategoryExperts::POST_PENDING_EXPERT_APPROVAL, :boolean)
 

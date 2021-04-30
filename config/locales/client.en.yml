@@ -41,3 +41,4 @@ en:
           title: "Category Expert Suggestion"
       expert-group-chooser:
         title: "Choose an expert group for the user"
+      endorsed_username: "Endorsed user"

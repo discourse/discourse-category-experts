@@ -36,6 +36,15 @@
     }
   }
 }
+
+.reviewable-container
+  .reviewable-filter-endorsed-username-to-filter
+  div.ac-wrap
+  input[type="text"] {
+  padding: 0;
+  margin: 2px 0 0px 3px;
+}
+
 .endorsement-successful {
   text-align: center;
   color: $success;
