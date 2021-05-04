@@ -27,15 +27,20 @@ module CategoryExperts
       post.save!
 
       topic = post.topic
-      has_accepted_posts_from_same_group = PostCustomField.where(
+      has_accepted_posts_from_same_group = post_group_name && PostCustomField.where(
         post_id: topic.post_ids,
         name: CategoryExperts::POST_APPROVED_GROUP_NAME,
         value: post_group_name
       ).exists?
 
       unless has_accepted_posts_from_same_group
-        topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] =
-          ((topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) - [post_group_name]).join("|")
+        groups = (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) - [post_group_name]
+
+        if groups.any?
+          topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = groups.join("|")
+        else
+          topic.custom_fields.delete(CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES)
+        end
       end
 
       topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] =
