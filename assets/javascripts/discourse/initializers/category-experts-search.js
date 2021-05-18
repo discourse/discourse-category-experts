@@ -89,9 +89,10 @@ function initialize(api) {
       setupComponent() {
         this.set(
           "canSeeIsQuestionFilter",
-          this.currentUser.staff ||
-            (this.currentUser.expert_for_category_ids &&
-              this.currentUser.expert_for_category_ids.length)
+          this.currentUser &&
+            (this.currentUser.staff ||
+              (this.currentUser.expert_for_category_ids &&
+                this.currentUser.expert_for_category_ids.length))
         );
       },
 
