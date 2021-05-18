@@ -186,6 +186,22 @@ after_initialize do
     !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
   end
 
+  add_to_serializer(:topic_view, :expert_post_group_count) do
+    object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|").inject({}) do |hash, group_name|
+      hash[group_name] = object
+        .topic
+        .posts
+        .joins("INNER JOIN post_custom_fields ON posts.id = post_custom_fields.post_id")
+        .where(post_custom_fields: { name: "category_expert_post", value: group_name })
+        .count
+      hash
+    end
+  end
+
+  add_to_serializer(:topic_view, :include_expert_post_group_count?) do
+    !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+  end
+
   add_permitted_post_create_param(:is_category_expert_question)
 
   if Search.respond_to? :preloaded_topic_custom_fields
