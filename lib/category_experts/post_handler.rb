@@ -50,6 +50,7 @@ module CategoryExperts
 
     def mark_post_as_approved
       raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
+      return if post.is_first_post?
 
       post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = false
