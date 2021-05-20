@@ -10,7 +10,6 @@ describe CategoryExperts::PostHandler do
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:second_group) { Fabricate(:group, users: [second_expert]) }
   fab!(:topic) { Fabricate(:topic, category: category) }
-  fab!(:first_post) { Fabricate(:post, topic: topic) }
 
   before do
     SiteSetting.enable_category_experts
@@ -26,6 +25,11 @@ describe CategoryExperts::PostHandler do
 
     describe "No existing approved expert posts" do
       it "marks the post as needing approval, as well as the topic" do
+        result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
+
+        expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(nil)
+        expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(nil)
+
         result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
 
         expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
@@ -52,8 +56,10 @@ describe CategoryExperts::PostHandler do
     end
 
     it "marks posts as approved automatically but not the first post" do
-      expect(first_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
-      expect(topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
+      result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
+
+      expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
+      expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
 
       result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
 
@@ -65,12 +71,13 @@ describe CategoryExperts::PostHandler do
     end
 
     it "correctly adds the expert group names to the topic custom fields" do
+      first_post = create_post(topic_id: topic.id)
       post = create_post(topic_id: topic.id, user: expert)
-        CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
-        expect(post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
+      CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+      expect(post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
 
-        result = NewPostManager.new(second_expert, raw: 'this is a new post', topic_id: topic.id).perform
-        expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq("#{group.name}|#{second_group.name}")
+      result = NewPostManager.new(second_expert, raw: 'this is a new post', topic_id: topic.id).perform
+      expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq("#{group.name}|#{second_group.name}")
     end
   end
 end
