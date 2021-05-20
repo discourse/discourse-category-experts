@@ -114,6 +114,7 @@ describe CategoryExpertsController do
 
   describe "#approve_post" do
     fab!(:topic) { Fabricate(:topic, category: category1) }
+    fab!(:first_post) { Fabricate(:post, topic: topic) }
 
     before do
       create_post(topic_id: topic.id, user: user)
@@ -156,7 +157,7 @@ describe CategoryExpertsController do
       end
 
       it "adds the group names to the topic custom field when an approved post already exists" do
-        CategoryExperts::PostHandler.new(post: topic.first_post).mark_post_as_approved
+        CategoryExperts::PostHandler.new(post: topic.posts.last).mark_post_as_approved
 
         post = create_post(topic_id: topic.id, user: other_user)
         CategoryExperts::PostHandler.new(post: post).mark_post_for_approval
@@ -214,12 +215,12 @@ describe CategoryExpertsController do
       end
 
       it "doesn't remove the group name from the topic custom field if another approved post exists" do
-        CategoryExperts::PostHandler.new(post: topic.first_post).mark_post_as_approved
-
         post = create_post(topic_id: topic.id, user: user)
         CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
 
-        post("/category-experts/unapprove.json", params: { post_id: post.id })
+        post2 = create_post(topic_id: topic.id, user: user)
+        CategoryExperts::PostHandler.new(post: post2).mark_post_as_approved
+        post("/category-experts/unapprove.json", params: { post_id: post2.id })
 
         expect(response.status).to eq(200)
 
