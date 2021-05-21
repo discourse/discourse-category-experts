@@ -10,7 +10,6 @@ describe CategoryExperts::PostHandler do
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:second_group) { Fabricate(:group, users: [second_expert]) }
   fab!(:topic) { Fabricate(:topic, category: category) }
-  fab!(:first_post) { Fabricate(:post, topic: topic) }
 
   before do
     SiteSetting.enable_category_experts
@@ -51,10 +50,7 @@ describe CategoryExperts::PostHandler do
       SiteSetting.category_experts_posts_require_approval = false
     end
 
-    it "marks posts as approved automatically but not the first post" do
-      expect(first_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
-      expect(topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
-
+    it "marks posts as approved automatically" do
       result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
 
       expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
