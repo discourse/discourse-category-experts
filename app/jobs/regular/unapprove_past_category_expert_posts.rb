@@ -27,8 +27,9 @@ module Jobs
           post.save
         end
 
+
         other_approved_post_count = PostCustomField
-          .where(post_id: grouped_posts.map(&:id))
+          .where(post_id: topic.post_ids)
           .where(name: CategoryExperts::POST_APPROVED_GROUP_NAME)
           .count
 

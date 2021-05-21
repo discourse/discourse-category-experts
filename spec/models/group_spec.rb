@@ -65,10 +65,11 @@ describe "Adding/removing users from groups" do
     end
 
     it "does not remove topic custom fields if another expert has replied" do
-      result = NewPostManager.new(other_expert, raw: 'this is a new post', topic_id: topic.id).perform
+      post = create_post(topic_id: topic.id, user: other_expert)
+      CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
 
       group.remove(user)
-      expect(result.post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+      expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
     end
   end
 end
