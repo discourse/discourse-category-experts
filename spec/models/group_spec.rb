@@ -72,4 +72,3 @@ describe "Adding/removing users from groups" do
     end
   end
 end
-

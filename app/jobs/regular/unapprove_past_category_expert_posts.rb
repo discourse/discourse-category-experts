@@ -20,15 +20,15 @@ module Jobs
         .where(user_id: args[:user_id])
         .where(topic: { category_id: args[:category_ids] })
 
-      posts.group_by(&:topic).each do |topic, posts|
-        posts.each do |post|
+      posts.group_by(&:topic).each do |topic, grouped_posts|
+        grouped_posts.each do |post|
           post.custom_fields.delete(CategoryExperts::POST_APPROVED_GROUP_NAME)
           post.custom_fields.delete(CategoryExperts::POST_PENDING_EXPERT_APPROVAL)
           post.save
         end
 
         other_approved_post_count = PostCustomField
-          .where(post_id: posts.map(&:id))
+          .where(post_id: grouped_posts.map(&:id))
           .where(name: CategoryExperts::POST_APPROVED_GROUP_NAME)
           .count
 
