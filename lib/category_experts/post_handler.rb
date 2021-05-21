@@ -9,16 +9,20 @@ module CategoryExperts
       @user = user || post.user
     end
 
-    def process_new_post
-      return unless ensure_poster_is_category_expert
+    def process_new_post(skip_validations: false)
+      if !skip_validations
+        return unless ensure_poster_is_category_expert
+      end
 
       SiteSetting.category_experts_posts_require_approval ?
-        mark_post_for_approval :
-        mark_post_as_approved
+        mark_post_for_approval(skip_validations: skip_validations) :
+        mark_post_as_approved(skip_validations: skip_validations)
     end
 
-    def mark_post_for_approval
-      raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
+    def mark_post_for_approval(skip_validations: false)
+      if !skip_validations
+        raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
+      end
 
       post_group_name = post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
 
@@ -48,8 +52,10 @@ module CategoryExperts
       topic.save!
     end
 
-    def mark_post_as_approved
-      raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
+    def mark_post_as_approved(skip_validations: false)
+      if !skip_validations
+        raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
+      end
 
       post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = false

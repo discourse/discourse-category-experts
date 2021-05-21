@@ -17,6 +17,8 @@ after_initialize do
     "../app/models/category_expert_endorsement",
     "../app/models/reviewable_category_expert_suggestion",
     "../app/serializers/reviewable_category_expert_suggestion_serializer",
+    "../app/jobs/regular/approve_past_category_expert_posts",
+    "../app/jobs/regular/unapprove_past_category_expert_posts",
     "../app/jobs/scheduled/remind_admin_of_category_experts_posts_job",
     "../app/jobs/scheduled/remind_category_experts_job",
     "../lib/category_experts/post_handler",
@@ -278,6 +280,39 @@ after_initialize do
     end
 
     result
+  end
+
+  add_to_class(:group, :category_expert_category_ids) do
+    category_ids = []
+
+    CategoryCustomField
+      .where(name: CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
+      .where.not(value: nil)
+      .where.not(value: "")
+      .pluck(:category_id, :value)
+      .each do |category_id, group_ids|
+        category_ids.push(category_id) if group_ids.split("|").map(&:to_i).include?(self.id)
+      end
+
+    category_ids
+  end
+
+  DiscourseEvent.on(:user_added_to_group) do |user, group|
+    next if !SiteSetting.approve_past_posts_on_becoming_category_expert
+
+    category_ids = group.category_expert_category_ids
+    next if category_ids.empty?
+
+    ::Jobs.enqueue(:approve_past_category_expert_posts, user_id: user.id, category_ids: category_ids)
+  end
+
+  DiscourseEvent.on(:user_removed_from_group) do |user, group|
+    next if !SiteSetting.approve_past_posts_on_becoming_category_expert
+
+    category_ids = group.category_expert_category_ids
+    next if category_ids.empty?
+
+    ::Jobs.enqueue(:unapprove_past_category_expert_posts, user_id: user.id, category_ids: category_ids)
   end
 
   Discourse::Application.routes.append do

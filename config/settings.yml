@@ -12,3 +12,5 @@ plugins:
     default: false
   send_admin_category_experts_posts_reminder_pm:
     default: false
+  approve_past_posts_on_becoming_category_expert:
+    default: false

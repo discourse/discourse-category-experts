@@ -12,8 +12,6 @@ describe CategoryExperts::PostHandler do
   fab!(:topic) { Fabricate(:topic, category: category) }
 
   before do
-    SiteSetting.enable_category_experts
-    SiteSetting.category_expert_suggestion_threshold
     category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group.id}|#{second_group.id}|#{group.id + 1}"
     category.save
   end

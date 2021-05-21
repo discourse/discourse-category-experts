@@ -5,6 +5,7 @@ en:
     category_experts_posts_require_approval: "Posts from category experts require staff approval for expert decoration."
     send_category_experts_reminder_pms: "Send reminder PMs to category experts, to reply to unanswered questions"
     send_admin_category_experts_posts_reminder_pm: "Send reminder PMs to staff, to review unapproved category expert posts."
+    approve_past_posts_on_becoming_category_expert: "When a user becomes an expert, all their past posts in the category are automatically approved. When a user is removed as an expert, all their posts are unapproved."
   system_messages:
     user_add_as_category_expert:
       title: "Congratulations, You are a category expert!"
