@@ -68,6 +68,38 @@ describe CategoryExpertsController do
         expect(response.status).to eq(200)
       end
     end
+
+    describe "rate limiting" do
+      before do
+        sign_in(user)
+        SiteSetting.max_category_expert_endorsements_per_day = 1
+        RateLimiter.enable
+        RateLimiter.clear_all!
+      end
+
+      it "returns a 429 when rate limits are hit for tl0" do
+        freeze_time
+        user.update(trust_level: TrustLevel[0])
+
+        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id] })
+        expect(response.status).to eq(200)
+        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category2.id] })
+        expect(response.status).to eq(429)
+      end
+
+      it "returns a 429 when rate limits are hit for tl2" do
+        freeze_time
+        user.update(trust_level: TrustLevel[2])
+        SiteSetting.tl2_additional_category_expert_endorsements_per_day_multiplier = 2
+
+        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id] })
+        expect(response.status).to eq(200)
+        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category2.id] })
+        expect(response.status).to eq(200)
+        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category2.id] })
+        expect(response.status).to eq(429)
+      end
+    end
   end
 
   describe "#endorsable_categories" do

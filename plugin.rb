@@ -22,6 +22,7 @@ after_initialize do
     "../app/jobs/scheduled/remind_admin_of_category_experts_posts_job",
     "../app/jobs/scheduled/remind_category_experts_job",
     "../lib/category_experts/post_handler",
+    "../lib/category_experts/endorsement_rate_limiter"
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   module ::CategoryExperts

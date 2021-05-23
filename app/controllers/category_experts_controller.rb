@@ -10,6 +10,7 @@ class CategoryExpertsController < ApplicationController
   before_action :authenticate_and_find_user, only: [:endorse, :endorsable_categories]
 
   def endorse
+    CategoryExperts::EndorsementRateLimiter.new(current_user).performed!
     category_ids = params[:categoryIds]&.reject(&:blank?)
 
     raise Discourse::InvalidParameters if category_ids.blank?
