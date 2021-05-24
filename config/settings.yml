@@ -22,4 +22,3 @@ plugins:
     default: 2
   tl4_additional_category_expert_endorsements_per_day_multiplier:
     default: 3
-
