@@ -64,10 +64,12 @@ export default Component.extend({
     startingCategoryIds,
     remainingEndorsements
   ) {
-    if (remainingEndorsements === 0 || saving || !categoryIds) {
-      return true;
-    }
-    if (categoryIds.length === 0 && startingCategoryIds.length === 0) {
+    if (
+      remainingEndorsements === 0 ||
+      saving ||
+      !categoryIds ||
+      (categoryIds.length === 0 && startingCategoryIds.length === 0)
+    ) {
       return true;
     }
     return !categoryIds.filter((c) => !startingCategoryIds.includes(c)).length;
@@ -75,7 +77,7 @@ export default Component.extend({
 
   @action
   save() {
-    if (saveDisabled) {
+    if (this.saveDisabled) {
       return;
     }
 
