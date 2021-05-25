@@ -38,5 +38,10 @@
       disabled=saveDisabled
       label="category_experts.endorse"
     }}
+    {{#unless currentUser.staff}}
+      <div class="remaining-endorsements-notice">
+        {{i18n "category_experts.remaining_endorsements" count=remainingEndorsements}}
+      </div>
+    {{/unless}}
   {{/if}}
 </div>

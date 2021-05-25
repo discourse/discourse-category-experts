@@ -45,6 +45,11 @@
   margin: 2px 0 0px 3px;
 }
 
+.endorse-user-modal .remaining-endorsements-notice {
+  color: $secondary-medium;
+  font-size: $font-down-1;
+}
+
 .endorsement-successful {
   text-align: center;
   color: $success;

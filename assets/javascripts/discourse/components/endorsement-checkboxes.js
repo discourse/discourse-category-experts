@@ -1,7 +1,7 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import Component from "@ember/component";
 import { action } from "@ember/object";
-import { equal } from "@ember/object/computed";
+import { lt } from "@ember/object/computed";
 import { later, next } from "@ember/runloop";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
@@ -16,7 +16,7 @@ export default Component.extend({
   showingSuccess: false,
   loading: true,
   remainingEndorsements: null,
-  outOfEndorsements: equal("remainingEndorsements", 0),
+  outOfEndorsements: lt("remainingEndorsements", 1),
 
   didInsertElement() {
     this._super(...arguments);

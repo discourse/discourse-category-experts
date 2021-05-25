@@ -10,6 +10,7 @@ en:
       accepting_questions: "Currently accepting questions for category experts"
       endorse: "Endorse"
       out_of_endorsements: "You have used all your endorsements for the day."
+      remaining_endorsements: "%{count} endorsements remaining today"
       existing_endorsements: "Endorsed in %{count} categories."
       edit: "Edit"
       approve: "Approve"
