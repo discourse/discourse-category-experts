@@ -2,47 +2,52 @@ import {
   acceptance,
   query,
   queryAll,
+  exists,
 } from "discourse/tests/helpers/qunit-helpers";
 import userFixtures from "discourse/tests/fixtures/user-fixtures";
 import categories from "../category-expert-categories";
 
-acceptance("Discourse Category Experts - No endorsements", function (needs) {
-  needs.user();
-  needs.settings({ enable_category_experts: true });
-  needs.site({ categories });
+acceptance(
+  "Discourse Category Experts - No existing endorsements",
+  function (needs) {
+    needs.user();
+    needs.settings({ enable_category_experts: true });
+    needs.site({ categories });
 
-  needs.pretender((server, helper) => {
-    let cardResponse = JSON.parse(
-      JSON.stringify(userFixtures["/u/charlie/card.json"])
-    );
-    cardResponse.user.category_expert_endorsements = [];
-    server.get("/u/charlie/card.json", () => helper.response(cardResponse));
-    server.get("/category-experts/endorsable-categories/charlie.json", () =>
-      helper.response({
-        categories: [
-          { id: 517, name: "Some Category" },
-          { id: 10, name: "A different one" },
-        ],
-      })
-    );
-  });
+    needs.pretender((server, helper) => {
+      let cardResponse = JSON.parse(
+        JSON.stringify(userFixtures["/u/charlie/card.json"])
+      );
+      cardResponse.user.category_expert_endorsements = [];
+      server.get("/u/charlie/card.json", () => helper.response(cardResponse));
+      server.get("/category-experts/endorsable-categories/charlie.json", () =>
+        helper.response({
+          categories: [
+            { id: 517, name: "Some Category" },
+            { id: 10, name: "A different one" },
+          ],
+          extras: { remaining_endorsements: 10 },
+        })
+      );
+    });
 
-  test("It allows the current user to endorse another via the user card", async (assert) => {
-    await visit("/t/internationalization-localization/280");
-    await click('a[data-user-card="charlie"]');
+    test("It allows the current user to endorse another via the user card", async (assert) => {
+      await visit("/t/internationalization-localization/280");
+      await click('a[data-user-card="charlie"]');
 
-    await click(".category-expert-endorse-btn");
+      await click(".category-expert-endorse-btn");
 
-    let checkboxRows = queryAll(".category-experts-endorsement-row");
-    assert.equal(checkboxRows.length, 2);
+      let checkboxRows = queryAll(".category-experts-endorsement-row");
+      assert.equal(checkboxRows.length, 2);
 
-    let saveBtn = query(".category-endorsement-save");
-    assert.equal(saveBtn.disabled, true);
+      let saveBtn = query(".category-endorsement-save");
+      assert.equal(saveBtn.disabled, true);
 
-    await click(checkboxRows[0]);
-    assert.equal(saveBtn.disabled, false);
-  });
-});
+      await click(checkboxRows[0]);
+      assert.equal(saveBtn.disabled, false);
+    });
+  }
+);
 
 acceptance("Discourse Category Experts - Has endorsement", function (needs) {
   needs.user();
@@ -72,6 +77,7 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
           { id: 517, name: "Some Category" },
           { id: 10, name: "A different one" },
         ],
+        extras: { remaining_endorsements: 10 },
       })
     );
   });
@@ -97,3 +103,39 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
     assert.equal(saveBtn.disabled, false);
   });
 });
+
+acceptance(
+  "Discourse Category Experts - No endorsements remaining",
+  function (needs) {
+    needs.user();
+    needs.settings({ enable_category_experts: true });
+    needs.site({ categories });
+
+    needs.pretender((server, helper) => {
+      let cardResponse = JSON.parse(
+        JSON.stringify(userFixtures["/u/charlie/card.json"])
+      );
+      cardResponse.user.category_expert_endorsements = [];
+      server.get("/u/charlie/card.json", () => helper.response(cardResponse));
+      server.get("/category-experts/endorsable-categories/charlie.json", () =>
+        helper.response({
+          categories: [
+            { id: 517, name: "Some Category" },
+            { id: 10, name: "A different one" },
+          ],
+          extras: { remaining_endorsements: 0 },
+        })
+      );
+    });
+
+    test("shows the out of endorsements alert instead of the save button", async (assert) => {
+      await visit("/t/internationalization-localization/280");
+      await click('a[data-user-card="charlie"]');
+
+      await click(".category-expert-endorse-btn");
+
+      assert.notOk(exists(".category-endorsement-save"));
+      assert.ok(exists(".out-of-endorsements-alert"));
+    });
+  }
+);
