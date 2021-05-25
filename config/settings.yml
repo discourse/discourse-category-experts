@@ -16,9 +16,13 @@ plugins:
     default: false
   max_category_expert_endorsements_per_day:
     default: 1
+    min: 1
   tl2_additional_category_expert_endorsements_per_day_multiplier:
     default: 2
+    min: 1
   tl3_additional_category_expert_endorsements_per_day_multiplier:
     default: 2
+    min: 1
   tl4_additional_category_expert_endorsements_per_day_multiplier:
     default: 3
+    min: 1
