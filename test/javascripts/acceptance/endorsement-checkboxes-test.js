@@ -1,8 +1,8 @@
 import {
   acceptance,
+  exists,
   query,
   queryAll,
-  exists,
 } from "discourse/tests/helpers/qunit-helpers";
 import userFixtures from "discourse/tests/fixtures/user-fixtures";
 import categories from "../category-expert-categories";
