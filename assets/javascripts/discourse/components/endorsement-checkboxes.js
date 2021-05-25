@@ -113,9 +113,7 @@ export default Component.extend({
           });
         }
       })
-      .catch((e) => {
-        popupAjaxError(e);
-      });
+      .catch(popupAjaxError);
   },
 
   @action
