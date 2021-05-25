@@ -45,12 +45,15 @@ class CategoryExpertsController < ApplicationController
       guardian.can_see_category?(category) && endorsee_guardian.can_see_category?(category)
     end
 
-    render json: ActiveModel::ArraySerializer.new(
+    render_serialized(
       categories,
-      each_serializer: BasicCategorySerializer,
-      scope: guardian,
+      BasicCategorySerializer,
       root: :categories,
-    ).as_json
+      rest_serializer: true,
+      extras: {
+        remaining_endorsements: CategoryExperts::EndorsementRateLimiter.new(current_user).remaining
+      }
+    )
   end
 
   def approve_post
