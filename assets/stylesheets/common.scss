@@ -1,12 +1,12 @@
 .category-expert-existing-endorsements {
-  font-size: $font-down-2;
+  font-size: var(--font-down-2);
 
   .category-expert-endorse-edit {
     display: inline-block;
     width: unset;
     min-width: unset;
     padding: 2px;
-    color: $tertiary;
+    color: var(--tertiary);
     cursor: pointer;
     font-weight: bold;
     text-decoration: underline;
@@ -45,9 +45,14 @@
   margin: 2px 0 0px 3px;
 }
 
+.endorse-user-modal .remaining-endorsements-notice {
+  color: var(--secondary-medium);
+  font-size: var(--font-down-1);
+}
+
 .endorsement-successful {
   text-align: center;
-  color: $success;
+  color: var(--success);
   font-size: 5em;
   line-height: 1em;
 }
@@ -55,18 +60,18 @@
 .time-gap + .topic-post article.category-expert-post {
   .topic-body,
   .topic-avatar {
-    border-top: 4px solid $success;
+    border-top: 4px solid var(--success);
   }
 }
 article.category-expert-post {
   .topic-body,
   .topic-avatar {
-    border-top: 4px solid $success;
+    border-top: 4px solid var(--success);
   }
 }
 
 .category-expert-indicator .d-icon {
-  color: $success;
+  color: var(--success);
 }
 
 .post-controls .approve-category-expert-post .d-button-label {
@@ -76,23 +81,23 @@ article.category-expert-post {
 .topic-list-category-expert-tags > a,
 .topic-list-category-expert-needs-approval,
 .topic-list-category-expert-question {
-  font-size: $font-down-2;
+  font-size: var(--font-down-2);
   padding: 0.3em 0.5em;
-  background: $success-low;
-  color: $primary-high;
+  background: var(--success-low);
+  color: var(--primary-high);
   border-radius: 1em;
   margin-left: 4px;
 }
 
 .topic-list-category-expert-needs-approval {
-  background: $highlight-low;
+  background: var(--highlight-low);
 }
 .topic-list-category-expert-question {
-  background: $tertiary-low;
+  background: var(--tertiary-low);
 }
 
 ul.category-experts-post-admin-menu-btn li {
-  border-top: 1px solid $primary-low !important;
+  border-top: 1px solid var(--primary-low) !important;
 }
 
 .category-experts-search-fields label {

@@ -10,6 +10,7 @@ class CategoryExpertsController < ApplicationController
   before_action :authenticate_and_find_user, only: [:endorse, :endorsable_categories]
 
   def endorse
+    CategoryExperts::EndorsementRateLimiter.new(current_user).performed!
     category_ids = params[:categoryIds]&.reject(&:blank?)
 
     raise Discourse::InvalidParameters if category_ids.blank?
@@ -44,12 +45,15 @@ class CategoryExpertsController < ApplicationController
       guardian.can_see_category?(category) && endorsee_guardian.can_see_category?(category)
     end
 
-    render json: ActiveModel::ArraySerializer.new(
+    render_serialized(
       categories,
-      each_serializer: BasicCategorySerializer,
-      scope: guardian,
+      BasicCategorySerializer,
       root: :categories,
-    ).as_json
+      rest_serializer: true,
+      extras: {
+        remaining_endorsements: CategoryExperts::EndorsementRateLimiter.new(current_user).remaining
+      }
+    )
   end
 
   def approve_post

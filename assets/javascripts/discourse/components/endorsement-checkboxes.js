@@ -1,6 +1,7 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import Component from "@ember/component";
 import { action } from "@ember/object";
+import { lt } from "@ember/object/computed";
 import { later, next } from "@ember/runloop";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
@@ -14,6 +15,8 @@ export default Component.extend({
   startingCategoryIds: null,
   showingSuccess: false,
   loading: true,
+  remainingEndorsements: null,
+  outOfEndorsements: lt("remainingEndorsements", 1),
 
   didInsertElement() {
     this._super(...arguments);
@@ -29,6 +32,7 @@ export default Component.extend({
     ajax(`/category-experts/endorsable-categories/${this.user.username}.json`)
       .then((response) => {
         this.setProperties({
+          remainingEndorsements: response.extras.remaining_endorsements,
           categories: response.categories,
           selectedCategoryIds: [...this.startingCategoryIds],
           loading: false,
@@ -48,12 +52,24 @@ export default Component.extend({
       .catch(popupAjaxError);
   },
 
-  @discourseComputed("saving", "selectedCategoryIds", "startingCategoryIds")
-  saveDisabled(saving, categoryIds, startingCategoryIds) {
-    if (saving || !categoryIds) {
-      return;
-    }
-    if (categoryIds.length === 0 && startingCategoryIds.length === 0) {
+  @discourseComputed(
+    "saving",
+    "selectedCategoryIds",
+    "startingCategoryIds",
+    "remainingEndorsements"
+  )
+  saveDisabled(
+    saving,
+    categoryIds,
+    startingCategoryIds,
+    remainingEndorsements
+  ) {
+    if (
+      remainingEndorsements === 0 ||
+      saving ||
+      !categoryIds ||
+      (categoryIds.length === 0 && startingCategoryIds.length === 0)
+    ) {
       return true;
     }
     return !categoryIds.filter((c) => !startingCategoryIds.includes(c)).length;
@@ -61,6 +77,10 @@ export default Component.extend({
 
   @action
   save() {
+    if (this.saveDisabled) {
+      return;
+    }
+
     this.set("saving", true);
 
     ajax(`/category-experts/endorse/${this.user.username}.json`, {
