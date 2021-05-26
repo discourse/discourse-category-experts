@@ -6,7 +6,7 @@ en:
     send_category_experts_reminder_pms: "Send reminder PMs to category experts, to reply to unanswered questions"
     send_admin_category_experts_posts_reminder_pm: "Send reminder PMs to staff, to review unapproved category expert posts."
     approve_past_posts_on_becoming_category_expert: "When a user becomes an expert, all their past posts in the category are automatically approved. When a user is removed as an expert, all their posts are unapproved."
-    max_category_expert_endorsements_per_day: "The maximum number of endorsements a user is allowed to create in the 24 hour period"
+    max_category_expert_endorsements_per_day: "The maximum number of endorsements a user is allowed in a day"
     tl2_additional_category_expert_endorsements_per_day_multiplier: "Increase limit of endorsements per day for tl2 (member) by multiplying with this number"
     tl3_additional_category_expert_endorsements_per_day_multiplier: "Increase limit of endorsements per day for tl3 (regular) by multiplying with this number"
     tl4_additional_category_expert_endorsements_per_day_multiplier: "Increase limit of endorsements per day for tl4 (leader) by multiplying with this number"
