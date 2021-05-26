@@ -21,8 +21,8 @@ describe CategoryExpertsController do
   end
 
   def enable_custom_fields_for(category)
-    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS] = true
-    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = true
+    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS] = 'true'
+    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = 'true'
   end
 
   def set_expert_group_for_category(category, group_ids)
@@ -111,6 +111,7 @@ describe CategoryExpertsController do
     context "logged in" do
       fab!(:private_category) { fabricate_category_with_category_experts }
       fab!(:private_group) { Fabricate(:group) }
+      fab!(:category3) { fabricate_category_with_category_experts }
 
       before do
         sign_in(user)
@@ -124,6 +125,9 @@ describe CategoryExpertsController do
       it "returns categories visible to the current user and endorsed user" do
         private_category.set_permissions({ private_group.id => :full })
         private_category.save
+
+        category3.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = 'false'
+        category3.save
 
         # Endorsee and current user cannot see the new category
         get("/category-experts/endorsable-categories/#{endorsee.username}.json")

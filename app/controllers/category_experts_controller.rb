@@ -33,11 +33,11 @@ class CategoryExpertsController < ApplicationController
     categories = Category.where(<<~SQL)
       id IN (
         SELECT cf.category_id
-        FROM category_custom_fields cf, category_custom_fields ocf
+        FROM category_custom_fields cf
+        INNER JOIN category_custom_fields ocf ON ocf.category_id = cf.category_id
+        AND ocf.name = '#{CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS}' AND ocf.value = 'true'
         WHERE cf.name = '#{CategoryExperts::CATEGORY_EXPERT_GROUP_IDS}' AND
-              cf.value <> '' AND
-              ocf.name = '#{CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS}' AND
-              ocf.value <> ''
+              cf.value <> ''
       )
     SQL
 
