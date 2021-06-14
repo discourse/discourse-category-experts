@@ -24,7 +24,7 @@ class ChangeBooleanCustomFieldsToInts < ActiveRecord::Migration[6.1]
         # We have a custom field, now update the 't' to be the post_id.
         execute(<<~SQL
                 UPDATE topic_custom_fields
-                SET value = #{post_id.getvalue(0,0)}
+                SET value = #{post_id.getvalue(0, 0)}
                 WHERE topic_id = #{topic_id}
                 AND name = 'category_expert_topic_post_needs_approval'
           SQL
@@ -32,7 +32,7 @@ class ChangeBooleanCustomFieldsToInts < ActiveRecord::Migration[6.1]
       end
 
     end
-    # Now set all 'f' values to integer 0
+      # Now set all 'f' values to integer 0
       execute(<<~SQL
               UPDATE topic_custom_fields
               SET value = 0
@@ -54,7 +54,7 @@ class ChangeBooleanCustomFieldsToInts < ActiveRecord::Migration[6.1]
         ORDER BY pcf.id ASC
         LIMIT 1
                         SQL
-                       ).getvalue(0,0)
+                       ).getvalue(0, 0)
       now = Time.now
 
       # Create a new topic custom field with the first expert post id
