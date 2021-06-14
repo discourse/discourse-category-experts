@@ -27,19 +27,19 @@ class ChangeBooleanCustomFieldsToInts < ActiveRecord::Migration[6.1]
                 SET value = #{post_id.getvalue(0, 0)}
                 WHERE topic_id = #{topic_id}
                 AND name = 'category_expert_topic_post_needs_approval'
-          SQL
+                SQL
                )
       end
 
     end
-      # Now set all 'f' values to integer 0
-      execute(<<~SQL
+    # Now set all 'f' values to integer 0
+    execute(<<~SQL
               UPDATE topic_custom_fields
               SET value = 0
               WHERE value = 'f'
               AND name = 'category_expert_topic_post_needs_approval'
-        SQL
-             )
+            SQL
+           )
   end
 
   def set_topic_first_approved_post_ids
