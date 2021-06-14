@@ -12,11 +12,6 @@ export function categoryExpertQuestionIndicator(topic, currentUser) {
     (topic.creator && topic.creator.id === currentUser.id) ||
     currentUser.expert_for_category_ids.includes(topic.category_id)
   ) {
-    return htmlSafe(
-      `<a href="/search?q=is:category_expert_question" class='topic-list-category-expert-question'>${I18n.t(
-        "category_experts.topic_list.question"
-      )}</a>`
-    );
   }
 }
 
