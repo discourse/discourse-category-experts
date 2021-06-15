@@ -26,18 +26,21 @@ describe CategoryExperts::PostHandler do
         result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
 
         expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
-        expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(true)
+        expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(nil)
+        expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(result.post.post_number)
       end
     end
 
     describe "With an existing approved expert post" do
       it "marks the post as needing approval, but not the topic" do
-        post = create_post(topic_id: topic.id, user: expert)
-        CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+        existing_post = create_post(topic_id: topic.id, user: expert)
+        CategoryExperts::PostHandler.new(post: existing_post).mark_post_as_approved
 
         result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
 
         expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
+
+        expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(existing_post.post_number)
         expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
       end
     end
@@ -52,10 +55,11 @@ describe CategoryExperts::PostHandler do
       result = NewPostManager.new(expert, raw: 'this is a new post', topic_id: topic.id).perform
 
       expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+      expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
 
-      expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
-      expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(false)
+      expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(result.post.post_number)
+      expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(nil)
     end
 
     it "correctly adds the expert group names to the topic custom fields" do

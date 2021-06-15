@@ -14,6 +14,9 @@ plugins:
     default: false
   approve_past_posts_on_becoming_category_expert:
     default: false
+  category_experts_topic_list_link_to_posts:
+    default: false
+    client: true
   max_category_expert_endorsements_per_day:
     default: 1
     min: 1

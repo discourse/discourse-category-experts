@@ -34,6 +34,7 @@ after_initialize do
     POST_APPROVED_GROUP_NAME = "category_expert_post"
     POST_PENDING_EXPERT_APPROVAL = "category_expert_post_pending"
     TOPIC_EXPERT_POST_GROUP_NAMES = "category_expert_topic_approved_group_names"
+    TOPIC_FIRST_EXPERT_POST_ID = "category_expert_first_expert_post_id"
     TOPIC_NEEDS_EXPERT_POST_APPROVAL = "category_expert_topic_post_needs_approval"
     TOPIC_IS_CATEGORY_EXPERT_QUESTION = "category_expert_topic_is_question"
 
@@ -64,13 +65,15 @@ after_initialize do
   register_post_custom_field_type(CategoryExperts::POST_PENDING_EXPERT_APPROVAL, :boolean)
 
   register_topic_custom_field_type(CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES, :string)
-  register_topic_custom_field_type(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL, :boolean)
+  register_topic_custom_field_type(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID, :integer)
+  register_topic_custom_field_type(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL, :integer)
   register_topic_custom_field_type(CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION, :boolean)
 
   [
     CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES,
     CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL,
-    CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION
+    CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION,
+    CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID
   ].each do |field|
     TopicList.preloaded_custom_fields << field
     Search.preloaded_topic_custom_fields << field
@@ -152,11 +155,13 @@ after_initialize do
   reloadable_patch do
     [:topic_list_item, :search_topic_list_item].each do |serializer|
       add_to_serializer(serializer, :needs_category_expert_post_approval) do
-        true
+        object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
       end
 
       add_to_serializer(serializer, :include_needs_category_expert_post_approval?) do
-        scope.is_staff? && object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
+        scope.is_staff? &&
+          object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] &&
+          object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] > 0
       end
 
       add_to_serializer(serializer, :expert_post_group_names) do
@@ -165,6 +170,14 @@ after_initialize do
 
       add_to_serializer(serializer, :include_expert_post_group_names?) do
         !object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+      end
+
+      add_to_serializer(serializer, :first_expert_post_id) do
+        object.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]
+      end
+
+      add_to_serializer(serializer, :include_first_expert_post_id?) do
+        include_expert_post_group_names?
       end
 
       add_to_serializer(serializer, :is_category_expert_question) do
@@ -250,7 +263,7 @@ after_initialize do
         FROM topics
         INNER JOIN topic_custom_fields tc ON topics.id = tc.topic_id
         WHERE (tc.name = '#{CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL}' AND
-              tc.value = 't')
+              tc.value <> '0')
         OR (tc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
               tc.value <> '' AND
               tc.value IS NOT NULL)
@@ -265,7 +278,7 @@ after_initialize do
         FROM topics
         INNER JOIN topic_custom_fields tc ON topics.id = tc.topic_id
         WHERE tc.name = '#{CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL}' AND
-              tc.value = 't'
+              tc.value <> '0'
         )
     SQL
   end

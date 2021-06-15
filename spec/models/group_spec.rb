@@ -24,7 +24,7 @@ describe "Adding/removing users from groups" do
       it "marks past posts as approved" do
         post = create_post(topic_id: topic.id, user: user)
         group.add(user)
-        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(true)
+        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(post.post_number)
         expect(topic.first_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
       end
     end

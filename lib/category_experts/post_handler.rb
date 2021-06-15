@@ -47,8 +47,13 @@ module CategoryExperts
         end
       end
 
-      topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] =
-        topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+      if topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+        topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = post.post_number
+        topic.custom_fields.delete(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID)
+      else
+        topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
+      end
+
       topic.save!
     end
 
@@ -64,9 +69,14 @@ module CategoryExperts
       topic = post.topic
       topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] =
         (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []).push(users_expert_group.name).uniq.join("|")
-      topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = false
-      topic.save!
+      topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
 
+      if !topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] ||
+          topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] == 0
+        topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] = post.post_number
+      end
+
+      topic.save!
       users_expert_group.name
     end
 
