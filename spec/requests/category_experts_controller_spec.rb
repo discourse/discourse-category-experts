@@ -202,7 +202,7 @@ describe CategoryExpertsController do
         expect(response.status).to eq(200)
 
         expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq("#{group.name}|#{other_group.name}")
-        expect(topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(topic.first_post.id)
+        expect(topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(topic.first_post.post_number)
 
         expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(nil)
       end
@@ -248,7 +248,7 @@ describe CategoryExpertsController do
         expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
 
         expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
-        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(last_post.id)
+        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(last_post.post_number)
       end
 
       it "doesn't remove the group name from the topic custom field if another approved post exists" do

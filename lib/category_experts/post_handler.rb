@@ -48,7 +48,7 @@ module CategoryExperts
       end
 
       if topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
-        topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = post.id
+        topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = post.post_number
         topic.custom_fields.delete(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID)
       else
         topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
@@ -73,7 +73,7 @@ module CategoryExperts
 
       if !topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] ||
           topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] == 0
-        topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] = post.id
+        topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] = post.post_number
       end
 
       topic.save!

@@ -10,21 +10,21 @@ class ChangeBooleanCustomFieldsToInts < ActiveRecord::Migration[6.1]
     topic_needs_approval_custom_field_ids = execute("SELECT topic_id FROM topic_custom_fields WHERE name='category_expert_topic_post_needs_approval' AND value = 't'").values.flatten
 
     topic_needs_approval_custom_field_ids.each do |topic_id|
-      post_id = execute(<<~SQL
-        SELECT pcf.post_id
-        FROM post_custom_fields AS pcf
-        INNER JOIN posts ON posts.id = pcf.post_id AND posts.topic_id = #{topic_id}
+      post_number = execute(<<~SQL
+        SELECT p.post_number
+        FROM posts AS p
+        INNER JOIN post_custom_fields AS pcf ON pcf.post_id = p.id AND p.topic_id = #{topic_id}
         WHERE pcf.name='category_expert_post_pending' AND value = 't'
         ORDER BY pcf.id ASC
         LIMIT 1
                         SQL
                        )
 
-      if post_id.count > 0
+      if post_number.count > 0
         # We have a custom field, now update the 't' to be the post_id.
         execute(<<~SQL
                 UPDATE topic_custom_fields
-                SET value = #{post_id.getvalue(0, 0)}
+                SET value = #{post_number.getvalue(0, 0)}
                 WHERE topic_id = #{topic_id}
                 AND name = 'category_expert_topic_post_needs_approval'
                 SQL
@@ -46,10 +46,10 @@ class ChangeBooleanCustomFieldsToInts < ActiveRecord::Migration[6.1]
     topic_approved_custom_field_ids = execute("SELECT topic_id FROM topic_custom_fields WHERE name='category_expert_topic_approved_group_names' AND value IS NOT NULL")
 
     topic_approved_custom_field_ids.values.flatten.each do |topic_id|
-      post_id = execute(<<~SQL
-        SELECT pcf.post_id
-        FROM post_custom_fields AS pcf
-        INNER JOIN posts ON posts.id = pcf.post_id AND posts.topic_id = #{topic_id}
+      post_number = execute(<<~SQL
+        SELECT p.post_number
+        FROM posts AS p
+        INNER JOIN post_custom_fields AS pcf ON pcf.post_id = p.id AND p.topic_id = #{topic_id}
         WHERE pcf.name='category_expert_post' AND value IS NOT NULL
         ORDER BY pcf.id ASC
         LIMIT 1
@@ -60,7 +60,7 @@ class ChangeBooleanCustomFieldsToInts < ActiveRecord::Migration[6.1]
       # Create a new topic custom field with the first expert post id
       execute(<<~SQL
         INSERT INTO topic_custom_fields(topic_id, name, value, created_at, updated_at)
-        VALUES(#{topic_id}, 'category_expert_first_expert_post_id', #{post_id}, '#{now}', '#{now}')
+        VALUES(#{topic_id}, 'category_expert_first_expert_post_id', #{post_number}, '#{now}', '#{now}')
               SQL
              )
     end
