@@ -54,15 +54,17 @@ class ChangeBooleanCustomFieldsToInts < ActiveRecord::Migration[6.1]
         ORDER BY pcf.id ASC
         LIMIT 1
                         SQL
-                       ).getvalue(0, 0)
-      now = Time.now
+                       )
+      if (post_number.count > 0)
+        now = Time.now
 
-      # Create a new topic custom field with the first expert post id
-      execute(<<~SQL
-        INSERT INTO topic_custom_fields(topic_id, name, value, created_at, updated_at)
-        VALUES(#{topic_id}, 'category_expert_first_expert_post_id', #{post_number}, '#{now}', '#{now}')
-              SQL
-             )
+        # Create a new topic custom field with the first expert post id
+        execute(<<~SQL
+          INSERT INTO topic_custom_fields(topic_id, name, value, created_at, updated_at)
+          VALUES(#{topic_id}, 'category_expert_first_expert_post_id', #{post_number.getvalue(0, 0)}, '#{now}', '#{now}')
+                SQL
+               )
+      end
     end
   end
 
