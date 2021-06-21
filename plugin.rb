@@ -328,8 +328,6 @@ after_initialize do
   end
 
   DiscourseEvent.on(:user_removed_from_group) do |user, group|
-    next if !SiteSetting.approve_past_posts_on_becoming_category_expert
-
     category_ids = group.category_expert_category_ids
     next if category_ids.empty?
 
