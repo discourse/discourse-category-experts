@@ -253,7 +253,7 @@ after_initialize do
         SELECT topics.id
         FROM topics
         INNER JOIN topic_custom_fields otc ON topics.id = otc.topic_id
-        WHERE otc.name = '#{CategoryExperts::TOPIC_EXpPERT_POST_GROUP_NAMES}' AND
+        WHERE otc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
               otc.value <> '' AND
               otc.value IS NOT NULL
       )
