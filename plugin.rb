@@ -108,6 +108,13 @@ after_initialize do
     given_category_expert_endorsements.where(endorsed_user_id: user.id)
   end
 
+  add_to_class(:user, :expert_group_ids_for_category) do |category|
+    unsplit_expert_group_ids = category.custom_fields&.[](CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
+    return [] if unsplit_expert_group_ids.nil?
+
+    unsplit_expert_group_ids.split("|").map(&:to_i) & group_ids
+  end
+
   add_to_serializer(:current_user, :expert_for_category_ids) do
     user_group_ids = object.group_ids
     return [] if user_group_ids.empty?
@@ -246,7 +253,7 @@ after_initialize do
         SELECT topics.id
         FROM topics
         INNER JOIN topic_custom_fields otc ON topics.id = otc.topic_id
-        WHERE otc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
+        WHERE otc.name = '#{CategoryExperts::TOPIC_EXpPERT_POST_GROUP_NAMES}' AND
               otc.value <> '' AND
               otc.value IS NOT NULL
       )

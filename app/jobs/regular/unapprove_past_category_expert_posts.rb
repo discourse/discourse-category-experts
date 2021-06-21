@@ -16,6 +16,14 @@ module Jobs
         raise Discourse::InvalidParameters.new(:category_ids)
       end
 
+      user = User.find_by(args[:user_id])
+      raise Discourse::InvalidParameters.new(:user_id) unless user
+
+      category_ids = args[:category_ids].select do |category_id|
+        category = category.find_by(id: category_id)
+      end
+
+
       posts = Post.joins(:topic)
         .where(user_id: args[:user_id])
         .where(topic: { category_id: args[:category_ids] })
