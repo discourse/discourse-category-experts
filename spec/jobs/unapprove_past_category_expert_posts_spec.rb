@@ -53,7 +53,7 @@ describe Jobs::UnapprovePastCategoryExpertPosts do
     end
   end
 
-  describe "Site setting approve_past_posts_on_becoming_category_expert is truek" do
+  describe "Site setting approve_past_posts_on_becoming_category_expert is true" do
     it "only removed pending approval" do
       SiteSetting.approve_past_posts_on_becoming_category_expert = true
       group.remove(user)
