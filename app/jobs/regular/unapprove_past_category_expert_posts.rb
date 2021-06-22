@@ -20,10 +20,8 @@ module Jobs
       # The user was removed as category expert from 1 group. They could
       # still be a category expert by another group memebership.
       # Filter out those categories.
-      category_ids = args[:category_ids].select do |category_id|
-        category = Category.find_by(id: category_id)
-        group_ids = user.expert_group_ids_for_category(category)
-        group_ids.empty?
+      categories = Category.where(id: args[:category_ids]).filter do |c|
+        user.expert_group_ids_for_category(c).empty?
       end
 
       posts = Post
@@ -33,7 +31,7 @@ module Jobs
                CategoryExperts::POST_APPROVED_GROUP_NAME,
                CategoryExperts::POST_PENDING_EXPERT_APPROVAL)
         .where(user_id: user.id)
-        .where(topic: { category_id: category_ids })
+        .where(topic: { category_id: categories.map(&:id) })
 
       posts.group_by(&:topic).each do |topic, grouped_posts|
         grouped_posts.each do |post|
