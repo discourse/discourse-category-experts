@@ -91,20 +91,13 @@ module CategoryExperts
     private
 
     def ensure_poster_is_category_expert
-      expert_group_ids.length && users_expert_group
-    end
-
-    def expert_group_ids
-      unsplit_group_ids = post.topic.category&.custom_fields&.[](CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
-      return [] if unsplit_group_ids.nil?
-
-      unsplit_group_ids.split("|").map(&:to_i)
+      !users_expert_group.nil?
     end
 
     def users_expert_group
       return @users_expert_group if defined?(@users_expert_group) # memoizing a potentially falsy value
 
-      group_id = ((expert_group_ids & user.group_ids) || []).first
+      group_id = user.expert_group_ids_for_category(post.topic.category)&.first
       @users_expert_group = group_id.nil? ? nil : Group.find_by(id: group_id)
     end
   end
