@@ -27,21 +27,23 @@
 {{/d-modal-body}}
 
 <div class="modal-footer">
-  {{#if outOfEndorsements}}
-    <div class="alert alert-danger out-of-endorsements-alert">
-      {{i18n "category_experts.out_of_endorsements"}}
-    </div>
-  {{else}}
-    {{d-button
-      class="btn-primary category-endorsement-save"
-      action=(action "save")
-      disabled=saveDisabled
-      label="category_experts.endorse"
-    }}
-    {{#unless currentUser.staff}}
-      <div class="remaining-endorsements-notice">
-        {{i18n "category_experts.remaining_endorsements" count=remainingEndorsements}}
+  {{#unless loading}}
+    {{#if outOfEndorsements}}
+      <div class="alert alert-danger out-of-endorsements-alert">
+        {{i18n "category_experts.out_of_endorsements"}}
       </div>
-    {{/unless}}
-  {{/if}}
+    {{else}}
+      {{d-button
+        class="btn-primary category-endorsement-save"
+        action=(action "save")
+        disabled=saveDisabled
+        label="category_experts.endorse"
+      }}
+      {{#unless currentUser.staff}}
+        <div class="remaining-endorsements-notice">
+          {{i18n "category_experts.remaining_endorsements" count=remainingEndorsements}}
+        </div>
+      {{/unless}}
+    {{/if}}
+  {{/unless}}
 </div>
