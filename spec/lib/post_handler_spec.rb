@@ -10,6 +10,11 @@ describe CategoryExperts::PostHandler do
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:second_group) { Fabricate(:group, users: [second_expert]) }
   fab!(:topic) { Fabricate(:topic, category: category) }
+  fab!(:private_message_topic) { Fabricate(:private_message_topic, topic_allowed_users: [
+    Fabricate.build(:topic_allowed_user, user: user),
+    Fabricate.build(:topic_allowed_user, user: expert),
+    Fabricate.build(:topic_allowed_user, user: second_expert),
+  ]) }
 
   before do
     category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group.id}|#{second_group.id}|#{group.id + 1}"
@@ -29,6 +34,10 @@ describe CategoryExperts::PostHandler do
         expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(nil)
         expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(result.post.post_number)
       end
+    end
+
+    it "topic without category like private message should not error" do
+      expect { NewPostManager.new(expert, raw: 'this is a new post', topic_id: private_message_topic.id).perform }.not_to raise_error
     end
 
     describe "With an existing approved expert post" do

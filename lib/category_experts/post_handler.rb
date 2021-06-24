@@ -96,6 +96,7 @@ module CategoryExperts
 
     def users_expert_group
       return @users_expert_group if defined?(@users_expert_group) # memoizing a potentially falsy value
+      return nil if !post.topic.category
 
       group_id = user.expert_group_ids_for_category(post.topic.category)&.first
       @users_expert_group = group_id.nil? ? nil : Group.find_by(id: group_id)
