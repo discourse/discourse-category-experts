@@ -16,7 +16,8 @@ export default Component.extend({
     if (
       !this.siteSettings.enable_category_experts ||
       !this.currentUser ||
-      this.currentUser.id === this.user.id
+      this.currentUser.id === this.user.id ||
+      this.user.suspended
     ) {
       return;
     }
