@@ -318,7 +318,7 @@ after_initialize do
     category_ids
   end
 
-  DiscourseEvent.on(:user_added_to_group) do |user, group|
+  on(:user_added_to_group) do |user, group|
     next if !SiteSetting.approve_past_posts_on_becoming_category_expert
 
     category_ids = group.category_expert_category_ids
@@ -327,7 +327,7 @@ after_initialize do
     ::Jobs.enqueue(:approve_past_category_expert_posts, user_id: user.id, category_ids: category_ids)
   end
 
-  DiscourseEvent.on(:user_removed_from_group) do |user, group|
+  on(:user_removed_from_group) do |user, group|
     category_ids = group.category_expert_category_ids
     next if category_ids.empty?
 
