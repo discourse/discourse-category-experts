@@ -52,6 +52,5 @@ describe Jobs::CorrectHistoricalCategoryExpertPosts do
     expect(p4.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
     expect(p5.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group2.name)
     expect(p6.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group2.name)
-
   end
 end
