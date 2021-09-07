@@ -38,7 +38,6 @@ describe Jobs::CorrectHistoricalCategoryExpertPosts do
     category2.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = group2.id
     category2.save
 
-
     Jobs::CorrectHistoricalCategoryExpertPosts.new.execute
     # Topic fields
     expect(off_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
