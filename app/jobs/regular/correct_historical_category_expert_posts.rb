@@ -15,8 +15,8 @@ module Jobs
         .pluck(:category_id, :value)
         .each do |category_id, group_ids|
           groups = Group.where(id: group_ids)
-          user_ids = (groups || []).map(&:user_ids).flatten.uniq
-          next unless user_ids
+          user_ids = groups.map(&:user_ids).flatten.uniq
+          next if user_ids.blank?
 
           posts = Post.joins(:topic)
             .where(user_id: user_ids)
