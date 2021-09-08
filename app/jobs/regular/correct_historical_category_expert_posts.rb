@@ -24,10 +24,11 @@ module Jobs
 
           posts.each do |post|
             begin
-            CategoryExperts::PostHandler
-              .new(post: post)
-              .process_new_post(skip_validations: true)
+              CategoryExperts::PostHandler
+                .new(post: post)
+                .process_new_post(skip_validations: true)
             rescue
+              Rails.logger.warn("Error saving post with ID #{post.id} in correct_historical_category_expert_posts job")
               next
             end
           end
