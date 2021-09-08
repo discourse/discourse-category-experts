@@ -23,7 +23,13 @@ module Jobs
             .where(topic: { category_id: category_id })
 
           posts.each do |post|
-            CategoryExperts::PostHandler.new(post: post).process_new_post(skip_validations: true)
+            begin
+            CategoryExperts::PostHandler
+              .new(post: post)
+              .process_new_post(skip_validations: true)
+            rescue
+              next
+            end
           end
         end
     end
