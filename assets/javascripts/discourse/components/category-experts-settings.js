@@ -1,30 +1,25 @@
 import Component from "@ember/component";
+import Group from "discourse/models/group";
 import { action } from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 
 export default Component.extend({
   groupIds: null,
+  allGroups: null,
 
   init() {
     this._super(...arguments);
     this.set(
       "groupIds",
       this.category.custom_fields.category_expert_group_ids
-        ? this.category.custom_fields.category_expert_group_ids.split("|")
+        ? this.category.custom_fields.category_expert_group_ids
+            .split("|")
+            .map((id) => parseInt(id, 10))
         : []
     );
 
-    ajax("/groups.json").then((response) => {
-      const groupOptions = [];
-      response.groups.forEach((group) => {
-        if (!group.automatic) {
-          groupOptions.push({
-            name: group.name,
-            id: group.id.toString(),
-          });
-        }
-      });
-      this.set("groupOptions", groupOptions);
+    Group.findAll().then((groups) => {
+      this.set("allGroups", groups.filterBy("automatic", false));
     });
 
     ajax("/badges.json").then((response) => {
