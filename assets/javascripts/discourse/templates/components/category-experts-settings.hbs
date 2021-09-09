@@ -5,10 +5,11 @@
       {{i18n "category_experts.group"}}
     </label>
     <div class="controls">
-      {{multi-select
+      {{group-chooser
+        content=allGroups
         value=groupIds
-        content=groupOptions
-        onSelect=(action onChangeGroupIds)
+        labelProperty="name"
+        onChange=(action "onChangeGroupIds")
       }}
     </div>
   </section>
