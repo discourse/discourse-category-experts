@@ -291,17 +291,12 @@ after_initialize do
     SQL
   end
 
-  NewPostManager.add_handler do |manager|
-    result = manager.perform_create_post
-
-    if result.success?
-      post = result.post
-      handler = CategoryExperts::PostHandler.new(post: post, user: manager.user)
-      handler.process_new_post
-      handler.mark_topic_as_question if manager.args[:is_category_expert_question] && post.is_first_post?
+  on(:post_created) do |post, opts, user|
+    handler = CategoryExperts::PostHandler.new(post: post, user: user)
+    handler.process_new_post
+    if opts[:is_category_expert_question].to_s == "true" && post.is_first_post?
+      handler.mark_topic_as_question
     end
-
-    result
   end
 
   add_to_class(:group, :category_expert_category_ids) do

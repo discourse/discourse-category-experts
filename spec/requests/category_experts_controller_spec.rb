@@ -322,6 +322,8 @@ describe CategoryExpertsController do
 
       it "returns the expert group name when the post can be approved" do
         post = create_post(topic_id: topic.id, user: user)
+        post.custom_fields.delete(CategoryExperts::POST_APPROVED_GROUP_NAME)
+        post.save
 
         get "/category-experts/retroactive-approval/#{post.id}.json"
 
