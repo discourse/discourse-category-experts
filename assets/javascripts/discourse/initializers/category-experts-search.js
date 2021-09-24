@@ -7,6 +7,8 @@ function initialize(api) {
   const REGEX_WITH_UNAPPROVED_POST = /^with:unapproved_ce_post/gi;
 
   api.modifyClass("component:search-advanced-options", {
+    pluginId: "discourse-category-experts",
+
     init() {
       this._super(...arguments);
 
