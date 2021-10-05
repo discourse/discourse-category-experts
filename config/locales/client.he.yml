@@ -5,3 +5,17 @@
 # https://translate.discourse.org/
 
 he:
+  js:
+    category_experts:
+      title: "מומחי קטגוריה"
+      group: "קבוצת מומחי קטגוריה"
+      badge: "עיטור"
+      no_badge: "אין"
+      no_group: "אין"
+      edit: "עריכה"
+      topic_list:
+        response_by_group: "תגובת מומחה"
+        question: "שאלה למומחה"
+      search:
+        expert_response: "עם תגובת מומחה"
+        question: "שאלה למומחה"

@@ -5,3 +5,47 @@
 # https://translate.discourse.org/
 
 sv:
+  js:
+    category_experts:
+      title: "Kategoriexperter"
+      group: "Grupp med kategoriexperter"
+      badge: "Utmärkelse"
+      no_badge: "Ingen"
+      no_group: "Ingen"
+      accepting_endorsements: "Godkänner för närvarande användarrekommendationer"
+      accepting_questions: "Godkänner för närvarande frågor för kategoriexperter"
+      endorse: "Rekommendera"
+      out_of_endorsements: "Du har använt alla dina rekommendationer för idag."
+      remaining_endorsements: "%{count} rekommendationer kvar idag"
+      existing_endorsements: "Rekommenderas i %{count} kategorier."
+      edit: "Redigera"
+      approve: "Godkänn"
+      unapprove: "Icke-godkänn kategoriexperts inlägg"
+      ask_category_expert: "Be en kategoriexpert att svara"
+      manage_endorsements:
+        title: "Rekommendera användare"
+        subtitle: "Vad är %{username}:s styrkor?"
+      review:
+        approve: "Godkänn"
+        deny: "Ignorera"
+        title: "Kategoriexperts förslag"
+        endorsed_count:
+          one: "har rekommenderats %{count} gång för "
+          other: "har rekommenderats %{count} gånger för "
+        endorsed_by: "Rekommenderad av (%{count})"
+      topic_list:
+        response_by_group: "Expertsvar"
+        needs_approval: "Behöver godkännande"
+        question: "Fråga till expert"
+      search:
+        expert_response: "Med expertsvar"
+        question: "Fråga till expert"
+        without_post: "Utan kategoriexperts inlägg"
+        unapproved_post: "Med icke-godkänt inlägg"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Kategoriexperts förslag"
+      expert-group-chooser:
+        title: "Välj en expertgrupp för användaren"
+      endorsed_username: "Rekommenderad användare"
