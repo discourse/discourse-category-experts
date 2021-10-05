@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 sv:
+  site_settings:
+    enable_category_experts: "Aktivera tillägg för kategoriexperter"
+    category_expert_suggestion_threshold: "Föreslå kategoriexperter efter så här många rekommendationer."
+    category_experts_posts_require_approval: "Inlägg från kategoriexperter kräver personalgodkännande för expertutmärkelse."
+    send_category_experts_reminder_pms: "Skicka PM till kategoriexperter som påminnelse om att svara på obesvarade frågor"
+    send_admin_category_experts_posts_reminder_pm: "Skicka PM till personalen som påminnelse om att granska icke-godkända kategoriexpertinlägg."
+    approve_past_posts_on_becoming_category_expert: "När en användare blir expert godkänns alla deras tidigare inlägg i kategorin automatiskt. När en användare tas bort som expert blir alla deras inlägg icke-godkända."
+    max_category_expert_endorsements_per_day: "Det maximala antalet rekommendationer som en användare tillåts under en dag"
+    category_experts_topic_list_link_to_posts: "Ämneslistepiller länkar till inlägg istället för sökning"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Öka gränsen för rekommendationer per dag för tl2 (medlem) genom att multiplicera med detta tal"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Öka gränsen för rekommendationer per dag för tl3 (vanliga) genom att multiplicera med detta tal"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Öka gränsen för rekommendationer per dag för tl4 (ledare) genom att multiplicera med detta tal"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Grattis, du är en kategoriexpert!"
+      subject_template: "Grattis, du är en kategoriexpert!"
+      text_body_template: |
+        Du är nu en kategoriexpert för [%{category_name}](%{category_url}).
+
+        Du har lagts till som medlem i gruppen [%{group_name}](%{base_url}%{group_path}). Medlemmar i denna grupp är kategoriexperter för %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "Det finns obesvarade frågor för dig att granska."
+      raw_for_category: |
+        Det finns [%{topic_count} obesvarade frågor](%{search_url}) för en kategoriexpert i kategorin [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Det finns icke-godkända kategoriexpertinlägg för granskning."
+      body: |
+        Det finns [%{topic_count} kategoriexpertfrågor](%{search_url}) som har minst ett icke-godkänt kategoriexpertinlägg.
+
+        Godkänn minst ett kategoriexpertinlägg eller redigera det första inlägget för att avmarkera det som fråga för att ta bort det från denna lista.
