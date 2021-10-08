@@ -3,7 +3,7 @@ import { registerUnbound } from "discourse-common/lib/helpers";
 import { htmlSafe } from "@ember/template";
 
 export function categoryExpertQuestionIndicator(topic, currentUser) {
-  if (!currentUser || topic.expert_post_group_names) {
+  if (!currentUser || topic.expert_post_group_names?.length) {
     return;
   }
 

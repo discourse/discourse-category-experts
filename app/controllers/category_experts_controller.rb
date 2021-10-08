@@ -92,7 +92,7 @@ class CategoryExpertsController < ApplicationController
 
   def topic_custom_fields
     {
-      topic_expert_post_group_names: @post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+      topic_expert_post_group_names: @post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|"),
       topic_needs_category_expert_approval: @post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
     }
   end
