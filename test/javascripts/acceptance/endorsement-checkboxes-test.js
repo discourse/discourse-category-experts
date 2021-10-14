@@ -6,6 +6,8 @@ import {
 } from "discourse/tests/helpers/qunit-helpers";
 import userFixtures from "discourse/tests/fixtures/user-fixtures";
 import categories from "../category-expert-categories";
+import { test } from "qunit";
+import { click, visit } from "@ember/test-helpers";
 
 acceptance(
   "Discourse Category Experts - No existing endorsements",
