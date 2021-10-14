@@ -4,6 +4,8 @@ import {
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
 import topicFixtures from "discourse/tests/fixtures/topic";
+import { test } from "qunit";
+import { click, visit } from "@ember/test-helpers";
 
 const groupName = "some-group";
 
