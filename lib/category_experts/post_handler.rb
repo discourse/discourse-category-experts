@@ -14,6 +14,8 @@ module CategoryExperts
         return unless ensure_poster_is_category_expert
       end
 
+      return unless post.post_type == Post.types[:regular]
+
       SiteSetting.category_experts_posts_require_approval ?
         mark_post_for_approval(skip_validations: skip_validations) :
         mark_post_as_approved(skip_validations: skip_validations)
