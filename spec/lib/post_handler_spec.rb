@@ -52,6 +52,19 @@ describe CategoryExperts::PostHandler do
         expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(existing_post.post_number)
         expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
       end
+
+      it "does nothing for non-regular posts" do
+        expect {
+          create_post(topic_id: topic.id, user: expert, post_type: Post.types[:small_action])
+          create_post(topic_id: topic.id, user: expert, post_type: Post.types[:whisper])
+          create_post(topic_id: topic.id, user: expert, post_type: Post.types[:moderator_action])
+        }.to change {
+          PostCustomField.where(name: [
+            CategoryExperts::POST_APPROVED_GROUP_NAME,
+            CategoryExperts::POST_PENDING_EXPERT_APPROVAL
+          ]).count
+        }.by(0)
+      end
     end
   end
 
