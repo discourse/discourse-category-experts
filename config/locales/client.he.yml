@@ -13,6 +13,13 @@ he:
       no_badge: "אין"
       no_group: "אין"
       edit: "עריכה"
+      approve: "אישור"
+      ask_category_expert: "לבקש ממומחה הקטגוריה להגיב"
+      manage_endorsements:
+        subtitle: "מהן החוזקות של %{username}?"
+      review:
+        approve: "אישור"
+        deny: "התעלמות"
       topic_list:
         response_by_group: "תגובת מומחה"
         question: "שאלה למומחה"
