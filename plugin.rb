@@ -64,6 +64,7 @@ after_initialize do
 
   register_post_custom_field_type(CategoryExperts::POST_APPROVED_GROUP_NAME, :string)
   register_post_custom_field_type(CategoryExperts::POST_PENDING_EXPERT_APPROVAL, :boolean)
+  topic_view_post_custom_fields_allowlister { [CategoryExperts::POST_APPROVED_GROUP_NAME, CategoryExperts::POST_PENDING_EXPERT_APPROVAL] }
 
   register_topic_custom_field_type(CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES, :string)
   register_topic_custom_field_type(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID, :integer)
@@ -76,7 +77,7 @@ after_initialize do
     CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION,
     CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID
   ].each do |field|
-    TopicList.preloaded_custom_fields << field
+    add_preloaded_topic_list_custom_field(field)
     Search.preloaded_topic_custom_fields << field
   end
 
