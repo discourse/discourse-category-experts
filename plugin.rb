@@ -145,11 +145,11 @@ after_initialize do
   end
 
   add_to_serializer(:post, :category_expert_approved_group) do
-    object.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
+    post_custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
   end
 
   add_to_serializer(:post, :needs_category_expert_approval) do
-    object.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]
+    post_custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]
   end
 
   add_to_serializer(:post, :can_manage_category_expert_posts) do
