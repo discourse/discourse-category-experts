@@ -3,9 +3,8 @@
 require_dependency 'reviewable_serializer'
 
 class ReviewableCategoryExpertSuggestionSerializer < ReviewableSerializer
-  attributes :endorsed_by, :endorsed_count, :category, :user
+  attributes :endorsed_by, :endorsed_count
 
-  has_one :category, serializer: CategorySerializer, root: false, embed: :objects
   has_one :user, serializer: BasicUserSerializer, root: false, embed: :objects
 
   def endorsed_users
@@ -27,8 +26,12 @@ class ReviewableCategoryExpertSuggestionSerializer < ReviewableSerializer
     endorsed_users.count
   end
 
-  def category
-    object.target.category
+  def category_id
+    object.target.category_id
+  end
+
+  def include_category_id?
+    true
   end
 
   def user
