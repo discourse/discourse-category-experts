@@ -12,12 +12,19 @@ class CategoryExpertEndorsement < ActiveRecord::Base
   private
 
   def create_reviewable
-    endorsements_for_category = CategoryExpertEndorsement.where(endorsed_user: endorsed_user, category: category).count
-    if endorsements_for_category == SiteSetting.category_expert_suggestion_threshold
-      ReviewableCategoryExpertSuggestion.needs_review!(
+    endorsements = CategoryExpertEndorsement.where(endorsed_user: endorsed_user, category: category)
+    if endorsements.count == SiteSetting.category_expert_suggestion_threshold
+      reviewable = ReviewableCategoryExpertSuggestion.needs_review!(
         created_by: user,
         target: self
       )
+      endorsements.each do |endorsement|
+        reviewable.add_score(
+          endorsement.user,
+          ReviewableScore.types[:needs_approval],
+          force_review: true
+        )
+      end
     end
   end
 
