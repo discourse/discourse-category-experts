@@ -35,7 +35,7 @@ describe ReviewableCategoryExpertSuggestion do
       }.to change { Topic.where(archetype: Archetype.private_message).count }.by(1)
 
       expect(user.reload.group_ids).to eq([group.id])
-      expect(reviewable.status).to eq(Reviewable.statuses[:approved])
+      expect(reviewable).to be_approved
     end
 
     it "grants the user the categories badge when present" do
@@ -53,7 +53,7 @@ describe ReviewableCategoryExpertSuggestion do
       reviewable.perform(admin, :deny_category_expert)
 
       expect(user.reload.group_ids).to eq([])
-      expect(reviewable.status).to eq(Reviewable.statuses[:rejected])
+      expect(reviewable).to be_rejected
     end
   end
 end
