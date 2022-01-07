@@ -110,7 +110,7 @@ function initializeWithApi(api) {
 
   api.decorateWidget("poster-name:after", (helper) => {
     const post = helper.getModel();
-    if (post.category_expert_approved_group) {
+    if (post && post.category_expert_approved_group) {
       return helper.h(
         `span.category-expert-indicator.category-expert-${post.category_expert_approved_group}`,
         iconNode("check-circle")
