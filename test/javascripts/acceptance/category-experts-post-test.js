@@ -4,6 +4,7 @@ import {
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
 import topicFixtures from "discourse/tests/fixtures/topic";
+import userFixtures from "discourse/tests/fixtures/user-fixtures";
 import { test } from "qunit";
 import { click, visit } from "@ember/test-helpers";
 
@@ -25,6 +26,16 @@ acceptance(
       );
       topicResponse.post_stream.posts[2].category_expert_approved_group = groupName;
       server.get("/t/2480.json", () => helper.response(topicResponse));
+
+      let cardResponse = JSON.parse(
+        JSON.stringify(userFixtures["/u/charlie/card.json"])
+      );
+      cardResponse.user.username = "normal_user";
+      cardResponse.user.category_expert_endorsements = [];
+      cardResponse.user.topic_post_count = { 2480: 2 };
+      server.get("/u/normal_user/card.json", () =>
+        helper.response(cardResponse)
+      );
     });
 
     test("Posts with category_expert_approved have the correct classes", async function (assert) {
@@ -39,6 +50,13 @@ acceptance(
       await click(lastArticle.querySelector("button.show-more-actions"));
 
       assert.notOk(exists(".widget-button.unapprove-category-expert-post"));
+    });
+
+    test("Filter posts by user works", async function (assert) {
+      await visit("/t/topic-for-group-moderators/2480");
+      await click("article#post_2 .trigger-user-card");
+      await click(".usercard-controls .btn-default");
+      assert.equal(find(".topic-post").length, 3);
     });
   }
 );
