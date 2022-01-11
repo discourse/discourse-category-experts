@@ -5,3 +5,47 @@
 # https://translate.discourse.org/
 
 it:
+  js:
+    category_experts:
+      title: "Esperti di categoria"
+      group: "Gruppo di esperti di categoria"
+      badge: "Distintivo"
+      no_badge: "Nessuno"
+      no_group: "Nessuno"
+      accepting_endorsements: "Attualmente si accetta il sostegno agli utenti"
+      accepting_questions: "Attualmente si accettano domande per gli esperti della categoria"
+      endorse: "Sostieni"
+      out_of_endorsements: "Hai usato tutte le possibilità di sostegno disponibili per oggi."
+      remaining_endorsements: "%{count} possibilità di sostegno rimanenti oggi"
+      existing_endorsements: "Sostenuto in %{count} categorie."
+      edit: "Modifica"
+      approve: "Approva"
+      unapprove: "Annulla approvazione del messaggio dell'esperto di categoria"
+      ask_category_expert: "Chiedi a un esperto della categoria di rispondere"
+      manage_endorsements:
+        title: "Sostieni utente"
+        subtitle: "Quali sono i punti di forza di %{username}?"
+      review:
+        approve: "Approva"
+        deny: "Ignora"
+        title: "Suggerimento dell'esperto di categoria"
+        endorsed_count:
+          one: "ha ricevuto sostegno %{count} volta per "
+          other: "ha ricevuto sostegno %{count} volte per "
+        endorsed_by: "Sostenuto da (%{count})"
+      topic_list:
+        response_by_group: "Risposta dell'esperto"
+        needs_approval: "Da approvare"
+        question: "Domanda per l'esperto"
+      search:
+        expert_response: "Con risposta dell'esperto"
+        question: "Domanda per l'esperto"
+        without_post: "Senza messaggio dell'esperto di categoria"
+        unapproved_post: "Con messaggio non approvato"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Suggerimento dell'esperto di categoria"
+      expert-group-chooser:
+        title: "Scegli un gruppo di esperti per l'utente"
+      endorsed_username: "Utente sostenuto"

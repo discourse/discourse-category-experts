@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 es:
+  site_settings:
+    enable_category_experts: "Habilitar complemento de expertos en categorías"
+    category_expert_suggestion_threshold: "Sugerir expertos en la categoría después de esta cantidad de respaldos."
+    category_experts_posts_require_approval: "Las publicaciones de los expertos en la categoría requieren la aprobación del personal para la decoración de los expertos."
+    send_category_experts_reminder_pms: "Enviar mensajes privados de recordatorio a los expertos en la categoría para que respondan a las preguntas no contestadas"
+    send_admin_category_experts_posts_reminder_pm: "Enviar mensajes privados de recordatorio al personal para que revisen los mensajes de los expertos en la categoría que no han sido aprobados."
+    approve_past_posts_on_becoming_category_expert: "Cuando un usuario se convierte en experto, todas sus publicaciones anteriores en la categoría se aprueban automáticamente. Cuando se elimina a un usuario como experto, se anulan las aprobaciones de todas sus publicaciones."
+    max_category_expert_endorsements_per_day: "El número máximo de respaldos que se permite a un usuario en un día"
+    category_experts_topic_list_link_to_posts: "Las píldoras de la lista de temas enlazan con los mensajes en lugar de buscarlos"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Incrementar el límite de respaldos por día para los usuarios con nivel de confianza 2 (miembro) multiplicándolo por este número"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Incrementar el límite de respaldos por día para los usuarios con nivel de confianza 3 (habitual) multiplicándolo por este número"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Incrementar el límite de respaldos por día para los usuarios con nivel de confianza 4 (líder) multiplicándolo por este número"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Enhorabuena, ¡eres un experto en la categoría!"
+      subject_template: "Enhorabuena, ¡eres un experto en la categoría!"
+      text_body_template: |
+        Ahora eres un experto en la categoría [%{category_name}](%{category_url}).
+
+        Has sido añadido como miembro del grupo [%{group_name}](%{base_url}%{group_path}). Los miembros de este grupo son expertos en la categoría %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "Hay preguntas sin responder para que las revises."
+      raw_for_category: |
+        Hay [%{topic_count} preguntas sin responder](%{search_url}) para un experto en la categoría en la categoría [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Hay publicaciones de expertos en la categoría no aprobadas pendientes de revisión."
+      body: |
+        Hay [%{topic_count} preguntas de expertos en la categoría](%{search_url}) que tienen al menos un mensaje de experto en la categoría sin aprobar.
+
+        Aprueba al menos un mensaje de experto en la categoría o edita el primer mensaje para desmarcarlo como pregunta y eliminarlo de esta lista.

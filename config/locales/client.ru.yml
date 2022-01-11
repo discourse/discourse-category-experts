@@ -5,3 +5,44 @@
 # https://translate.discourse.org/
 
 ru:
+  js:
+    category_experts:
+      title: "Эксперты категории"
+      group: "Группа экспертов категории"
+      badge: "Награда"
+      no_badge: "Нет"
+      no_group: "Нет"
+      accepting_endorsements: "В настоящее время принимаются одобрения пользователей"
+      accepting_questions: "В настоящее время принимаются вопросы для экспертов категории"
+      endorse: "Одобрить"
+      out_of_endorsements: "Вы использовали все свои одобрения за день."
+      remaining_endorsements: "Осталось одобрений: %{count}"
+      existing_endorsements: "Одобрено в %{count} категориях."
+      edit: "Изменить"
+      approve: "Одобрить"
+      unapprove: "Отклонить одобрение сообщение эксперта категории"
+      ask_category_expert: "Попросить эксперта категории ответить"
+      manage_endorsements:
+        title: "Одобрение пользователя"
+        subtitle: "Каковы сильные стороны %{username}?"
+      review:
+        approve: "Одобрить"
+        deny: "Пропустить"
+        title: "Предложение эксперта по категории"
+        endorsed_by: "Одобрено (%{count})"
+      topic_list:
+        response_by_group: "Ответ эксперта"
+        needs_approval: "Требуется одобрение"
+        question: "Вопрос эксперту"
+      search:
+        expert_response: "С ответом эксперта"
+        question: "Вопрос эксперту"
+        without_post: "Без сообщения от эксперта категории"
+        unapproved_post: "С неодобренным сообщением"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Предложение эксперта категории"
+      expert-group-chooser:
+        title: "Выберите группу экспертов для пользователя"
+      endorsed_username: "Одобренный пользователь"

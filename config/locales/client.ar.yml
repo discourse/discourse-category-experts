@@ -5,3 +5,51 @@
 # https://translate.discourse.org/
 
 ar:
+  js:
+    category_experts:
+      title: "خبراء الفئة"
+      group: "مجموعة خبراء الفئة"
+      badge: "الشارة"
+      no_badge: "لا يوجد"
+      no_group: "لا يوجد"
+      accepting_endorsements: "يقبل مصادقات المستخدمين حاليًا"
+      accepting_questions: "يقبل طرح الأسئلة على خبراء الفئات حاليًا"
+      endorse: "مصادقة"
+      out_of_endorsements: "لقد استخدمت جميع مصادقاتك لليوم."
+      remaining_endorsements: "%{count} من المصادقات المتبقية اليوم"
+      existing_endorsements: "تمت المصادقة عليه في %{count} من الفئات."
+      edit: "تعديل"
+      approve: "موافقة"
+      unapprove: "عدم الموافقة على منشور خبير الفئة"
+      ask_category_expert: "مطالبة خبير الفئة بالرد"
+      manage_endorsements:
+        title: "المصادقة على المستخدم"
+        subtitle: "ما نقاط قوة %{username}؟"
+      review:
+        approve: "موافقة"
+        deny: "تجاهل"
+        title: "اقتراح خبير الفئة"
+        endorsed_count:
+          zero: "تم المصادقة عليه %{count} مرة في "
+          one: "تم المصادقات عليه مرة واحدة (%{count}) في "
+          two: "تم المصادقات عليه مرتين (%{count}) في "
+          few: "تم المصادقات عليه %{count} مرات في "
+          many: "تم المصادقات عليه %{count} مرةً في "
+          other: "تم المصادقات عليه %{count} مرة في "
+        endorsed_by: "تمت المصادقة عليه بواسطة (%{count})"
+      topic_list:
+        response_by_group: "رد الخبير"
+        needs_approval: "بحاجة إلى الموافقة"
+        question: "سؤال للخبير"
+      search:
+        expert_response: "مع رد الخبير"
+        question: "سؤال للخبير"
+        without_post: "دون منشور خبير الفئة"
+        unapproved_post: "مع منشور لم تتم الموافقة عليه"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "اقتراح خبير الفئة"
+      expert-group-chooser:
+        title: "اختيار مجموعة خبراء للمستخدم"
+      endorsed_username: "مستخدم تمت المصادقة عليه"

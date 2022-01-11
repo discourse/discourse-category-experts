@@ -5,3 +5,47 @@
 # https://translate.discourse.org/
 
 pt_BR:
+  js:
+    category_experts:
+      title: "Especialistas em categoria"
+      group: "Grupo de especialistas em categoria"
+      badge: "Emblema"
+      no_badge: "Nenhum"
+      no_group: "Nenhum"
+      accepting_endorsements: "Atualmente aceitando endossos de usuário(a)"
+      accepting_questions: "Atualmente aceitando perguntas para especialistas em categoria"
+      endorse: "Endossar"
+      out_of_endorsements: "Você esgotou seus endossos por hoje."
+      remaining_endorsements: "%{count} endossos restantes hoje"
+      existing_endorsements: "Endossou em %{count} categorias."
+      edit: "Editar"
+      approve: "Aprovar"
+      unapprove: "Desaprovar postagem de especialista em categoria"
+      ask_category_expert: "Pedir resposta a um(a) especialista em categoria"
+      manage_endorsements:
+        title: "Endossar usuário(a)"
+        subtitle: "Quais são os pontos fortes de %{username}?"
+      review:
+        approve: "Aprovar"
+        deny: "Ignorar"
+        title: "Sugestão de especialista em categoria"
+        endorsed_count:
+          one: "recebeu endosso %{count} vez por "
+          other: "recebeu endosso %{count} vezes por "
+        endorsed_by: "Recebeu endosso de (%{count})"
+      topic_list:
+        response_by_group: "Resposta de especialista"
+        needs_approval: "Precisa de aprovação"
+        question: "Pergunta para especialista"
+      search:
+        expert_response: "Com resposta de especialista"
+        question: "Pergunta para especialista"
+        without_post: "Sem postagem de especialista em categoria"
+        unapproved_post: "Com postagem não aprovada"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Sugestão de especialista em categoria"
+      expert-group-chooser:
+        title: "Escolha um grupo de especialistas para o(a) usuário(a)"
+      endorsed_username: "Usuário(a) endossado(a)"
