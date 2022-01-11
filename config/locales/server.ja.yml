@@ -5,3 +5,32 @@
 # https://translate.discourse.org/
 
 ja:
+  site_settings:
+    enable_category_experts: "カテゴリエキスパートプラグインを有効にする"
+    category_expert_suggestion_threshold: "この数の支持を得たら、カテゴリエキスパートを提案します。"
+    category_experts_posts_require_approval: "カテゴリエキスパートの投稿にエキスパートのデコレーションを付けるには、スタッフの承認を必要とします。"
+    send_category_experts_reminder_pms: "未回答の質問に返信するように、カテゴリエキスパートにリマインダー PM を送信する"
+    send_admin_category_experts_posts_reminder_pm: "未承認のカテゴリエキスパートの投稿をレビューするように、スタッフにリマインダー PM を送信します。"
+    approve_past_posts_on_becoming_category_expert: "ユーザーがエキスパートになると、カテゴリに含まれるそのユーザーの過去のすべての投稿を自動的に承認します。エキスパートユーザーが削除されると、そのユーザーの過去のすべての投稿を未承認にします。"
+    max_category_expert_endorsements_per_day: "ユーザーが 1 日に許可されている最大支持数"
+    category_experts_topic_list_link_to_posts: "トピックリストのピルは検索ではなく投稿にリンクする"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "TL2（メンバー）の 1 日の支持数制限をこの倍数で増加する"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "TL3（レギュラー）の 1 日の支持数制限をこの倍数で増加する"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "TL4（リーダー）の 1 日の支持数制限をこの倍数で増加する"
+  system_messages:
+    user_add_as_category_expert:
+      title: "おめでとうございます！カテゴリエキスパートになりました。"
+      subject_template: "おめでとうございます！カテゴリエキスパートになりました。"
+      text_body_template: |
+        あなたは、[%{category_name}](%{category_url}) のカテゴリエキスパートになりました。
+
+        [%{group_name}](%{base_url}%{group_path}) グループのメンバーとして追加されています。このグループのメンバーは、%{category_name} のカテゴリエキスパートです。
+  category_experts:
+    experts_reminder:
+      title: "レビューが必要な未回答の質問があります。"
+      raw_for_category: |
+        このカテゴリ「[%{category_name}](%{category_url})」には、カテゴリエキスパート宛ての[未回答の質問が %{topic_count} 件](%{search_url})あります。
+    admin_reminder:
+      title: "レビューが必要な未承認のカテゴリエキスパート投稿があります。"
+      body: |
+        少なくとも 1 件の未承認のカテゴリエキスパート投稿がある[カテゴリエキスパート質問が %{topic_count} 件](%{search_url})あります。

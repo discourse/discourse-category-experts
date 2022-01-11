@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 de:
+  site_settings:
+    enable_category_experts: "Kategorie-Experten-Plug-in aktivieren"
+    category_expert_suggestion_threshold: "Schlage nach so vielen Empfehlungen Kategorie-Experten vor."
+    category_experts_posts_require_approval: "Beiträge von Kategorie-Experten müssen vom Team für die Expertenauszeichnung genehmigt werden."
+    send_category_experts_reminder_pms: "Erinnerungs-PNs betreffend die Beantwortung nicht beantworteter Fragen an Kategorie-Experten senden"
+    send_admin_category_experts_posts_reminder_pm: "Erinnerungs-PNs betreffend die Überprüfung nicht genehmigter Beiträge von Kategorie-Experten an das Team senden."
+    approve_past_posts_on_becoming_category_expert: "Wenn ein Benutzer Experte wird, werden alle seine früheren Beiträge in der Kategorie automatisch genehmigt. Wenn ein Benutzer als Experte entfernt wird, sind alle seine Beiträge nicht mehr genehmigt."
+    max_category_expert_endorsements_per_day: "Die maximale Anzahl von Empfehlungen, die ein Benutzer an einem Tag machen darf"
+    category_experts_topic_list_link_to_posts: "Themenlistenpillen führen zu Beiträgen statt zur Suche"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Erhöhe das Limit der Empfehlungen pro Tag für Benutzer mit Vertrauensstufe 2 (Mitglied) durch Multiplikation mit dieser Zahl"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Erhöhe das Limit der Empfehlungen pro Tag für Benutzer mit Vertrauensstufe 3 (Stammgast) durch Multiplikation mit dieser Zahl"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Erhöhe das Limit der Empfehlungen pro Tag für Benutzer mit Vertrauensstufe 4 (Anführer) durch Multiplikation mit dieser Zahl"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Glückwunsch, du bist ein Kategorie-Experte!"
+      subject_template: "Glückwunsch, du bist ein Kategorie-Experte!"
+      text_body_template: |
+        Du bist jetzt ein Kategorie-Experte für [%{category_name}](%{category_url}).
+
+        Du wurdest als Mitglied der Gruppe [%{group_name}](%{base_url}%{group_path}) hinzugefügt. Die Mitglieder dieser Gruppe sind Kategorie-Experten für %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "Es gibt noch nicht beantwortete Fragen, die du überprüfen kannst."
+      raw_for_category: |
+        Es gibt [%{topic_count} nicht beantwortete Fragen](%{search_url}) für einen Kategorie-Experten in der Kategorie [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Es liegen nicht genehmigte Beiträge von Kategorie-Experten zur Überprüfung vor."
+      body: |
+        Es liegen [%{topic_count} Fragen an Kategorie-Experten](%{search_url}) vor, die mindestens einen nicht genehmigten Beitrag von Kategorie-Experten aufweisen.
+
+        Genehmige entweder mindestens einen Beitrag von Kategorie-Experten oder bearbeite den ersten Beitrag, um die Markierung als Frage aufzuheben und ihn aus dieser Liste zu entfernen.

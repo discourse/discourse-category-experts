@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 fr:
+  site_settings:
+    enable_category_experts: "Activer l'extension d'experts de catégorie"
+    category_expert_suggestion_threshold: "Suggérer des experts de la catégorie après ce nombre d'approbations."
+    category_experts_posts_require_approval: "Les messages d'experts de catégorie nécessitent l'approbation du personnel pour obtenir la qualification d'expert."
+    send_category_experts_reminder_pms: "Envoyer des messages de rappel aux experts de la catégorie pour qu'ils répondent aux questions restées sans réponse"
+    send_admin_category_experts_posts_reminder_pm: "Envoyer des messages de rappel au personnel pour qu'il examine les messages d'experts de la catégorie non approuvés."
+    approve_past_posts_on_becoming_category_expert: "Lorsqu'un utilisateur devient un expert, tous ses messages passés dans la catégorie sont automatiquement approuvés. Lorsqu'un utilisateur est supprimé en tant qu'expert, tous ses messages perdent leur statut d'approbation."
+    max_category_expert_endorsements_per_day: "Le nombre maximal d'approbations qu'un utilisateur est autorisé à accorder en une journée"
+    category_experts_topic_list_link_to_posts: "La liste des sujets mène vers les messages au lieu de la recherche"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Augmenter la limite quotidienne d'approbations pour les utilisateurs de niveau de confiance 2 (membres) en la multipliant par ce nombre"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Augmenter la limite quotidienne d'approbations pour les utilisateurs de niveau de confiance 3 (normal) en la multipliant par ce nombre"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Augmenter la limite quotidienne d'approbations pour les utilisateurs de niveau de confiance 4 (meneur) en la multipliant par ce nombre"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Félicitations, vous êtes un(e) expert(e) de la catégorie !"
+      subject_template: "Félicitations, vous êtes un(e) expert(e) de la catégorie !"
+      text_body_template: |
+        Vous êtes désormais un(e) expert(e) de la catégorie [%{category_name}](%{category_url}).
+
+        Vous avez été ajouté(e) en tant que membre du groupe [%{group_name}](%{base_url}%{group_path}). Les membres de ce groupe sont des experts de la catégorie %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "Il y a des questions sans réponse que vous devez examiner."
+      raw_for_category: |
+        Il y a [%{topic_count} questions sans réponse](%{search_url}) pour les experts de la catégorie [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Il y a des messages d'experts de la catégorie non approuvés à examiner."
+      body: |
+        Il y a [%{topic_count} questions d'expert de la catégorie](%{search_url}) qui comprennent au moins un message d'expert de la catégorie non approuvé.
+
+        Approuvez au moins un message d'expert de la catégorie ou modifiez le premier message pour supprimer son statut de question et le supprimer de cette liste.

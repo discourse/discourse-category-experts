@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 ru:
+  site_settings:
+    enable_category_experts: "Включить плагин экспертов по категориям"
+    category_expert_suggestion_threshold: "Предложить экспертов категории после такого количества одобрений."
+    category_experts_posts_require_approval: "Сообщения от экспертов категории требуют одобрения персонала для экспертного оформления."
+    send_category_experts_reminder_pms: "Отправлять напоминающие ЛС экспертам категорий, чтобы они ответили на вопросы, на которые нет ответов"
+    send_admin_category_experts_posts_reminder_pm: "Отправлять напоминания сотрудникам в ЛС, чтобы они просматривали неодобренные сообщения экспертов категории."
+    approve_past_posts_on_becoming_category_expert: "Когда пользователь становится экспертом, все его прошлые сообщения в этой категории автоматически одобряются. Когда пользователь удаляется с поста эксперта, все его сообщения становятся неодобренными."
+    max_category_expert_endorsements_per_day: "Максимальное количество одобрений, разрешённое пользователю в течение дня"
+    category_experts_topic_list_link_to_posts: "Список тем подстраивает ссылку на сообщения вместо поиска"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Увеличить лимит одобрений в день для tl2 (участника), умножив на это число"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Увеличить лимит одобрений в день для tl3 (активный), умножив на это число"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Увеличить лимит одобрений в день для tl4 (лидера), умножив на это число"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Поздравляем, вы являетесь экспертом категории!"
+      subject_template: "Поздравляем, вы являетесь экспертом категории!"
+      text_body_template: |
+        Теперь вы являетесь экспертом категории для [%{category_name}](%{category_url}).
+
+        Вы были добавлены в группу [%{group_name}](%{base_url}%{group_path}). Члены этой группы являются экспертами категории для %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "У вас есть вопросы, на которые вы можете ответить."
+      raw_for_category: |
+        Есть [%{topic_count} вопросов без ответа](%{search_url}) для эксперта категории в категории [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Есть непроверенные сообщения от экспертов категории для рассмотрения."
+      body: |
+        Есть [вопросы экспертов категории %{topic_count}](%{search_url}), которые содержат хотя бы одно неодобренное сообщение эксперта категории.
+
+        Одобрите хотя бы одно сообщение эксперта категории или отредактируйте первую публикацию, сняв отметку вопроса, чтобы удалить её из этого списка.

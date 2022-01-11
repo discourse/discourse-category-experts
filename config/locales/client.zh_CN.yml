@@ -5,3 +5,46 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  js:
+    category_experts:
+      title: "类别专家"
+      group: "类别专家群组"
+      badge: "徽章"
+      no_badge: "无"
+      no_group: "无"
+      accepting_endorsements: "当前接受用户认可"
+      accepting_questions: "当前接受类别专家问题"
+      endorse: "认可"
+      out_of_endorsements: "您已经用完了当天的所有认可。"
+      remaining_endorsements: "今天还剩 %{count} 个认可"
+      existing_endorsements: "在 %{count} 个类别中得到认可。"
+      edit: "编辑"
+      approve: "批准"
+      unapprove: "取消批准类别专家帖子"
+      ask_category_expert: "请类别专家回应"
+      manage_endorsements:
+        title: "认可用户"
+        subtitle: "%{username} 的优点是什么？"
+      review:
+        approve: "批准"
+        deny: "忽略"
+        title: "类别专家建议"
+        endorsed_count:
+          other: "已获得 %{count} 次认可："
+        endorsed_by: "认可者 (%{count})"
+      topic_list:
+        response_by_group: "专家回应"
+        needs_approval: "需要批准"
+        question: "给专家的问题"
+      search:
+        expert_response: "有专家回应"
+        question: "给专家的问题"
+        without_post: "无类别专家帖子"
+        unapproved_post: "有未批准的帖子"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "类别专家建议"
+      expert-group-chooser:
+        title: "为用户选择专家群组"
+      endorsed_username: "认可的用户"

@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  site_settings:
+    enable_category_experts: "启用类别专家插件"
+    category_expert_suggestion_threshold: "在此数值的认可之后建议类别专家。"
+    category_experts_posts_require_approval: "类别专家的帖子需要管理人员批准才能授予专家奖章。"
+    send_category_experts_reminder_pms: "向类别专家发送提醒 PM，请求回复未回答的问题"
+    send_admin_category_experts_posts_reminder_pm: "向管理人员发送提醒 PM，请求审核未批准的类别专家帖子。"
+    approve_past_posts_on_becoming_category_expert: "当用户成为专家时，他们在该类别中的所有旧帖子都会自动获得批准。当用户的专家身份被移除时，其所有帖子都会被取消批准。"
+    max_category_expert_endorsements_per_day: "一个用户一天内的最大认可数"
+    category_experts_topic_list_link_to_posts: "话题列表将链接指向帖子而不是搜索"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "通过乘以此数字来提升 tl2（成员）每天的认可限值"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "通过乘以此数字来提升 tl3（常规）每天的认可限值"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "通过乘以此数字来提升 tl4（领导者）每天的认可限值"
+  system_messages:
+    user_add_as_category_expert:
+      title: "恭喜，您已成为类别专家！"
+      subject_template: "恭喜，您已成为类别专家！"
+      text_body_template: |
+        您现在是 [%{category_name}](%{category_url}) 的类别专家。
+
+        您已成为 [%{group_name}](%{base_url}%{group_path}) 群组的成员。此群组的成员是 %{category_name} 的类别专家。
+  category_experts:
+    experts_reminder:
+      title: "有未回答的问题供您查看。"
+      raw_for_category: |
+        [%{category_name}](%{category_url}) 类别中有 [%{topic_count} 个未回答的问题](%{search_url})供类别专家处理。
+    admin_reminder:
+      title: "有未批准的类别专家帖子需要审核。"
+      body: |
+        有 [%{topic_count} 个类别专家问题](%{search_url})至少有一个未批准的类别专家帖子。
+
+        批准至少一个类别专家帖子，或编辑第一个帖子以将其问题标记取消并从列表中移除。

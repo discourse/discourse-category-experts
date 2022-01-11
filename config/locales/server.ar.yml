@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 ar:
+  site_settings:
+    enable_category_experts: "تفعيل المكوِّن الإضافي لخبراء الفئة"
+    category_expert_suggestion_threshold: "اقتراح خبراء الفئة بعد هذا العدد من المصادقات"
+    category_experts_posts_require_approval: "تتطلب المنشورات من خبراء الفئة موافقة فريق العمل على التعيين كخبراء"
+    send_category_experts_reminder_pms: "إرسال رسائل تذكيرية خاصة إلى خبراء الفئات للرد على الأسئلة التي لم تتم الإجابة عليها"
+    send_admin_category_experts_posts_reminder_pm: "إرسال رسائل تذكيرية خاصة إلى فريق العمل لمراجعة منشورات خبراء الفئة التي لم تتم الموافقة عليها"
+    approve_past_posts_on_becoming_category_expert: "الموافقة تلقائيًا على جميع منشورات المستخدم السابقة في الفئة عندما يصبح خبيرًا، وإلغاء الموافقة على جميع منشورات المستخدم عند إزالته من قائمة الخبراء"
+    max_category_expert_endorsements_per_day: "أقصى عدد مسموح به من المصادقات للمستخدم في اليوم"
+    category_experts_topic_list_link_to_posts: "تسحب قائمة الموضوعات الرابط إلى المنشورات بدلًا من البحث"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "زيادة الحد الأقصى لعدد المصادقات في اليوم للمستخدمين من مستوى الثقة 2 (عضو) من خلال مضاعفته بهذا الرقم"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "زيادة الحد الأقصى لعدد المصادقات في اليوم للمستخدمين من مستوى الثقة 3 (منتظم) من خلال مضاعفته بهذا الرقم"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "زيادة الحد الأقصى لعدد المصادقات في اليوم للمستخدمين من مستوى الثقة 4 (قائد) من خلال مضاعفته بهذا الرقم"
+  system_messages:
+    user_add_as_category_expert:
+      title: "تهانينا، أنت خبير في الفئة!"
+      subject_template: "تهانينا، أنت خبير في الفئة!"
+      text_body_template: |
+        أنت الآن خبير في الفئة [%{category_name}](%{category_url}).
+
+        لقد تمت إضافتك كعضو في المجموعة [%{group_name}](%{base_url}%{group_path}). أعضاء هذه المجموعة هم خبراء في الفئة %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "هناك أسئلة لم تتم الإجابة عليها لمراجعتها."
+      raw_for_category: |
+        هناك %{topic_count} من الأسئلة التي لم تتم الإجابة عليها](%{search_url}) لخبير في الفئة [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "هناك منشورات من خبراء الفئة لم تتم الموافقة عليها للمراجعة."
+      body: |
+        هناك [%{topic_count} من أسئلة خبراء الفئة](%{search_url}) وتتضمَّن منشورًا واحدًا على الأقل لم تتم الموافقة عليه من خبير في الفئة.
+
+        إما أن توافق على منشور واحد على الأقل من خبير في الفئة، أو أن تعدِّل المنشور الأول لإلغاء تمييزه كسؤال لإزالته من هذه القائمة.

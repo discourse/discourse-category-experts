@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 pt_BR:
+  site_settings:
+    enable_category_experts: "Ativar plugin de especialistas em categoria"
+    category_expert_suggestion_threshold: "Sugerir especialistas em categoria após tantos endossos."
+    category_experts_posts_require_approval: "Postagens de especialistas em categoria requerem a aprovação da equipe para a condecoração do especialista"
+    send_category_experts_reminder_pms: "Enviar MPs de lembrete a especialistas em categoria para responderem a perguntas não respondidas"
+    send_admin_category_experts_posts_reminder_pm: "Enviar PMs à equipe para revisar postagens não aprovadas de especialistas em categoria."
+    approve_past_posts_on_becoming_category_expert: "Quando um(a) usuário(a) se torna especialista, todas as suas postagens anteriores na categoria serão aprovadas automaticamente. Caso contrário, todas as suas postagens serão desaprovadas."
+    max_category_expert_endorsements_per_day: "A quantidade máxima de endosso permitida ao(à) usuário(a) em um dia"
+    category_experts_topic_list_link_to_posts: "A lista de tópicos recebe links para postagens em vez de pesquisa"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Aumente o limite de endossos por dia para tl2 (membro) ao multiplicar por este número"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Aumente o limite de endossos por dia para tl3 (membro) ao multiplicar por este número"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Aumente o limite de endossos por dia para tl4 (membro) ao multiplicar por este número"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Parabéns, você é um(a) especialista em categoria!"
+      subject_template: "Parabéns, você é um(a) especialista em categoria!"
+      text_body_template: |
+        Agora você é especialista em categoria para [%{category_name}](%{category_url}).
+
+        Você foi adicionado(a) como membro do grupo [%{group_name}](%{base_url}%{group_path}). Membros desse grupo são especialistas em categoria para %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "Há perguntas não respondidas para revisar."
+      raw_for_category: |
+        Há [%{topic_count} perguntas não respondidas](%{search_url}) para especialista em categoria na categoria [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Há postagens de especialista em categoria não aprovadas para revisar."
+      body: |
+        Há [%{topic_count} perguntas de especialista em categoria](%{search_url}) com pelo menos uma postagem não aprovada de especialista em categoria.
+
+        Aprove pelo menos uma postagem de especialista em categoria ou edite a primeira postagem para desmarcá-la como pergunta e removê-la desta lista.

@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 it:
+  site_settings:
+    enable_category_experts: "Abilita il plugin degli esperti di categoria"
+    category_expert_suggestion_threshold: "Suggerisci esperti di categoria dopo averli sostenuti per il numero di volte indicato."
+    category_experts_posts_require_approval: "I messaggi degli esperti di categoria richiedono l'approvazione dello staff per ricevere la decorazione di esperti."
+    send_category_experts_reminder_pms: "Invia messaggi personali di promemoria agli esperti di categoria, per rispondere a domande che non hanno ricevuto risposta"
+    send_admin_category_experts_posts_reminder_pm: "Invia messaggi personali di promemoria allo staff per la revisione dei messaggi degli esperti di categoria non approvati."
+    approve_past_posts_on_becoming_category_expert: "Quando un utente diventa esperto, tutti i suoi messaggi passati nella categoria vengono automaticamente approvati. Quando un utente viene rimosso come esperto, l'approvazione di tutti i suoi messaggi è annullata."
+    max_category_expert_endorsements_per_day: "Il numero massimo di possibilità di sostegno consentite a un utente al giorno"
+    category_experts_topic_list_link_to_posts: "Le pillole dell'elenco argomenti collegano ai messaggi anziché alla ricerca"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Aumenta il limite di possibilità di sostegno giornaliere per gli utenti con livello di attendibilità 2 (membri) moltiplicandolo per questo numero"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Aumenta il limite di possibilità di sostegno giornaliere per gli utenti con livello di attendibilità 3 (abituale) moltiplicandolo per questo numero"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Aumenta il limite di possibilità di sostegno giornaliere per gli utenti con livello di attendibilità 4 (veterani) moltiplicandolo per questo numero"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Congratulazioni, sei un esperto di categoria!"
+      subject_template: "Congratulazioni, sei un esperto di categoria!"
+      text_body_template: |
+        Ora sei un esperto della categoria [%{category_name}](%{category_url}).
+
+        Sei stato aggiunto come membro del gruppo [%{group_name}](%{base_url}%{group_path}). I membri di questo gruppo sono esperti della categoria %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "Ci sono domande senza risposta che devi sottoporre a revisione."
+      raw_for_category: |
+        Ci sono [%{topic_count} domande senza risposta](%{search_url}) per un esperto della categoria [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Ci sono messaggi di esperti di categoria non approvati da sottoporre a revisione."
+      body: |
+        Ci sono [%{topic_count} domande di esperti di categoria](%{search_url}) che hanno almeno un messaggio di esperti di categoria non approvato.
+
+        Approva almeno un messaggio degli esperti di categoria o modifica il primo messaggio per deselezionarlo e rimuoverlo da questo elenco di domande.

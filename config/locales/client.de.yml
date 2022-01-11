@@ -5,3 +5,47 @@
 # https://translate.discourse.org/
 
 de:
+  js:
+    category_experts:
+      title: "Kategorie-Experten"
+      group: "Kategorie-Expertengruppe"
+      badge: "Abzeichen"
+      no_badge: "Keines"
+      no_group: "Keine"
+      accepting_endorsements: "Akzeptiere derzeit Benutzerempfehlungen"
+      accepting_questions: "Akzeptiert derzeit Fragen an Kategorie-Experten"
+      endorse: "Empfehlen"
+      out_of_endorsements: "Du hast alle deine Empfehlungen für den Tag aufgebraucht."
+      remaining_endorsements: "%{count} heute verbleibende Empfehlungen"
+      existing_endorsements: "Empfohlen in %{count} Kategorien."
+      edit: "Bearbeiten"
+      approve: "Genehmigen"
+      unapprove: "Genehmigung für Beitrag von Kategorie-Experten widerrufen"
+      ask_category_expert: "Bitte einen Kategorie-Experten um eine Antwort"
+      manage_endorsements:
+        title: "Benutzer empfehlen"
+        subtitle: "Was sind die Stärken von %{username}?"
+      review:
+        approve: "Genehmigen"
+        deny: "Ignorieren"
+        title: "Kategorie-Expertenvorschlag"
+        endorsed_count:
+          one: "wurde %{count} Mal empfohlen für "
+          other: "wurde %{count} Mal empfohlen für "
+        endorsed_by: "Empfohlen von (%{count})"
+      topic_list:
+        response_by_group: "Expertenantwort"
+        needs_approval: "Benötigt Genehmigung"
+        question: "Frage an einen Experten"
+      search:
+        expert_response: "Mit Expertenantwort"
+        question: "Frage an einen Experten"
+        without_post: "Ohne Beitrag von Kategorie-Experten"
+        unapproved_post: "Mit nicht genehmigtem Beitrag"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Kategorie-Expertenvorschlag"
+      expert-group-chooser:
+        title: "Wähle eine Expertengruppe für den Benutzer"
+      endorsed_username: "Empfohlener Benutzer"

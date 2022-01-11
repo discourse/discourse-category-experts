@@ -5,3 +5,46 @@
 # https://translate.discourse.org/
 
 ja:
+  js:
+    category_experts:
+      title: "カテゴリエキスパート"
+      group: "カテゴリエキスパートグループ"
+      badge: "バッジ"
+      no_badge: "なし"
+      no_group: "なし"
+      accepting_endorsements: "現在、ユーザーの支持を受け付け中です"
+      accepting_questions: "現在、カテゴリエキスパートへの質問を受け付け中です"
+      endorse: "支持"
+      out_of_endorsements: "1 日の支持数をすべて使用しました。"
+      remaining_endorsements: "今日の支持数残り %{count} 件"
+      existing_endorsements: "%{count} 個のカテゴリで支持されています。"
+      edit: "編集"
+      approve: "承認"
+      unapprove: "未承認のカテゴリエキスパート投稿"
+      ask_category_expert: "カテゴリエキスパートに回答を依頼する"
+      manage_endorsements:
+        title: "ユーザーの支持"
+        subtitle: "%{username} の強みは何ですか？"
+      review:
+        approve: "承認"
+        deny: "無視"
+        title: "カテゴリエキスパートの提案"
+        endorsed_count:
+          other: "は、%{count} 回支持されています: "
+        endorsed_by: "支持者数（%{count}）"
+      topic_list:
+        response_by_group: "エキスパート回答"
+        needs_approval: "要承認"
+        question: "エキスパートへの質問"
+      search:
+        expert_response: "エキスパート回答あり"
+        question: "エキスパートへの質問"
+        without_post: "カテゴリエキスパート投稿なし"
+        unapproved_post: "未承認の投稿あり"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "カテゴリエキスパートの提案"
+      expert-group-chooser:
+        title: "ユーザーのエキスパートグループを選択してください"
+      endorsed_username: "支持済みのユーザー"

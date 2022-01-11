@@ -5,3 +5,47 @@
 # https://translate.discourse.org/
 
 fr:
+  js:
+    category_experts:
+      title: "Experts de la catégorie"
+      group: "Groupe d'experts de la catégorie"
+      badge: "Badge"
+      no_badge: "Aucun"
+      no_group: "Aucun"
+      accepting_endorsements: "Accepte actuellement les approbations des utilisateurs"
+      accepting_questions: "Accepte actuellement les questions pour les experts de la catégorie"
+      endorse: "Approuver"
+      out_of_endorsements: "Vous avez utilisé toutes vos approbations pour la journée."
+      remaining_endorsements: "%{count} approbations restantes aujourd'hui"
+      existing_endorsements: "Approuvé dans %{count} catégories."
+      edit: "Modifier"
+      approve: "Approuver"
+      unapprove: "Désapprouver le message d'expert de la catégorie"
+      ask_category_expert: "Demander à un expert de la catégorie de répondre"
+      manage_endorsements:
+        title: "Approuver l'utilisateur"
+        subtitle: "Quels sont les points forts de %{username} ?"
+      review:
+        approve: "Approuver"
+        deny: "Ignorer"
+        title: "Suggestion d'expert de catégorie"
+        endorsed_count:
+          one: "a été approuvé %{count} fois depuis "
+          other: "a été approuvé %{count} fois depuis "
+        endorsed_by: "Approuvé par (%{count})"
+      topic_list:
+        response_by_group: "Réponse d'expert"
+        needs_approval: "Besoin d'approbation"
+        question: "Question pour l'expert"
+      search:
+        expert_response: "Avec une réponse d'expert"
+        question: "Question pour l'expert"
+        without_post: "Sans message d'expert de la catégorie"
+        unapproved_post: "Avec un message non approuvé"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Suggestion d'expert de la catégorie"
+      expert-group-chooser:
+        title: "Choisissez un groupe d'experts pour l'utilisateur"
+      endorsed_username: "Utilisateur approuvé"
