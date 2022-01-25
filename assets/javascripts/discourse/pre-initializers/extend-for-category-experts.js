@@ -1,4 +1,3 @@
-import Category from "discourse/models/category";
 import Composer from "discourse/models/composer";
 import { and } from "@ember/object/computed";
 import { withPluginApi } from "discourse/lib/plugin-api";
@@ -19,18 +18,19 @@ export default {
       "is_category_expert_question"
     );
 
-    Category.reopen({
-      allowingCategoryExpertEndorsements: and(
-        "custom_fields.category_expert_group_ids",
-        "custom_fields.category_accepting_endorsements"
-      ),
-      allowingCategoryExpertQuestions: and(
-        "custom_fields.category_expert_group_ids",
-        "custom_fields.category_accepting_questions"
-      ),
-    });
-
     withPluginApi("0.8.31", (api) => {
+      api.modifyClass("model:category", {
+        pluginId: "discourse-category-experts",
+        allowingCategoryExpertEndorsements: and(
+          "custom_fields.category_expert_group_ids",
+          "custom_fields.category_accepting_endorsements"
+        ),
+        allowingCategoryExpertQuestions: and(
+          "custom_fields.category_expert_group_ids",
+          "custom_fields.category_accepting_questions"
+        ),
+      });
+
       api.addPluginReviewableParam(
         "ReviewableCategoryExpertSuggestion",
         "group_id"
