@@ -5,3 +5,47 @@
 # https://translate.discourse.org/
 
 fi:
+  js:
+    category_experts:
+      title: "Alueen asiantuntijat"
+      group: "Alueen asiantuntijoiden ryhmä"
+      badge: "Kunniamerkki"
+      no_badge: "Ei valittu"
+      no_group: "Ei valittu"
+      accepting_endorsements: "Käyttäjien suosituksia hyväksytään tällä hetkellä"
+      accepting_questions: "Kysymyksiä alueen asiantuntijoille otetaan tällä hetkellä vastaan"
+      endorse: "Suosittele"
+      out_of_endorsements: "Olet käyttänyt kaikki tämän päivän suositukset."
+      remaining_endorsements: "%{count} suositusta jäljellä tänään"
+      existing_endorsements: "Suositeltu %{count} alueella."
+      edit: "Muokkaa"
+      approve: "Hyväksy"
+      unapprove: "Peru alueen asiantuntijan viestin hyväksyntä"
+      ask_category_expert: "Pyydä alueen asiantuntijaa vastaamaan"
+      manage_endorsements:
+        title: "Suosittele käyttäjää"
+        subtitle: "Mitkä ovat käyttäjän %{username} vahvuudet?"
+      review:
+        approve: "Hyväksy"
+        deny: "Ohita"
+        title: "Alueen asiantuntijan ehdotus"
+        endorsed_count:
+          one: "on saanut %{count} suosituksen alueella "
+          other: "on saanut %{count} suositusta alueella "
+        endorsed_by: "Suosittelijoita (%{count})"
+      topic_list:
+        response_by_group: "Asiantuntijan vastaus"
+        needs_approval: "Vaatii hyväksynnän"
+        question: "Kysymys asiantuntijalle"
+      search:
+        expert_response: "Sisältää asiantuntijan vastauksen"
+        question: "Kysymys asiantuntijalle"
+        without_post: "Ilman alueen asiantuntijan viestiä"
+        unapproved_post: "Sisältää hyväksymättömän viestin"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Alueen asiantuntijan ehdotus"
+      expert-group-chooser:
+        title: "Valitse käyttäjälle asiantuntijaryhmä"
+      endorsed_username: "Suositeltu käyttäjä"

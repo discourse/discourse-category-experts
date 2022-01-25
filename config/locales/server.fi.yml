@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 fi:
+  site_settings:
+    enable_category_experts: "Ota alueen asiantuntija -lisäosa käyttöön"
+    category_expert_suggestion_threshold: "Ehdota alueen siantuntijoita näin monen suosituksen jälkeen."
+    category_experts_posts_require_approval: "Alueen asiantuntijoiden viestit vaativat henkilökunnan hyväksynnän asiantuntijan merkintää varten."
+    send_category_experts_reminder_pms: "Lähetä alueen asiantuntijoille muistutus yksityisviestinä vastaamattomiin kysymyksiin vastaamisesta"
+    send_admin_category_experts_posts_reminder_pm: "Lähetä muistutus yksityisviestinä henkilökunnalle hyväksymättömien alueen asiantuntijoiden viestien käsittelystä."
+    approve_past_posts_on_becoming_category_expert: "Kun käyttäjästä tulee asiantuntija, kaikki hänen aikaisemmat viestinsä alueella hyväksytään automaattisesti. Kun käyttäjältä poistetaan asiantuntijan asema, kaikkien hänen viestiensä hyväksyntä perutaan."
+    max_category_expert_endorsements_per_day: "Käyttäjän sallittujen suositusten enimmäismäärä päivässä"
+    category_experts_topic_list_link_to_posts: "Ketjuluettelon pyöristetyt painikkeet linkittävät viesteihin haun sijaan"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Nosta suositusten päivittäistä rajaa tasolla lt2 (jäsen) kertomalla tällä luvulla"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Nosta suositusten päivittäistä rajaa tasolla lt3 (mestari) kertomalla tällä luvulla"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Nosta suositusten päivittäistä rajaa tasolla lt4 (johtaja) kertomalla tällä luvulla"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Onnittelut, olet alueen asiantuntija!"
+      subject_template: "Onnittelut, olet alueen asiantuntija!"
+      text_body_template: |
+        Olet nyt alueen [%{category_name}](%{category_url}) asiantuntija.
+
+        Sinut on lisätty ryhmän [%{group_name}](%{base_url}%{group_path}) jäseneksi. Tämän ryhmän jäsenet ovat alueen %{category_name} asiantuntijoita.
+  category_experts:
+    experts_reminder:
+      title: "Sinulla on vastaamattomia kysymyksiä käsiteltävänä."
+      raw_for_category: |
+        Alueen asiantuntijalle on [%{topic_count} vastaamatonta kysymystä](%{search_url}) alueella [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Hyväksymättömiä alueen asiantuntijan viestejä on käsiteltävänä."
+      body: |
+        [%{topic_count} alueen asiantuntijan kysymystä](%{search_url}) sisältää ainakin yhden hyväksymättömän alueen asiantuntijan viestin.
+
+        Hyväksy ainakin yksi alueen asiantuntijan viesti tai muokkaa ensimmäistä viestiä poistaaksesi sen merkitseminen kysymykseksi, jolloin se poistetaan tästä luettelosta.
