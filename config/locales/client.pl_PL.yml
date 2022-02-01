@@ -5,3 +5,46 @@
 # https://translate.discourse.org/
 
 pl_PL:
+  js:
+    category_experts:
+      title: "Eksperci kategorii"
+      group: "Grupa ekspertów kategorii"
+      badge: "Odznaka"
+      no_badge: "Brak"
+      no_group: "Brak"
+      endorse: "Zatwierdź"
+      remaining_endorsements: "%{count} zatwierdzeń pozostałych na dziś"
+      existing_endorsements: "Zatwierdzony w %{count} kategoriach."
+      edit: "Edytuj"
+      approve: "Zatwierdź"
+      unapprove: "Cofnij zatwierdzenie postu eksperta kategorii"
+      ask_category_expert: "Poproś eksperta kategorii o odpowiedź"
+      manage_endorsements:
+        title: "Zatwierdź użytkownika"
+        subtitle: "Jakie są mocne strony %{username}?"
+      review:
+        approve: "Zatwierdź"
+        deny: "Ignoruj"
+        title: "Sugestia eksperta kategorii"
+        endorsed_count:
+          one: "został zatwierdzony %{count} raz za "
+          few: "został zatwierdzony %{count} razy za "
+          many: "został zatwierdzony %{count} razy za "
+          other: "został zatwierdzony %{count} razy za "
+        endorsed_by: "Zatwierdzony przez (%{count})"
+      topic_list:
+        response_by_group: "Odpowiedź eksperta"
+        needs_approval: "Wymaga zatwierdzenia"
+        question: "Pytanie do eksperta"
+      search:
+        expert_response: "Z odpowiedzią eksperta"
+        question: "Pytanie do eksperta"
+        without_post: "Bez postu eksperta kategorii"
+        unapproved_post: "Z niezatwierdzonym postem"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Sugestia eksperta kategorii"
+      expert-group-chooser:
+        title: "Wybierz grupę eksperta dla użytkownika"
+      endorsed_username: "Zatwierdzony użytkownik"
