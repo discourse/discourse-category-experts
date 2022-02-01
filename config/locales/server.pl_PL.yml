@@ -5,3 +5,25 @@
 # https://translate.discourse.org/
 
 pl_PL:
+  site_settings:
+    enable_category_experts: "Włącz wtyczkę ekspertów kategorii"
+    send_admin_category_experts_posts_reminder_pm: "Wyślij przypomnienia do personelu, aby przejrzeli niezatwierdzone posty ekspertów kategorii."
+    approve_past_posts_on_becoming_category_expert: "Gdy użytkownik staje się ekspertem, wszystkie jego wcześniejsze posty w kategorii są automatycznie zatwierdzane. Gdy użytkownik przestanie być ekspertem, wszystkie jego posty są niezatwierdzone."
+  system_messages:
+    user_add_as_category_expert:
+      title: "Gratulacje, jesteś ekspertem tej kategorii!"
+      subject_template: "Gratulacje, jesteś ekspertem tej kategorii!"
+      text_body_template: |
+        Jesteś teraz ekspertem od kategorii [%{category_name}](%{category_url}).
+
+        Zostałeś dodany jako członek grupy [%{group_name}](%{base_url}%{group_path}). Członkowie tej grupy są ekspertami kategorii %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "Są pytania bez odpowiedzi, które musisz przejrzeć."
+      raw_for_category: |
+        Istnieje [%{topic_count} pytań bez odpowiedzi](%{search_url}) dla eksperta kategorii w kategorii [%{category_name}](%{category_url}).
+    admin_reminder:
+      body: |
+        Istnieją [%{topic_count} pytania ekspertów kategorii](%{search_url}), które mają co najmniej jeden niezatwierdzony post eksperta kategorii.
+
+        Zatwierdź przynajmniej jeden post eksperta kategorii lub edytuj pierwszy post, aby usunąć go z tej listy.
