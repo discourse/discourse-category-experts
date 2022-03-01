@@ -7,6 +7,7 @@
 pl_PL:
   site_settings:
     enable_category_experts: "Włącz wtyczkę ekspertów kategorii"
+    category_expert_suggestion_threshold: "Zaproponuj ekspertów kategorii po tylu zatwierdzeniach."
     send_admin_category_experts_posts_reminder_pm: "Wyślij przypomnienia do personelu, aby przejrzeli niezatwierdzone posty ekspertów kategorii."
     approve_past_posts_on_becoming_category_expert: "Gdy użytkownik staje się ekspertem, wszystkie jego wcześniejsze posty w kategorii są automatycznie zatwierdzane. Gdy użytkownik przestanie być ekspertem, wszystkie jego posty są niezatwierdzone."
   system_messages:
