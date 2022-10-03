@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe "Adding/removing users from groups" do
+describe Group do
   fab!(:user) { Fabricate(:user) }
   fab!(:category) { Fabricate(:category) }
   fab!(:group) { Fabricate(:group) }
