@@ -64,7 +64,7 @@ describe CategoryExpertsController do
 
         expect {
           put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id, category2.id] })
-        }.to change { CategoryExpertEndorsement.count }.by(0)
+        }.not_to change { CategoryExpertEndorsement.count }
         expect(response.status).to eq(200)
       end
     end
