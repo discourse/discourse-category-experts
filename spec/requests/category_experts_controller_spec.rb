@@ -35,7 +35,7 @@ describe CategoryExpertsController do
       expect(response.status).to eq(404)
     end
 
-    context "logged in" do
+    context "when logged in" do
       before do
         sign_in(user)
       end
@@ -64,7 +64,7 @@ describe CategoryExpertsController do
 
         expect {
           put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id, category2.id] })
-        }.to change { CategoryExpertEndorsement.count }.by(0)
+        }.not_to change { CategoryExpertEndorsement.count }
         expect(response.status).to eq(200)
       end
     end
@@ -108,7 +108,7 @@ describe CategoryExpertsController do
       expect(response.status).to eq(404)
     end
 
-    context "logged in" do
+    context "when logged in" do
       fab!(:private_category) { fabricate_category_with_category_experts }
       fab!(:private_group) { Fabricate(:group) }
       fab!(:category3) { fabricate_category_with_category_experts }
@@ -171,7 +171,7 @@ describe CategoryExpertsController do
       expect(response.status).to eq(403)
     end
 
-    context "Correctly configured" do
+    context "when correctly configured" do
       before do
         sign_in(admin)
         SiteSetting.category_experts_posts_require_approval = true
@@ -232,7 +232,7 @@ describe CategoryExpertsController do
       expect(response.status).to eq(403)
     end
 
-    context "Correctly configured" do
+    context "when correctly configured" do
       before do
         sign_in(admin)
         SiteSetting.category_experts_posts_require_approval = true
