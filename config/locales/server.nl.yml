@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 nl:
+  site_settings:
+    enable_category_experts: "Categorie-expertsplug-in inschakelen"
+    category_expert_suggestion_threshold: "Stel categorie-experts voor na zoveel aanbevelingen."
+    category_experts_posts_require_approval: "Berichten van categorie-experts vereisen goedkeuring van een medewerker voor expertonderscheiding."
+    send_category_experts_reminder_pms: "Herinnerings-PB's sturen naar categorie-experts om onbeantwoorde vragen te beantwoorden"
+    send_admin_category_experts_posts_reminder_pm: "Herinnerings-PB's sturen naar medewerkers om niet-goedgekeurde categorie-expertberichten te bekijken."
+    approve_past_posts_on_becoming_category_expert: "Wanneer een gebruiker een expert wordt, worden al diens eerdere berichten in de categorie automatisch goedgekeurd. Wanneer een gebruiker wordt verwijderd als expert, wordt de goedkeuring van al diens berichten ongedaan gemaakt."
+    max_category_expert_endorsements_per_day: "Het maximale aantal aanbevelingen dat een gebruiker per dag mag doen"
+    category_experts_topic_list_link_to_posts: "Topiclijstpillen linken naar berichten in plaats van zoeken"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "Limiet van aantal aanbewerkingen per dag voor TL2 (lid) verhogen door met dit getal te vermenigvuldigen"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "Limiet van aantal aanbevelingen per dag voor TL3 (regulier) verhogen door met dit getal te vermenigvuldigen"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "Limiet van aantal aanbewerkingen per dag voor TL4 (leider) verhogen door met dit getal te vermenigvuldigen"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Gefeliciteerd, je bent een categorie-expert!"
+      subject_template: "Gefeliciteerd, je bent een categorie-expert!"
+      text_body_template: |
+        Je bent nu categorie-expert voor [%{category_name}](%{category_url}).
+
+        Je bent toegevoegd als lid van de groep [%{group_name}](%{base_url}%{group_path}). Leden van deze groep zijn categorie-experts voor %{category_name}.
+  category_experts:
+    experts_reminder:
+      title: "Er zijn onbeantwoorde vragen die je moet bekijken."
+      raw_for_category: |
+        Er zijn [%{topic_count} onbeantwoorde vragen](%{search_url}) voor een categorie-expert in de categorie [%{category_name}](%{category_url}).
+    admin_reminder:
+      title: "Er zijn niet-goedgekeurde berichten van categorie-experts ter beoordeling."
+      body: |
+        Er zijn [%{topic_count} categorie-expertvragen](%{search_url}) met minimaal één niet-goedgekeurd categorie-expertbericht.
+
+        Keur minimaal één bericht van een categorie-expert goed of bewerk het eerste bericht om de markering als vraag ongedaan te maken en het bericht uit deze lijst te verwijderen.
