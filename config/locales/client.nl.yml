@@ -5,3 +5,47 @@
 # https://translate.discourse.org/
 
 nl:
+  js:
+    category_experts:
+      title: "Categorie-experts"
+      group: "Categorie-expertsgroep"
+      badge: "Badge"
+      no_badge: "Geen"
+      no_group: "Geen"
+      accepting_endorsements: "Gebruikersaanbevelingen worden momenteel geaccepteerd"
+      accepting_questions: "Vragen voor categorie-experts worden momenteel geaccepteerd"
+      endorse: "Aanbevelen"
+      out_of_endorsements: "Je hebt al je aanbevelingen voor vandaag gebruikt."
+      remaining_endorsements: "%{count} aanbevelingen over vandaag"
+      existing_endorsements: "Aanbevolen in %{count} categorieën."
+      edit: "Bewerken"
+      approve: "Goedkeuren"
+      unapprove: "Goedkeuring van categorie-expertbericht ongedaan maken"
+      ask_category_expert: "Categorie-expert vragen te antwoorden"
+      manage_endorsements:
+        title: "Gebruiker aanbevelen"
+        subtitle: "Wat zijn de sterke punten van %{username}?"
+      review:
+        approve: "Goedkeuren"
+        deny: "Negeren"
+        title: "Suggestie voor categorie-expert"
+        endorsed_count:
+          one: "is %{count} keer aanbevolen voor "
+          other: "is %{count} keer aanbevolen voor "
+        endorsed_by: "Aanbevolen door (%{count})"
+      topic_list:
+        response_by_group: "Expertantwoord"
+        needs_approval: "Heeft goedkeuring nodig"
+        question: "Vraag voor expert"
+      search:
+        expert_response: "Met expertantwoord"
+        question: "Vraag voor expert"
+        without_post: "Zonder categorie-expertbericht"
+        unapproved_post: "Met niet-goedgekeurd bericht"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Suggestie voor categorie-expert"
+      expert-group-chooser:
+        title: "Kies een expertgroep voor de gebruiker"
+      endorsed_username: "Aanbevolen gebruiker"
