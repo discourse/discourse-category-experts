@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rate_limiter'
+require "rate_limiter"
 
 module CategoryExperts
   class EndorsementRateLimiter < RateLimiter
@@ -8,7 +8,10 @@ module CategoryExperts
       limit = SiteSetting.max_category_expert_endorsements_per_day
 
       if user.trust_level >= 2
-        multiplier = SiteSetting.get("tl#{user.trust_level}_additional_category_expert_endorsements_per_day_multiplier").to_f
+        multiplier =
+          SiteSetting.get(
+            "tl#{user.trust_level}_additional_category_expert_endorsements_per_day_multiplier",
+          ).to_f
         multiplier = 1.0 if multiplier < 1.0
         limit = (limit * multiplier).to_i
       end

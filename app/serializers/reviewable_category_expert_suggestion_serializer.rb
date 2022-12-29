@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_dependency 'reviewable_serializer'
+require_dependency "reviewable_serializer"
 
 class ReviewableCategoryExpertSuggestionSerializer < ReviewableSerializer
   attributes :endorsed_by, :endorsed_count
@@ -8,10 +8,14 @@ class ReviewableCategoryExpertSuggestionSerializer < ReviewableSerializer
   has_one :user, serializer: BasicUserSerializer, root: false, embed: :objects
 
   def endorsed_users
-    @endorsed_users ||= CategoryExpertEndorsement
-      .includes(:user)
-      .where(category_id: object.target.category_id, endorsed_user_id: object.target.endorsed_user_id)
-      .map(&:user)
+    @endorsed_users ||=
+      CategoryExpertEndorsement
+        .includes(:user)
+        .where(
+          category_id: object.target.category_id,
+          endorsed_user_id: object.target.endorsed_user_id,
+        )
+        .map(&:user)
   end
 
   def endorsed_by

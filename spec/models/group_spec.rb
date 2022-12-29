@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe Group do
   fab!(:user) { Fabricate(:user) }
@@ -17,28 +17,32 @@ describe Group do
 
   describe "Adding user to expert group" do
     describe "SiteSetting.category_experts_posts_require_approval = true" do
-      before do
-        SiteSetting.category_experts_posts_require_approval = true
-      end
+      before { SiteSetting.category_experts_posts_require_approval = true }
 
       it "marks past posts as approved" do
         post = create_post(topic_id: topic.id, user: user)
         group.add(user)
-        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(post.post_number)
-        expect(topic.first_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
+        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(
+          post.post_number,
+        )
+        expect(topic.first_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(
+          true,
+        )
       end
     end
 
     describe "SiteSetting.category_experts_posts_require_approval = false" do
-      before do
-        SiteSetting.category_experts_posts_require_approval = false
-      end
+      before { SiteSetting.category_experts_posts_require_approval = false }
 
       it "marks past posts as requiring approval" do
         post = create_post(topic_id: topic.id, user: user)
         group.add(user)
-        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
-        expect(topic.first_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
+          group.name,
+        )
+        expect(topic.first_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+          group.name,
+        )
       end
     end
   end
@@ -53,7 +57,7 @@ describe Group do
       post = create_post(topic_id: topic.id, user: user)
       CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
 
-      NewPostManager.new(user, raw: 'this is a new post', topic_id: topic.id).perform
+      NewPostManager.new(user, raw: "this is a new post", topic_id: topic.id).perform
     end
 
     it "removes past post custom fields when the expert is removed" do
@@ -69,7 +73,9 @@ describe Group do
       CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
 
       group.remove(user)
-      expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
+      expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
+        group.name,
+      )
     end
   end
 end

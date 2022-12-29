@@ -7,17 +7,14 @@ describe ReviewableCategoryExpertSuggestion do
   fab!(:user) { Fabricate(:user) }
   fab!(:category) { Fabricate(:category) }
   fab!(:group) { Fabricate(:group) }
-  let(:category_expert_endorsement) {
-    CategoryExpertEndorsement.create(
-      user: admin,
-      endorsed_user: user,
-      category: category
-    )
-  }
+  let(:category_expert_endorsement) do
+    CategoryExpertEndorsement.create(user: admin, endorsed_user: user, category: category)
+  end
 
   let(:reviewable) do
     ReviewableCategoryExpertSuggestion.needs_review!(
-      target: category_expert_endorsement, created_by: Discourse.system_user
+      target: category_expert_endorsement,
+      created_by: Discourse.system_user,
     )
   end
 
@@ -30,16 +27,16 @@ describe ReviewableCategoryExpertSuggestion do
   describe "#perform_approve_category_expert" do
     it "adds the user to the group" do
       expect(user.group_ids).to eq([])
-      expect {
-        reviewable.perform(admin, :approve_category_expert, group_id: group.id)
-      }.to change { Topic.where(archetype: Archetype.private_message).count }.by(1)
+      expect { reviewable.perform(admin, :approve_category_expert, group_id: group.id) }.to change {
+        Topic.where(archetype: Archetype.private_message).count
+      }.by(1)
 
       expect(user.reload.group_ids).to eq([group.id])
       expect(reviewable).to be_approved
     end
 
     it "grants the user the categories badge when present" do
-      badge = Badge.create!(name: 'a badge', badge_type_id: BadgeType::Bronze)
+      badge = Badge.create!(name: "a badge", badge_type_id: BadgeType::Bronze)
       category.custom_fields[CategoryExperts::CATEGORY_BADGE_ID] = badge.id
       reviewable.perform(admin, :approve_category_expert, group_id: group.id)
 
