@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe Jobs::UnapprovePastCategoryExpertPosts do
   fab!(:user) { Fabricate(:user) }
@@ -49,7 +49,9 @@ describe Jobs::UnapprovePastCategoryExpertPosts do
       expect(p2.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
       expect(p3.reload.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(nil)
       expect(p4.reload.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(nil)
-      expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
+      expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
+        group.name,
+      )
     end
   end
 

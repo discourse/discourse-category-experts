@@ -17,13 +17,18 @@ module CategoryExperts
         group_ids = category_custom_field.value.split("|")
 
         usernames_in_group_ids(group_ids).each do |username|
-          search_path = "/search?q=#{CGI::escape("##{category.name} is:category_expert_question without:category_expert_post")}"
-          raw = I18n.t("category_experts.experts_reminder.raw_for_category", {
-            topic_count: unanswered_count,
-            category_name: category.name,
-            category_url: category.url,
-            search_url: "#{Discourse.base_url}#{search_path}"
-          })
+          search_path =
+            "/search?q=#{CGI.escape("##{category.name} is:category_expert_question without:category_expert_post")}"
+          raw =
+            I18n.t(
+              "category_experts.experts_reminder.raw_for_category",
+              {
+                topic_count: unanswered_count,
+                category_name: category.name,
+                category_url: category.url,
+                search_url: "#{Discourse.base_url}#{search_path}",
+              },
+            )
           username_raw_map[username] = (username_raw_map[username] || "") + raw
         end
       end
@@ -40,23 +45,20 @@ module CategoryExperts
     end
 
     def usernames_in_group_ids(group_ids)
-      User
-        .joins(:group_users)
-        .where(group_users: { group_id: group_ids })
-        .pluck(:username)
-        .uniq
+      User.joins(:group_users).where(group_users: { group_id: group_ids }).pluck(:username).uniq
     end
 
     def create_message(username, raw)
-      creator = PostCreator.new(
-        Discourse.system_user,
-        title: I18n.t("category_experts.experts_reminder.title"),
-        raw: raw,
-        archetype: Archetype.private_message,
-        target_usernames: username,
-        subtype: TopicSubtype.system_message,
-        skip_validations: true
-      )
+      creator =
+        PostCreator.new(
+          Discourse.system_user,
+          title: I18n.t("category_experts.experts_reminder.title"),
+          raw: raw,
+          archetype: Archetype.private_message,
+          target_usernames: username,
+          subtype: TopicSubtype.system_message,
+          skip_validations: true,
+        )
       creator.create!
     end
 

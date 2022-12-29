@@ -12,18 +12,18 @@ register_asset "stylesheets/common.scss"
 enabled_site_setting :enable_category_experts
 
 after_initialize do
-  [
-    "../app/controllers/category_experts_controller",
-    "../app/models/category_expert_endorsement",
-    "../app/models/reviewable_category_expert_suggestion",
-    "../app/serializers/reviewable_category_expert_suggestion_serializer",
-    "../app/jobs/regular/approve_past_category_expert_posts",
-    "../app/jobs/regular/correct_historical_category_expert_posts",
-    "../app/jobs/regular/unapprove_past_category_expert_posts",
-    "../app/jobs/scheduled/remind_admin_of_category_experts_posts_job",
-    "../app/jobs/scheduled/remind_category_experts_job",
-    "../lib/category_experts/post_handler",
-    "../lib/category_experts/endorsement_rate_limiter"
+  %w[
+    ../app/controllers/category_experts_controller
+    ../app/models/category_expert_endorsement
+    ../app/models/reviewable_category_expert_suggestion
+    ../app/serializers/reviewable_category_expert_suggestion_serializer
+    ../app/jobs/regular/approve_past_category_expert_posts
+    ../app/jobs/regular/correct_historical_category_expert_posts
+    ../app/jobs/regular/unapprove_past_category_expert_posts
+    ../app/jobs/scheduled/remind_admin_of_category_experts_posts_job
+    ../app/jobs/scheduled/remind_category_experts_job
+    ../lib/category_experts/post_handler
+    ../lib/category_experts/endorsement_rate_limiter
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   module ::CategoryExperts
@@ -55,16 +55,18 @@ after_initialize do
       Proc.new do |results, value|
         user_id = User.find_by_username(value)&.id
         return results if user_id.blank?
-        results
-          .joins("INNER JOIN category_expert_endorsements ON category_expert_endorsements.id = target_id")
-          .where("category_expert_endorsements.endorsed_user_id = ?", user_id)
-      end
-    ]
+        results.joins(
+          "INNER JOIN category_expert_endorsements ON category_expert_endorsements.id = target_id",
+        ).where("category_expert_endorsements.endorsed_user_id = ?", user_id)
+      end,
+    ],
   )
 
   register_post_custom_field_type(CategoryExperts::POST_APPROVED_GROUP_NAME, :string)
   register_post_custom_field_type(CategoryExperts::POST_PENDING_EXPERT_APPROVAL, :boolean)
-  topic_view_post_custom_fields_allowlister { [CategoryExperts::POST_APPROVED_GROUP_NAME, CategoryExperts::POST_PENDING_EXPERT_APPROVAL] }
+  topic_view_post_custom_fields_allowlister do
+    [CategoryExperts::POST_APPROVED_GROUP_NAME, CategoryExperts::POST_PENDING_EXPERT_APPROVAL]
+  end
 
   register_topic_custom_field_type(CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES, :string)
   register_topic_custom_field_type(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID, :integer)
@@ -75,7 +77,7 @@ after_initialize do
     CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES,
     CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL,
     CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION,
-    CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID
+    CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID,
   ].each do |field|
     add_preloaded_topic_list_custom_field(field)
     Search.preloaded_topic_custom_fields << field
@@ -91,18 +93,26 @@ after_initialize do
   Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS
   Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_BADGE_ID
 
-  add_permitted_post_update_param(:is_category_expert_question) do |post, is_category_expert_question|
+  add_permitted_post_update_param(
+    :is_category_expert_question,
+  ) do |post, is_category_expert_question|
     if post.is_first_post?
       topic = post.topic
-      topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = is_category_expert_question.to_s == "true"
+      topic.custom_fields[
+        CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION
+      ] = is_category_expert_question.to_s == "true"
       topic.save!
     end
   end
 
   reloadable_patch do
     User.class_eval do
-      has_many :given_category_expert_endorsements, foreign_key: "user_id", class_name: "CategoryExpertEndorsement"
-      has_many :received_category_expert_endorsements, foreign_key: "endorsed_user_id", class_name: "CategoryExpertEndorsement"
+      has_many :given_category_expert_endorsements,
+               foreign_key: "user_id",
+               class_name: "CategoryExpertEndorsement"
+      has_many :received_category_expert_endorsements,
+               foreign_key: "endorsed_user_id",
+               class_name: "CategoryExpertEndorsement"
     end
   end
 
@@ -111,7 +121,8 @@ after_initialize do
   end
 
   add_to_class(:user, :expert_group_ids_for_category) do |category|
-    unsplit_expert_group_ids = category.custom_fields&.[](CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
+    unsplit_expert_group_ids =
+      category.custom_fields&.[](CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
     return [] if unsplit_expert_group_ids.nil?
 
     unsplit_expert_group_ids.split("|").map(&:to_i) & group_ids
@@ -123,7 +134,9 @@ after_initialize do
 
     CategoryCustomField
       .where(name: CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
-      .select { |custom_field| (custom_field.value.split("|").map(&:to_i) & user_group_ids).count > 0 }
+      .select do |custom_field|
+        (custom_field.value.split("|").map(&:to_i) & user_group_ids).count > 0
+      end
       .map(&:category_id)
   end
 
@@ -152,9 +165,7 @@ after_initialize do
     post_custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]
   end
 
-  add_to_serializer(:post, :can_manage_category_expert_posts) do
-    scope.is_staff?
-  end
+  add_to_serializer(:post, :can_manage_category_expert_posts) { scope.is_staff? }
 
   add_to_class(:topic, :is_category_expert_question?) do
     custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] &&
@@ -162,7 +173,7 @@ after_initialize do
   end
 
   reloadable_patch do
-    [:topic_list_item, :search_topic_list_item].each do |serializer|
+    %i[topic_list_item search_topic_list_item].each do |serializer|
       add_to_serializer(serializer, :needs_category_expert_post_approval) do
         object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
       end
@@ -189,9 +200,7 @@ after_initialize do
         include_expert_post_group_names?
       end
 
-      add_to_serializer(serializer, :is_category_expert_question) do
-        true
-      end
+      add_to_serializer(serializer, :is_category_expert_question) { true }
 
       add_to_serializer(serializer, :include_is_category_expert_question?) do
         object.is_category_expert_question?
@@ -212,15 +221,17 @@ after_initialize do
   end
 
   add_to_serializer(:topic_view, :expert_post_group_count) do
-    object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|").inject({}) do |hash, group_name|
-      hash[group_name] = object
-        .topic
-        .posts
-        .joins("INNER JOIN post_custom_fields ON posts.id = post_custom_fields.post_id")
-        .where(post_custom_fields: { name: "category_expert_post", value: group_name })
-        .count
-      hash
-    end
+    object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]
+      .split("|")
+      .inject({}) do |hash, group_name|
+        hash[group_name] = object
+          .topic
+          .posts
+          .joins("INNER JOIN post_custom_fields ON posts.id = post_custom_fields.post_id")
+          .where(post_custom_fields: { name: "category_expert_post", value: group_name })
+          .count
+        hash
+      end
   end
 
   add_to_serializer(:topic_view, :include_expert_post_group_count?) do
@@ -235,16 +246,17 @@ after_initialize do
   end
 
   register_search_advanced_filter(/with:category_expert_response/) do |posts|
-    posts.where("topics.id IN (
+    posts.where(
+      "topics.id IN (
         SELECT tc.topic_id
         FROM topic_custom_fields tc
         WHERE tc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
               tc.value <> ''
-        )")
+        )",
+    )
   end
 
-  register_search_advanced_filter(/is:category_expert_question/) do |posts|
-    posts.where(<<~SQL)
+  register_search_advanced_filter(/is:category_expert_question/) { |posts| posts.where(<<~SQL) }
       topics.id IN (
         SELECT topics.id
         FROM topics
@@ -260,10 +272,8 @@ after_initialize do
               otc.value IS NOT NULL
       )
     SQL
-  end
 
-  register_search_advanced_filter(/without:category_expert_post/) do |posts|
-    posts.where(<<~SQL)
+  register_search_advanced_filter(/without:category_expert_post/) { |posts| posts.where(<<~SQL) }
       topics.id IN (
         SELECT topics.id
         FROM topics
@@ -278,10 +288,8 @@ after_initialize do
               tc.value IS NOT NULL)
         )
     SQL
-  end
 
-  register_search_advanced_filter(/with:unapproved_ce_post/) do |posts|
-    posts.where(<<~SQL)
+  register_search_advanced_filter(/with:unapproved_ce_post/) { |posts| posts.where(<<~SQL) }
       topics.id IN (
         SELECT topics.id
         FROM topics
@@ -290,7 +298,6 @@ after_initialize do
               tc.value <> '0'
         )
     SQL
-  end
 
   on(:post_created) do |post, opts, user|
     handler = CategoryExperts::PostHandler.new(post: post, user: user)
@@ -321,21 +328,36 @@ after_initialize do
     category_ids = group.category_expert_category_ids
     next if category_ids.empty?
 
-    ::Jobs.enqueue(:approve_past_category_expert_posts, user_id: user.id, category_ids: category_ids)
+    ::Jobs.enqueue(
+      :approve_past_category_expert_posts,
+      user_id: user.id,
+      category_ids: category_ids,
+    )
   end
 
   on(:user_removed_from_group) do |user, group|
     category_ids = group.category_expert_category_ids
     next if category_ids.empty?
 
-    ::Jobs.enqueue(:unapprove_past_category_expert_posts, user_id: user.id, category_ids: category_ids)
+    ::Jobs.enqueue(
+      :unapprove_past_category_expert_posts,
+      user_id: user.id,
+      category_ids: category_ids,
+    )
   end
 
   Discourse::Application.routes.append do
-    put "category-experts/endorse/:username" => "category_experts#endorse", constraints: { username: ::RouteFormat.username }
+    put "category-experts/endorse/:username" => "category_experts#endorse",
+        :constraints => {
+          username: ::RouteFormat.username,
+        }
     post "category-experts/approve" => "category_experts#approve_post"
     post "category-experts/unapprove" => "category_experts#unapprove_post"
     get "category-experts/retroactive-approval/:post_id" => "category_experts#retroactive_approval?"
-    get "category-experts/endorsable-categories/:username" => "category_experts#endorsable_categories", constraints: { username: ::RouteFormat.username }
+    get "category-experts/endorsable-categories/:username" =>
+          "category_experts#endorsable_categories",
+        :constraints => {
+          username: ::RouteFormat.username,
+        }
   end
 end

@@ -16,9 +16,11 @@ module CategoryExperts
 
       return unless post.post_type == Post.types[:regular]
 
-      SiteSetting.category_experts_posts_require_approval ?
-        mark_post_for_approval(skip_validations: skip_validations) :
+      if SiteSetting.category_experts_posts_require_approval
+        mark_post_for_approval(skip_validations: skip_validations)
+      else
         mark_post_as_approved(skip_validations: skip_validations)
+      end
     end
 
     def mark_post_for_approval(skip_validations: false)
@@ -33,14 +35,18 @@ module CategoryExperts
       post.save!
 
       topic = post.topic
-      has_accepted_posts_from_same_group = post_group_name && PostCustomField.where(
-        post_id: topic.post_ids,
-        name: CategoryExperts::POST_APPROVED_GROUP_NAME,
-        value: post_group_name
-      ).exists?
+      has_accepted_posts_from_same_group =
+        post_group_name &&
+          PostCustomField.where(
+            post_id: topic.post_ids,
+            name: CategoryExperts::POST_APPROVED_GROUP_NAME,
+            value: post_group_name,
+          ).exists?
 
       unless has_accepted_posts_from_same_group
-        groups = (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) - [post_group_name]
+        groups =
+          (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) -
+            [post_group_name]
 
         if groups.any?
           topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = groups.join("|")
@@ -69,12 +75,13 @@ module CategoryExperts
       post.save!
 
       topic = post.topic
-      topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] =
-        (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []).push(users_expert_group.name).uniq.join("|")
+      topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = (
+        topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []
+      ).push(users_expert_group.name).uniq.join("|")
       topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
 
       if !topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] ||
-          topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] == 0
+           topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] == 0
         topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] = post.post_number
       end
 

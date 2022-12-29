@@ -21,8 +21,8 @@ describe CategoryExpertsController do
   end
 
   def enable_custom_fields_for(category)
-    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS] = 'true'
-    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = 'true'
+    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS] = "true"
+    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = "true"
   end
 
   def set_expert_group_for_category(category, group_ids)
@@ -31,14 +31,17 @@ describe CategoryExpertsController do
 
   describe "#endorse" do
     it "errors when the current user is not logged in" do
-      put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id] })
+      put(
+        "/category-experts/endorse/#{endorsee.username}.json",
+        params: {
+          categoryIds: [category1.id],
+        },
+      )
       expect(response.status).to eq(404)
     end
 
     context "when logged in" do
-      before do
-        sign_in(user)
-      end
+      before { sign_in(user) }
 
       it "errors when no category ids are present" do
         put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [] })
@@ -47,13 +50,23 @@ describe CategoryExpertsController do
 
       it "errors when the category isn't accepting endorsements" do
         category = Fabricate(:category)
-        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category.id] })
+        put(
+          "/category-experts/endorse/#{endorsee.username}.json",
+          params: {
+            categoryIds: [category.id],
+          },
+        )
         expect(response.status).to eq(400)
       end
 
       it "creates new CategoryExpertEndorsement records for each category" do
         expect {
-          put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id, category2.id] })
+          put(
+            "/category-experts/endorse/#{endorsee.username}.json",
+            params: {
+              categoryIds: [category1.id, category2.id],
+            },
+          )
         }.to change { CategoryExpertEndorsement.count }.by(2)
       end
 
@@ -63,7 +76,12 @@ describe CategoryExpertsController do
         end
 
         expect {
-          put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id, category2.id] })
+          put(
+            "/category-experts/endorse/#{endorsee.username}.json",
+            params: {
+              categoryIds: [category1.id, category2.id],
+            },
+          )
         }.not_to change { CategoryExpertEndorsement.count }
         expect(response.status).to eq(200)
       end
@@ -81,9 +99,19 @@ describe CategoryExpertsController do
         freeze_time
         user.update(trust_level: TrustLevel[0])
 
-        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id] })
+        put(
+          "/category-experts/endorse/#{endorsee.username}.json",
+          params: {
+            categoryIds: [category1.id],
+          },
+        )
         expect(response.status).to eq(200)
-        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category2.id] })
+        put(
+          "/category-experts/endorse/#{endorsee.username}.json",
+          params: {
+            categoryIds: [category2.id],
+          },
+        )
         expect(response.status).to eq(429)
       end
 
@@ -92,11 +120,26 @@ describe CategoryExpertsController do
         user.update(trust_level: TrustLevel[2])
         SiteSetting.tl2_additional_category_expert_endorsements_per_day_multiplier = 2
 
-        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category1.id] })
+        put(
+          "/category-experts/endorse/#{endorsee.username}.json",
+          params: {
+            categoryIds: [category1.id],
+          },
+        )
         expect(response.status).to eq(200)
-        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category2.id] })
+        put(
+          "/category-experts/endorse/#{endorsee.username}.json",
+          params: {
+            categoryIds: [category2.id],
+          },
+        )
         expect(response.status).to eq(200)
-        put("/category-experts/endorse/#{endorsee.username}.json", params: { categoryIds: [category2.id] })
+        put(
+          "/category-experts/endorse/#{endorsee.username}.json",
+          params: {
+            categoryIds: [category2.id],
+          },
+        )
         expect(response.status).to eq(429)
       end
     end
@@ -113,9 +156,7 @@ describe CategoryExpertsController do
       fab!(:private_group) { Fabricate(:group) }
       fab!(:category3) { fabricate_category_with_category_experts }
 
-      before do
-        sign_in(user)
-      end
+      before { sign_in(user) }
 
       def expect_categories_in_response(response, categories)
         category_ids = response.parsed_body["categories"].map { |c| c["id"] }.sort
@@ -126,7 +167,7 @@ describe CategoryExpertsController do
         private_category.set_permissions({ private_group.id => :full })
         private_category.save
 
-        category3.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = 'false'
+        category3.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = "false"
         category3.save
 
         # Endorsee and current user cannot see the new category
@@ -151,9 +192,7 @@ describe CategoryExpertsController do
   describe "#approve_post" do
     fab!(:topic) { Fabricate(:topic, category: category1) }
 
-    before do
-      create_post(topic_id: topic.id, user: user)
-    end
+    before { create_post(topic_id: topic.id, user: user) }
 
     it "returns a 403 when regular user is signed in" do
       sign_in(user)
@@ -187,7 +226,9 @@ describe CategoryExpertsController do
         expect(last_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
         expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
 
-        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
+          group.name,
+        )
         expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(nil)
       end
 
@@ -201,8 +242,12 @@ describe CategoryExpertsController do
 
         expect(response.status).to eq(200)
 
-        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq("#{group.name}|#{other_group.name}")
-        expect(topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(topic.first_post.post_number)
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
+          "#{group.name}|#{other_group.name}",
+        )
+        expect(topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(
+          topic.first_post.post_number,
+        )
 
         expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(nil)
       end
@@ -212,9 +257,7 @@ describe CategoryExpertsController do
   describe "#unapprove_post" do
     fab!(:topic) { Fabricate(:topic, category: category1) }
 
-    before do
-      create_post(topic_id: topic.id, user: user)
-    end
+    before { create_post(topic_id: topic.id, user: user) }
 
     it "returns a 403 when regular user is signed in" do
       sign_in(user)
@@ -247,8 +290,12 @@ describe CategoryExpertsController do
         expect(last_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
         expect(last_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
 
-        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
-        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(last_post.post_number)
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
+          nil,
+        )
+        expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(
+          last_post.post_number,
+        )
       end
 
       it "doesn't remove the group name from the topic custom field if another approved post exists" do
@@ -261,7 +308,9 @@ describe CategoryExpertsController do
 
         expect(response.status).to eq(200)
 
-        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
+        expect(topic.reload.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
+          group.name,
+        )
         expect(topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]).to eq(nil)
       end
     end
@@ -272,9 +321,7 @@ describe CategoryExpertsController do
     fab!(:random_user) { Fabricate(:user) }
 
     describe "non-staff user" do
-      before do
-        sign_in(user)
-      end
+      before { sign_in(user) }
 
       it "returns a 403" do
         post = create_post(topic_id: topic.id, user: user)
@@ -285,15 +332,13 @@ describe CategoryExpertsController do
     end
 
     describe "staff user signed in" do
-      before do
-        sign_in(admin)
-      end
+      before { sign_in(admin) }
 
       it "return false when the category has no category expert groups" do
         post = create_post(topic_id: topic.id, user: random_user)
         CategoryCustomField.find_by(
           category_id: post.topic.category.id,
-          name: CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
+          name: CategoryExperts::CATEGORY_EXPERT_GROUP_IDS,
         ).destroy
         get "/category-experts/retroactive-approval/#{post.id}.json"
 

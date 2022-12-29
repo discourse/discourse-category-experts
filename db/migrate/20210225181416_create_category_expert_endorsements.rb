@@ -9,8 +9,8 @@ class CreateCategoryExpertEndorsements < ActiveRecord::Migration[6.0]
     end
 
     add_index :category_expert_endorsements,
-      [:user_id, :endorsed_user_id, :category_id],
-      unique: true,
-      name: "category_expert_endorsements_index" # Default name was too long.
+              %i[user_id endorsed_user_id category_id],
+              unique: true,
+              name: "category_expert_endorsements_index" # Default name was too long.
   end
 end

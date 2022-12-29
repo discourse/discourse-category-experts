@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class CategoryExpertsController < ApplicationController
-  before_action :find_post, :ensure_staff, :ensure_needs_approval_enabled, only: [
-    :approve_post,
-    :unapprove_post,
-    :retroactive_approval?,
-  ]
-  before_action :ensure_needs_approval_enabled, only: [:approve_post, :unapprove_post]
-  before_action :authenticate_and_find_user, only: [:endorse, :endorsable_categories]
+  before_action :find_post,
+                :ensure_staff,
+                :ensure_needs_approval_enabled,
+                only: %i[approve_post unapprove_post retroactive_approval?]
+  before_action :ensure_needs_approval_enabled, only: %i[approve_post unapprove_post]
+  before_action :authenticate_and_find_user, only: %i[endorse endorsable_categories]
 
   def endorse
     CategoryExperts::EndorsementRateLimiter.new(current_user).performed!
@@ -19,12 +18,17 @@ class CategoryExpertsController < ApplicationController
     categories.each do |category|
       raise Discourse::InvalidParameters unless category.accepting_category_expert_endorsements?
 
-      CategoryExpertEndorsement.find_or_create_by(user: current_user, endorsed_user: @user, category: category)
+      CategoryExpertEndorsement.find_or_create_by(
+        user: current_user,
+        endorsed_user: @user,
+        category: category,
+      )
     end
 
     render json: {
-      category_expert_endorsements: current_user.given_category_expert_endorsements_for(@user)
-    }.to_json
+             category_expert_endorsements:
+               current_user.given_category_expert_endorsements_for(@user),
+           }.to_json
   end
 
   def endorsable_categories
@@ -41,9 +45,10 @@ class CategoryExpertsController < ApplicationController
       )
     SQL
 
-    categories = categories.select do |category|
-      guardian.can_see_category?(category) && endorsee_guardian.can_see_category?(category)
-    end
+    categories =
+      categories.select do |category|
+        guardian.can_see_category?(category) && endorsee_guardian.can_see_category?(category)
+      end
 
     render_serialized(
       categories,
@@ -51,8 +56,8 @@ class CategoryExpertsController < ApplicationController
       root: :categories,
       rest_serializer: true,
       extras: {
-        remaining_endorsements: CategoryExperts::EndorsementRateLimiter.new(current_user).remaining
-      }
+        remaining_endorsements: CategoryExperts::EndorsementRateLimiter.new(current_user).remaining,
+      },
     )
   end
 
@@ -60,9 +65,7 @@ class CategoryExpertsController < ApplicationController
     post_handler = CategoryExperts::PostHandler.new(post: @post)
     group_name = post_handler.mark_post_as_approved
 
-    render json: {
-      group_name: group_name
-    }.merge(topic_custom_fields)
+    render json: { group_name: group_name }.merge(topic_custom_fields)
   end
 
   def unapprove_post
@@ -84,7 +87,8 @@ class CategoryExpertsController < ApplicationController
     category = post.topic.category
     return false unless category
 
-    expert_group_ids = category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS]&.split("|")&.map(&:to_i)
+    expert_group_ids =
+      category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS]&.split("|")&.map(&:to_i)
     return false if expert_group_ids.nil? || expert_group_ids.count == 0
 
     (expert_group_ids & (post.user.group_ids || [])).count > 0
@@ -92,15 +96,15 @@ class CategoryExpertsController < ApplicationController
 
   def topic_custom_fields
     {
-      topic_expert_post_group_names: @post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|"),
-      topic_needs_category_expert_approval: @post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
+      topic_expert_post_group_names:
+        @post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|"),
+      topic_needs_category_expert_approval:
+        @post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL],
     }
   end
 
   def ensure_staff_and_enabled
-    unless current_user && current_user.staff?
-      raise Discourse::InvalidAccess
-    end
+    raise Discourse::InvalidAccess unless current_user && current_user.staff?
   end
 
   def ensure_needs_approval_enabled

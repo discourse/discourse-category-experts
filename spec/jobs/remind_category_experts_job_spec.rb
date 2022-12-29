@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe CategoryExperts::RemindCategoryExpertsJob do
   fab!(:user) { Fabricate(:user) }
@@ -26,9 +26,7 @@ describe CategoryExperts::RemindCategoryExpertsJob do
       # Create 2 questions, and 1 unapproved answered question for category 1
       topic = Fabricate(:topic, category: category1)
       topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = true
-      if n == 0
-        topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = true
-      end
+      topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = true if n == 0
       topic.save
     end
 
@@ -36,9 +34,7 @@ describe CategoryExperts::RemindCategoryExpertsJob do
       # Create 1 question, and 1 approved answered question for category 2
       topic = Fabricate(:topic, category: category2)
       topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = true
-      if n == 0
-        topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = true
-      end
+      topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = true if n == 0
       topic.save
     end
   end
@@ -46,9 +42,7 @@ describe CategoryExperts::RemindCategoryExpertsJob do
   it "Sends out the correct PM to each category expert" do
     SiteSetting.send_category_experts_reminder_pms = true
 
-    expect {
-      subject.execute()
-    }.to change { Topic.count }.by (2) # Sent a PM to each expert
+    expect { subject.execute() }.to change { Topic.count }.by (2) # Sent a PM to each expert
 
     # Expert 1 should get 2 rows, 1 for each category
     expert1_message = expert1.topics_allowed.where(archetype: Archetype.private_message).last
@@ -68,8 +62,6 @@ describe CategoryExperts::RemindCategoryExpertsJob do
 
   it "Does nothing if the site setting is disabled" do
     SiteSetting.send_category_experts_reminder_pms = false
-    expect {
-      subject.execute()
-    }.to change { Topic.count }.by (0)
+    expect { subject.execute() }.to change { Topic.count }.by (0)
   end
 end

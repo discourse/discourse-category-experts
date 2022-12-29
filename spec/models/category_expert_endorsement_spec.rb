@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe CategoryExpertEndorsement do
   fab!(:user) { Fabricate(:user) }
@@ -21,7 +21,8 @@ describe CategoryExpertEndorsement do
 
   describe "valdations" do
     it "validates that the user_id and endorsed_user_id are different" do
-      endorsement = CategoryExpertEndorsement.new(user: user, endorsed_user: user, category: category1)
+      endorsement =
+        CategoryExpertEndorsement.new(user: user, endorsed_user: user, category: category1)
       endorsement.valid?
       expect(endorsement.errors[:user_id]).to be_present
     end
