@@ -5,3 +5,34 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  site_settings:
+    enable_category_experts: "Kategori uzmanları eklentisini etkinleştirin"
+    category_expert_suggestion_threshold: "Bu kadar onaydan sonra kategori uzmanlarını önerin."
+    category_experts_posts_require_approval: "Kategori uzmanlarından gelen gönderiler, uzmanlık nişanı için personel onayı gerektirir."
+    send_category_experts_reminder_pms: "Yanıtlanmamış soruları yanıtlamaları için kategori uzmanlarına hatırlatma kişisel mesajları gönderin"
+    send_admin_category_experts_posts_reminder_pm: "Onaylanmamış kategori uzmanı gönderilerini gözden geçirmeleri için personele hatırlatma kişisel mesajları gönderin."
+    approve_past_posts_on_becoming_category_expert: "Bir kullanıcı uzman olduğunda, kategorideki tüm geçmiş gönderileri otomatik olarak onaylanır. Bir kullanıcı uzmanlıktan çıkarıldığında, tüm gönderileri onaylanmamış olur."
+    max_category_expert_endorsements_per_day: "Bir kullanıcının bir gün içinde izin verilen maksimum onay sayısı"
+    category_experts_topic_list_link_to_posts: "Konu listesi hapları arama yerine gönderilere bağlantı veriyor"
+    tl2_additional_category_expert_endorsements_per_day_multiplier: "GS2 (üye) için günlük onay limitini bu sayı ile çarparak artırın"
+    tl3_additional_category_expert_endorsements_per_day_multiplier: "GS3 (normal) için günlük onay limitini bu sayı ile çarparak artırın"
+    tl4_additional_category_expert_endorsements_per_day_multiplier: "GS4 (lider) için günlük onay limitini bu sayı ile çarparak artırın"
+  system_messages:
+    user_add_as_category_expert:
+      title: "Tebrikler, Kategori uzmanısınız!"
+      subject_template: "Tebrikler, Kategori uzmanısınız!"
+      text_body_template: |
+        Artık [%{category_name}](%{category_url}) için kategori uzmanısınız.
+
+        [%{group_name}](%{base_url}%{group_path}) grubunun bir üyesi olarak eklendiniz. Bu grubun üyeleri %{category_name} için kategori uzmanlarıdır.
+  category_experts:
+    experts_reminder:
+      title: "İncelemeniz gereken yanıtlanmamış sorular var."
+      raw_for_category: |
+        %{category_name}](%{category_url}) kategorisinde bir kategori uzmanı için [%{topic_count} yanıtlanmamış sorular](%{search_url}) bulunuyor.
+    admin_reminder:
+      title: "İncelenmek üzere onaylanmamış kategori uzmanı gönderileri var."
+      body: |
+        En az bir onaylanmamış kategori uzmanı gönderisi olan [%{topic_count} kategori uzmanı soruları](%{search_url}) var.
+
+        Ya en az bir kategori uzmanı gönderisini onaylayın ya da bu listeden kaldırmak için ilk gönderiyi soru olarak işaretini kaldıracak şekilde düzenleyin.

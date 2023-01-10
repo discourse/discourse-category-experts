@@ -5,3 +5,47 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  js:
+    category_experts:
+      title: "Kategori Uzmanları"
+      group: "Kategori uzmanları grubu"
+      badge: "Rozet"
+      no_badge: "Hiçbiri"
+      no_group: "Hiçbiri"
+      accepting_endorsements: "Şu anda kullanıcı onaylarını kabul ediyor"
+      accepting_questions: "Şu anda kategori uzmanları için soru kabul ediliyor"
+      endorse: "Onayla"
+      out_of_endorsements: "Bugünlük tüm onaylarınızı kullandınız."
+      remaining_endorsements: "Bugün %{count} onay kaldı"
+      existing_endorsements: "%{count} kategoride onaylandı."
+      edit: "Düzenle"
+      approve: "Onayla"
+      unapprove: "Kategori Uzmanı Gönderisinin Onayını Kaldır"
+      ask_category_expert: "Bir kategori uzmanından yanıt vermesini isteyin"
+      manage_endorsements:
+        title: "Kullanıcıyı onayla"
+        subtitle: "%{username} adlı kullanıcının güçlü yönleri nelerdir?"
+      review:
+        approve: "Onayla"
+        deny: "Yok say"
+        title: "Kategori Uzmanı Önerisi"
+        endorsed_count:
+          one: "şunun için %{count} kez onaylandı: "
+          other: "şunun için %{count} kez onaylandı: "
+        endorsed_by: "Onaylayan (%{count})"
+      topic_list:
+        response_by_group: "Uzman yanıtı"
+        needs_approval: "Onay gerekiyor"
+        question: "Uzman için soru"
+      search:
+        expert_response: "Uzman yanıtı ile"
+        question: "Uzman için soru"
+        without_post: "Kategori uzmanı gönderisi olmadan"
+        unapproved_post: "Onaylanmamış gönderi ile"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Kategori Uzmanı Önerisi"
+      expert-group-chooser:
+        title: "Kullanıcı için bir uzman grubu seçin"
+      endorsed_username: "Onaylanan kullanıcı"
