@@ -22,7 +22,6 @@ en:
       review:
         approve: "Approve"
         deny: "Ignore"
-        title: "Category Expert Suggestion"
         endorsed_count:
           one: "has been endorsed %{count} time for "
           other: "has been endorsed %{count} times for "
