@@ -28,7 +28,6 @@ it:
       review:
         approve: "Approva"
         deny: "Ignora"
-        title: "Suggerimento dell'esperto di categoria"
         endorsed_count:
           one: "ha ricevuto sostegno %{count} volta per "
           other: "ha ricevuto sostegno %{count} volte per "

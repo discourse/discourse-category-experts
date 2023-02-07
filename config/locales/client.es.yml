@@ -28,7 +28,6 @@ es:
       review:
         approve: "Aprobar"
         deny: "Ignorar"
-        title: "Sugerencia del experto en la categoría"
         endorsed_count:
           one: "ha sido respaldado %{count} vez para "
           other: "ha sido respaldado %{count} veces para "

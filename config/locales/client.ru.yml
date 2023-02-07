@@ -28,7 +28,6 @@ ru:
       review:
         approve: "Одобрить"
         deny: "Пропустить"
-        title: "Предложение эксперта по категории"
         endorsed_by: "Одобрено (%{count})"
       topic_list:
         response_by_group: "Ответ эксперта"

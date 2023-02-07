@@ -28,7 +28,6 @@ ja:
       review:
         approve: "承認"
         deny: "無視"
-        title: "カテゴリエキスパートの提案"
         endorsed_count:
           other: "は、%{count} 回支持されています: "
         endorsed_by: "支持者数（%{count}）"

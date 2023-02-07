@@ -28,7 +28,6 @@ zh_CN:
       review:
         approve: "批准"
         deny: "忽略"
-        title: "类别专家建议"
         endorsed_count:
           other: "已获得 %{count} 次认可："
         endorsed_by: "认可者 (%{count})"

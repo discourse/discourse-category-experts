@@ -28,7 +28,6 @@ de:
       review:
         approve: "Genehmigen"
         deny: "Ignorieren"
-        title: "Kategorie-Expertenvorschlag"
         endorsed_count:
           one: "wurde %{count} Mal empfohlen für "
           other: "wurde %{count} Mal empfohlen für "
