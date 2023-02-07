@@ -28,7 +28,6 @@ sv:
       review:
         approve: "Godkänn"
         deny: "Ignorera"
-        title: "Kategoriexperts förslag"
         endorsed_count:
           one: "har rekommenderats %{count} gång för "
           other: "har rekommenderats %{count} gånger för "

@@ -28,7 +28,6 @@ nl:
       review:
         approve: "Goedkeuren"
         deny: "Negeren"
-        title: "Suggestie voor categorie-expert"
         endorsed_count:
           one: "is %{count} keer aanbevolen voor "
           other: "is %{count} keer aanbevolen voor "

@@ -28,7 +28,6 @@ fi:
       review:
         approve: "Hyväksy"
         deny: "Ohita"
-        title: "Alueen asiantuntijan ehdotus"
         endorsed_count:
           one: "on saanut %{count} suosituksen alueella "
           other: "on saanut %{count} suositusta alueella "

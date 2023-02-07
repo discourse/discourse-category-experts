@@ -28,7 +28,6 @@ pt_BR:
       review:
         approve: "Aprovar"
         deny: "Ignorar"
-        title: "Sugestão de especialista em categoria"
         endorsed_count:
           one: "recebeu endosso %{count} vez por "
           other: "recebeu endosso %{count} vezes por "

@@ -28,7 +28,6 @@ fr:
       review:
         approve: "Approuver"
         deny: "Ignorer"
-        title: "Suggestion d'expert de catégorie"
         endorsed_count:
           one: "a été approuvé %{count} fois depuis "
           other: "a été approuvé %{count} fois depuis "

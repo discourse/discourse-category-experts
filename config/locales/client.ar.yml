@@ -28,7 +28,6 @@ ar:
       review:
         approve: "موافقة"
         deny: "تجاهل"
-        title: "اقتراح خبير الفئة"
         endorsed_count:
           zero: "تم المصادقة عليه %{count} مرة في "
           one: "تم المصادقات عليه مرة واحدة (%{count}) في "

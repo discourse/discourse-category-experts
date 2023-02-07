@@ -27,7 +27,6 @@ pl_PL:
       review:
         approve: "Zatwierdź"
         deny: "Ignoruj"
-        title: "Sugestia eksperta kategorii"
         endorsed_count:
           one: "został zatwierdzony %{count} raz za "
           few: "został zatwierdzony %{count} razy za "

@@ -28,7 +28,6 @@ tr_TR:
       review:
         approve: "Onayla"
         deny: "Yok say"
-        title: "Kategori Uzmanı Önerisi"
         endorsed_count:
           one: "şunun için %{count} kez onaylandı: "
           other: "şunun için %{count} kez onaylandı: "
