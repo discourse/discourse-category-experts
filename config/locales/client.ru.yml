@@ -12,15 +12,15 @@ ru:
       badge: "Награда"
       no_badge: "Нет"
       no_group: "Нет"
-      accepting_endorsements: "В настоящее время принимаются одобрения пользователей"
-      accepting_questions: "В настоящее время принимаются вопросы для экспертов категории"
+      accepting_endorsements: "Сейчас принимаются одобрения пользователей"
+      accepting_questions: "Сейчас принимаются вопросы для экспертов категории"
       endorse: "Одобрить"
       out_of_endorsements: "Вы использовали все свои одобрения за день."
-      remaining_endorsements: "Осталось одобрений: %{count}"
-      existing_endorsements: "Одобрено в %{count} категориях."
+      remaining_endorsements: "Осталось одобрений на сегодня: %{count}"
+      existing_endorsements: "Одобрено в категориях: %{count}."
       edit: "Изменить"
       approve: "Одобрить"
-      unapprove: "Отклонить одобрение сообщение эксперта категории"
+      unapprove: "Отклонить одобрение записи эксперта категории"
       ask_category_expert: "Попросить эксперта категории ответить"
       manage_endorsements:
         title: "Одобрение пользователя"
@@ -36,8 +36,8 @@ ru:
       search:
         expert_response: "С ответом эксперта"
         question: "Вопрос эксперту"
-        without_post: "Без сообщения от эксперта категории"
-        unapproved_post: "С неодобренным сообщением"
+        without_post: "Без записи от эксперта категории"
+        unapproved_post: "С неодобренной записью"
     review:
       types:
         reviewable_category_expert_suggestion:
