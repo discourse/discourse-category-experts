@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 et:
+  js:
+    category_experts:
+      badge: "Märgis"
+      no_badge: "Pole"
+      no_group: "Pole"
+      edit: "Muuda"
+      approve: "Kinnita"
+      review:
+        approve: "Kinnita"
+        deny: "Ignoreeri"

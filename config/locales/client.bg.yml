@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 bg:
+  js:
+    category_experts:
+      badge: "Значка"
+      no_badge: "Без"
+      no_group: "Без"
+      edit: "Редактирай"
+      approve: "Одобри"
+      review:
+        approve: "Одобри"
+        deny: "Игнорирай"

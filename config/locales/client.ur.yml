@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 ur:
+  js:
+    category_experts:
+      badge: "بَیج"
+      no_badge: "کوئی نہیں"
+      no_group: "کوئی نہیں"
+      edit: "ترمیم کریں"
+      approve: "منظور"
+      review:
+        approve: "منظور"
+        deny: "نظر انداز کریں"

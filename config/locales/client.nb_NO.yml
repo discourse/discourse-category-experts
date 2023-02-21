@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 nb_NO:
+  js:
+    category_experts:
+      badge: "Merke"
+      no_badge: "Ingen"
+      no_group: "Ingen"
+      edit: "Endre"
+      approve: "Godkjenn"
+      review:
+        approve: "Godkjenn"
+        deny: "Ignorer"

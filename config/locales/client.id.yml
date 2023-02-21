@@ -5,3 +5,12 @@
 # https://translate.discourse.org/
 
 id:
+  js:
+    category_experts:
+      no_badge: "Tidak ada"
+      no_group: "Tidak ada"
+      edit: "Ubah"
+      approve: "Terima"
+      review:
+        approve: "Terima"
+        deny: "Abaikan"

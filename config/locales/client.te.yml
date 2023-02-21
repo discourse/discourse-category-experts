@@ -5,3 +5,10 @@
 # https://translate.discourse.org/
 
 te:
+  js:
+    category_experts:
+      badge: "బ్యాడ్జీ"
+      edit: "సవరణ"
+      approve: "అంగీకరించు"
+      review:
+        approve: "అంగీకరించు"

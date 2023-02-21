@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 hy:
+  js:
+    category_experts:
+      badge: "Կրծքանշան"
+      no_badge: "Ոչ մի"
+      no_group: "Ոչ մի"
+      edit: "Խմբագրել"
+      approve: "Հաստատել"
+      review:
+        approve: "Հաստատել"
+        deny: "Անտեսել"

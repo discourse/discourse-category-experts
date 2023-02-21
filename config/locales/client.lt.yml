@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 lt:
+  js:
+    category_experts:
+      badge: "Ženklelis"
+      no_badge: "Nieko"
+      no_group: "Nieko"
+      edit: "Redaguoti"
+      approve: "Patvirtinti"
+      review:
+        approve: "Patvirtinti"
+        deny: "Ignoruoti"

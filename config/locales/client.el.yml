@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 el:
+  js:
+    category_experts:
+      badge: "Παράσημο"
+      no_badge: "Κανένα"
+      no_group: "Κανένα"
+      edit: "Επεξεργασία"
+      approve: "Έγκριση"
+      review:
+        approve: "Έγκριση"
+        deny: "Αγνόηση"

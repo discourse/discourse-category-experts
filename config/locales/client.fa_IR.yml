@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 fa_IR:
+  js:
+    category_experts:
+      badge: "نشان"
+      no_badge: "هیچ کدام"
+      no_group: "هیچ کدام"
+      edit: "ویرایش‌"
+      approve: "تایید"
+      review:
+        approve: "تایید"
+        deny: "چشم پوشی"
