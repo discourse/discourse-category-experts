@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 da:
+  js:
+    category_experts:
+      badge: "Emblem"
+      no_badge: "Ingen"
+      no_group: "Ingen"
+      edit: "Ret"
+      approve: "Godkend"
+      review:
+        approve: "Godkend"
+        deny: "Ignorér"

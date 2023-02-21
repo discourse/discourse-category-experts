@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 vi:
+  js:
+    category_experts:
+      badge: "Huy hiệu"
+      no_badge: "Không có gì"
+      no_group: "Không có gì"
+      edit: "Sửa"
+      approve: "Duyệt"
+      review:
+        approve: "Duyệt"
+        deny: "Bỏ qua"

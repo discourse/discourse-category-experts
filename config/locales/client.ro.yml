@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 ro:
+  js:
+    category_experts:
+      badge: "Ecuson"
+      no_badge: "Nimeni"
+      no_group: "Nimeni"
+      edit: "Modifică"
+      approve: "Aprobare"
+      review:
+        approve: "Aprobare"
+        deny: "Ignoră"

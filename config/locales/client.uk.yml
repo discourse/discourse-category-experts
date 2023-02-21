@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 uk:
+  js:
+    category_experts:
+      badge: "Нагорода"
+      no_badge: "Немає"
+      no_group: "Немає"
+      edit: "Редагувати"
+      approve: "Схвалити"
+      review:
+        approve: "Схвалити"
+        deny: "Ігнорувати"

@@ -5,3 +5,12 @@
 # https://translate.discourse.org/
 
 sr:
+  js:
+    category_experts:
+      badge: "Značka"
+      no_badge: "Ništa"
+      no_group: "Ništa"
+      edit: "Izmeni"
+      approve: "Odobri"
+      review:
+        approve: "Odobri"

@@ -5,3 +5,12 @@
 # https://translate.discourse.org/
 
 sq:
+  js:
+    category_experts:
+      badge: "Stemë"
+      no_badge: "Asnjë"
+      no_group: "Asnjë"
+      edit: "Redakto"
+      approve: "Aprovo"
+      review:
+        approve: "Aprovo"

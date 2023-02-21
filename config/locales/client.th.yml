@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 th:
+  js:
+    category_experts:
+      badge: "เหรียญ"
+      no_badge: "ไม่มี"
+      no_group: "ไม่มี"
+      edit: "แก้ไข"
+      approve: "อนุมัติ"
+      review:
+        approve: "อนุมัติ"
+        deny: "ไม่สนใจ"

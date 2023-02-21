@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 pt:
+  js:
+    category_experts:
+      badge: "Crachá"
+      no_badge: "Nenhuma"
+      no_group: "Nenhuma"
+      edit: "Editar"
+      approve: "Aprovar"
+      review:
+        approve: "Aprovar"
+        deny: "Ignorar"

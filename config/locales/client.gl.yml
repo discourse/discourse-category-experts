@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 gl:
+  js:
+    category_experts:
+      badge: "Insignia"
+      no_badge: "Ningunha"
+      no_group: "Ningunha"
+      edit: "Editar"
+      approve: "Aprobar"
+      review:
+        approve: "Aprobar"
+        deny: "Ignorar"

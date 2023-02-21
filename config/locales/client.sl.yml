@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 sl:
+  js:
+    category_experts:
+      badge: "Značka"
+      no_badge: "Brez"
+      no_group: "Brez"
+      edit: "Uredi"
+      approve: "Odobri"
+      review:
+        approve: "Odobri"
+        deny: "Prezri"

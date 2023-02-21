@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 zh_TW:
+  js:
+    category_experts:
+      badge: "徽章"
+      no_badge: "無"
+      no_group: "無"
+      edit: "編輯"
+      approve: "批准"
+      review:
+        approve: "批准"
+        deny: "忽略"

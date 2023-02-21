@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 ca:
+  js:
+    category_experts:
+      badge: "Insígnia"
+      no_badge: "Cap"
+      no_group: "Cap"
+      edit: "Edita"
+      approve: "Aprova"
+      review:
+        approve: "Aprova"
+        deny: "Ignora"

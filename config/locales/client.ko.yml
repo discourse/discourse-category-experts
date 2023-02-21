@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 ko:
+  js:
+    category_experts:
+      badge: "배지"
+      no_badge: "없음"
+      no_group: "없음"
+      edit: "편집"
+      approve: "승인"
+      review:
+        approve: "승인"
+        deny: "무시"

@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 cs:
+  js:
+    category_experts:
+      badge: "Odznak"
+      no_badge: "Žádná"
+      no_group: "Žádná"
+      edit: "Upravit"
+      approve: "Schválit"
+      review:
+        approve: "Schválit"
+        deny: "ignorovat"

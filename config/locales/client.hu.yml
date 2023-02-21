@@ -5,3 +5,13 @@
 # https://translate.discourse.org/
 
 hu:
+  js:
+    category_experts:
+      badge: "Jelvény"
+      no_badge: "Egyik sem"
+      no_group: "Egyik sem"
+      edit: "Szerkesztés"
+      approve: "Jóváhagyás"
+      review:
+        approve: "Jóváhagyás"
+        deny: "Letiltás"
