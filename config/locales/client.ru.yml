@@ -28,6 +28,11 @@ ru:
       review:
         approve: "Одобрить"
         deny: "Пропустить"
+        endorsed_count:
+          one: "была одобрена %{count} раз в категории "
+          few: "была одобрена %{count} раза в категории "
+          many: "была одобрена %{count} раз в категории "
+          other: "была одобрена %{count} раза в категории "
         endorsed_by: "Одобрено (%{count})"
       topic_list:
         response_by_group: "Ответ эксперта"
