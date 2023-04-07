@@ -1,55 +1,57 @@
-<div class="control-group">
-  <label class="control-label">{{i18n "category_experts.title"}}</label>
-  <div class="controls">
+{{#if this.siteSettings.show_category_expert_advanced_search_filters}}
+  <div class="control-group">
+    <label class="control-label">{{i18n "category_experts.title"}}</label>
+    <div class="controls">
 
-    {{plugin-outlet name="inside-category-experts-search-fields" tagName="span" connectorTagName="div" args=(hash searchedTerms=searchedTerms onChangeSearchedTermField=onChangeSearchedTermField)}}
-    <section class="field with-category-expert-response-field">
-      <label>
-        {{input
-          type="checkbox"
-          class="with-category-expert-response"
-          checked=(readonly searchedTerms.withCategoryExpertResponse)
-          click=(action "onChangeCheckBox" "withCategoryExpertResponse" "updateWithCategoryExpertResponse")
-        }}
-        {{i18n "category_experts.search.expert_response"}}
-      </label>
-    </section>
-    {{#if canSeeIsQuestionFilter}}
-      <section class="field is-category-expert-question-field">
+      {{plugin-outlet name="inside-category-experts-search-fields" tagName="span" connectorTagName="div" args=(hash searchedTerms=searchedTerms onChangeSearchedTermField=onChangeSearchedTermField)}}
+      <section class="field with-category-expert-response-field">
         <label>
           {{input
             type="checkbox"
-            class="is-category-expert-question"
-            checked=(readonly searchedTerms.isCategoryExpertQuestion)
-            click=(action "onChangeCheckBox" "isCategoryExpertQuestion" "updateIsCategoryExpertQuestion")
+            class="with-category-expert-response"
+            checked=(readonly searchedTerms.withCategoryExpertResponse)
+            click=(action "onChangeCheckBox" "withCategoryExpertResponse" "updateWithCategoryExpertResponse")
           }}
-          {{i18n "category_experts.search.question"}}
+          {{i18n "category_experts.search.expert_response"}}
         </label>
       </section>
-      <section class="field without-category-expert-post-field">
-        <label>
-          {{input
-            type="checkbox"
-            class="without-category-expert-post"
-            checked=(readonly searchedTerms.withoutCategoryExpertPost)
-            click=(action "onChangeCheckBox" "withoutCategoryExpertPost" "updateWithoutCategoryExpertPost")
-          }}
-          {{i18n "category_experts.search.without_post"}}
-        </label>
-      </section>
-    {{/if}}
-    {{#if currentUser.staff}}
-      <section class="field with-unapproved-ce-post-field">
-        <label>
-          {{input
-            type="checkbox"
-            class="with-unapproved-post"
-            checked=(readonly searchedTerms.withUnapprovedPost)
-            click=(action "onChangeCheckBox" "withUnapprovedPost" "updateWithUnapprovedPost")
-          }}
-          {{i18n "category_experts.search.unapproved_post"}}
-        </label>
-      </section>
-    {{/if}}
+      {{#if canSeeIsQuestionFilter}}
+        <section class="field is-category-expert-question-field">
+          <label>
+            {{input
+              type="checkbox"
+              class="is-category-expert-question"
+              checked=(readonly searchedTerms.isCategoryExpertQuestion)
+              click=(action "onChangeCheckBox" "isCategoryExpertQuestion" "updateIsCategoryExpertQuestion")
+            }}
+            {{i18n "category_experts.search.question"}}
+          </label>
+        </section>
+        <section class="field without-category-expert-post-field">
+          <label>
+            {{input
+              type="checkbox"
+              class="without-category-expert-post"
+              checked=(readonly searchedTerms.withoutCategoryExpertPost)
+              click=(action "onChangeCheckBox" "withoutCategoryExpertPost" "updateWithoutCategoryExpertPost")
+            }}
+            {{i18n "category_experts.search.without_post"}}
+          </label>
+        </section>
+      {{/if}}
+      {{#if currentUser.staff}}
+        <section class="field with-unapproved-ce-post-field">
+          <label>
+            {{input
+              type="checkbox"
+              class="with-unapproved-post"
+              checked=(readonly searchedTerms.withUnapprovedPost)
+              click=(action "onChangeCheckBox" "withUnapprovedPost" "updateWithUnapprovedPost")
+            }}
+            {{i18n "category_experts.search.unapproved_post"}}
+          </label>
+        </section>
+      {{/if}}
+    </div>
   </div>
-</div>
+{{/if}}
