@@ -2,6 +2,9 @@ plugins:
   enable_category_experts:
     default: true
     client: true
+  show_category_expert_advanced_search_filters:
+    default: true
+    client: true
   category_expert_suggestion_threshold:
     default: 3
     min: 1

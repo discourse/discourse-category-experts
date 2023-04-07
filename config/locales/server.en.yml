@@ -1,6 +1,7 @@
 en:
   site_settings:
     enable_category_experts: "Enable category experts plugin"
+    show_category_expert_advanced_search_filters: "Show category expert filters in advanced search"
     category_expert_suggestion_threshold: "Suggest category experts after this many endorsements."
     category_experts_posts_require_approval: "Posts from category experts require staff approval for expert decoration."
     send_category_experts_reminder_pms: "Send reminder PMs to category experts, to reply to unanswered questions"
