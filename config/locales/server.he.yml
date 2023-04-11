@@ -5,3 +5,7 @@
 # https://translate.discourse.org/
 
 he:
+  system_messages:
+    user_add_as_category_expert:
+      title: "ברכות, התמנית למומחה או מומחית קטגוריה!"
+      subject_template: "ברכות, התמנית למומחה או מומחית קטגוריה!"
