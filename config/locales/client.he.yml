@@ -12,10 +12,14 @@ he:
       badge: "עיטור"
       no_badge: "אין"
       no_group: "אין"
+      endorse: "תמיכה"
+      out_of_endorsements: "השתמשת בכל הבעות התמיכה שלך להיום."
+      remaining_endorsements: "נותרו %{count} הבעות תמיכה להיום"
       edit: "עריכה"
       approve: "אישור"
       ask_category_expert: "לבקש ממומחה הקטגוריה להגיב"
       manage_endorsements:
+        title: "תמיכה במשתמש"
         subtitle: "מהן החוזקות של %{username}?"
       review:
         approve: "אישור"
@@ -26,3 +30,6 @@ he:
       search:
         expert_response: "עם תגובת מומחה"
         question: "שאלה למומחה"
+        unapproved_post: "עם פוסט שלא אושר"
+    review:
+      endorsed_username: "משתמש שהובעה כלפיו תמיכה"

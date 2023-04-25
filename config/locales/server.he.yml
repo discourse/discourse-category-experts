@@ -5,6 +5,9 @@
 # https://translate.discourse.org/
 
 he:
+  site_settings:
+    enable_category_experts: "הפעלת תוסף מומחי קטגוריות"
+    show_category_expert_advanced_search_filters: "הצג מסנני מומחי קטגוריות בחיפוש מתקדם"
   system_messages:
     user_add_as_category_expert:
       title: "ברכות, התמנית למומחה או מומחית קטגוריה!"
