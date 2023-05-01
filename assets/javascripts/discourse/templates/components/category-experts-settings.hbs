@@ -5,12 +5,12 @@
       {{i18n "category_experts.group"}}
     </label>
     <div class="controls">
-      {{group-chooser
-        content=allGroups
-        value=groupIds
-        labelProperty="name"
-        onChange=(action "onChangeGroupIds")
-      }}
+      <GroupChooser
+        @content={{allGroups}}
+        @value={{groupIds}}
+        @labelProperty="name"
+        @onChange={{action "onChangeGroupIds"}}
+      />
     </div>
   </section>
 
@@ -19,37 +19,49 @@
       {{i18n "category_experts.badge"}}
     </label>
     <div class="controls">
-      {{combo-box
-        value=category.custom_fields.category_experts_badge_id
-        content=badgeOptions
-        nameProperty="name"
-        onChange=(action (mut category.custom_fields.category_experts_badge_id))
-        options=(hash
-          none="category_experts.no_badge"
-        )
-      }}
+      <ComboBox
+        @value={{category.custom_fields.category_experts_badge_id}}
+        @content={{badgeOptions}}
+        @nameProperty="name"
+        @onChange={{action
+          (mut category.custom_fields.category_experts_badge_id)
+        }}
+        @options={{hash none="category_experts.no_badge"}}
+      />
     </div>
   </section>
 
   {{#if category.custom_fields.category_expert_group_ids}}
     <section class="field">
       <label class="checkbox-label">
-        {{input
-          type="checkbox"
-          checked=(readonly category.custom_fields.category_accepting_endorsements)
-          change=(action "onChangeAcceptingExpertEndorsements" value="target.checked")
-        }}
+        <Input
+          @type="checkbox"
+          @checked={{readonly
+            category.custom_fields.category_accepting_endorsements
+          }}
+          {{on
+            "change"
+            (action
+              "onChangeAcceptingExpertEndorsements" value="target.checked"
+            )
+          }}
+        />
         {{i18n "category_experts.accepting_endorsements"}}
       </label>
     </section>
 
     <section class="field">
       <label class="checkbox-label">
-        {{input
-          type="checkbox"
-          checked=(readonly category.custom_fields.category_accepting_questions)
-          change=(action "onChangeAcceptingExpertQuestions" value="target.checked")
-        }}
+        <Input
+          @type="checkbox"
+          @checked={{readonly
+            category.custom_fields.category_accepting_questions
+          }}
+          {{on
+            "change"
+            (action "onChangeAcceptingExpertQuestions" value="target.checked")
+          }}
+        />
         {{i18n "category_experts.accepting_questions"}}
       </label>
     </section>

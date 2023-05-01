@@ -2,17 +2,17 @@
   {{#if endorsements}}
     <div class="category-expert-existing-endorsements">
       {{i18n "category_experts.existing_endorsements" count=endorsementsCount}}
-      {{d-button
-        action=(action "openEndorsementModal")
+      <DButton
+        @action={{action "openEndorsementModal"}}
         class="btn-flat category-expert-endorse-edit"
-        label="category_experts.edit"
-      }}
+        @label="category_experts.edit"
+      />
     </div>
   {{else}}
-    {{d-button
-      action=(action "openEndorsementModal")
+    <DButton
+      @action={{action "openEndorsementModal"}}
       class="category-expert-endorse-btn"
-      label="category_experts.endorse"
-    }}
+      @label="category_experts.endorse"
+    />
   {{/if}}
 {{/unless}}
