@@ -57,10 +57,11 @@
               @checked={{readonly searchedTerms.withoutCategoryExpertPost}}
               {{on
                 "change"
-                action
-                "onChangeCheckBox"
-                "withoutCategoryExpertPost"
-                "updateWithoutCategoryExpertPost"
+                (action
+                  "onChangeCheckBox"
+                  "withoutCategoryExpertPost"
+                  "updateWithoutCategoryExpertPost"
+                )
               }}
             />
             {{i18n "category_experts.search.without_post"}}
