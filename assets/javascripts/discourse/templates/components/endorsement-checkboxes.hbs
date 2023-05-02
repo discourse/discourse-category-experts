@@ -1,5 +1,8 @@
-{{#d-modal-body}}
-  <h3>{{i18n "category_experts.manage_endorsements.subtitle" username=user.username}}</h3>
+<DModalBody>
+  <h3>{{i18n
+      "category_experts.manage_endorsements.subtitle"
+      username=user.username
+    }}</h3>
 
   {{#if loading}}
     {{loading-spinner size="large"}}
@@ -18,13 +21,13 @@
             value={{category.id}}
             id="category-endorsement-{{category.id}}"
             {{action "checkboxChanged" category.id}}
-          >
+          />
           {{category.name}}
         </label>
       {{/each}}
     {{/if}}
   {{/if}}
-{{/d-modal-body}}
+</DModalBody>
 
 <div class="modal-footer">
   {{#unless loading}}
@@ -33,15 +36,18 @@
         {{i18n "category_experts.out_of_endorsements"}}
       </div>
     {{else}}
-      {{d-button
+      <DButton
         class="btn-primary category-endorsement-save"
-        action=(action "save")
-        disabled=saveDisabled
-        label="category_experts.endorse"
-      }}
+        @action={{action "save"}}
+        @disabled={{saveDisabled}}
+        @label="category_experts.endorse"
+      />
       {{#unless currentUser.staff}}
         <div class="remaining-endorsements-notice">
-          {{i18n "category_experts.remaining_endorsements" count=remainingEndorsements}}
+          {{i18n
+            "category_experts.remaining_endorsements"
+            count=remainingEndorsements
+          }}
         </div>
       {{/unless}}
     {{/if}}

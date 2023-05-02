@@ -1,9 +1,12 @@
 <div class="row">
-  {{#link-to "user" reviewable.user.username}}
+  <LinkTo @route="user" @model={{reviewable.user.username}}>
     {{avatar reviewable.user imageSize="small"}}
     {{reviewable.user.username}}
-  {{/link-to}}
-  {{count-i18n key="category_experts.review.endorsed_count" count=reviewable.endorsed_count}}
+  </LinkTo>
+  <CountI18n
+    @key="category_experts.review.endorsed_count"
+    @count={{reviewable.endorsed_count}}
+  />
   {{category-link reviewable.category}}
 </div>
 
@@ -11,17 +14,20 @@
   <table class="endorsed-by-table">
     <thead>
       <th>
-        <td>{{i18n "category_experts.review.endorsed_by" count=reviewable.endorsed_count}}</td>
+        <td>{{i18n
+            "category_experts.review.endorsed_by"
+            count=reviewable.endorsed_count
+          }}</td>
       </th>
     </thead>
     <tbody>
       {{#each reviewable.endorsed_by as |user|}}
         <tr>
           <td class="endorsed-by">
-            {{#link-to "user" user.username}}
+            <LinkTo @route="user" @model={{user.username}}>
               {{avatar user imageSize="tiny"}}
               {{user.username}}
-            {{/link-to}}
+            </LinkTo>
           </td>
         </tr>
       {{/each}}

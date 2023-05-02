@@ -1,9 +1,13 @@
-{{#d-modal-body}}
-  {{#tap-tile-grid activeTile=duration as |grid|}}
+<DModalBody>
+  <TapTileGrid @activeTile={{duration}} as |grid|>
     {{#each groupOptions as |group|}}
-      {{#tap-tile tileId=group.id activeTile=grid.activeTile onChange=(action "setGroupId")}}
+      <TapTile
+        @tileId={{group.id}}
+        @activeTile={{grid.activeTile}}
+        @onChange={{action "setGroupId"}}
+      >
         {{group.name}}
-      {{/tap-tile}}
+      </TapTile>
     {{/each}}
-  {{/tap-tile-grid}}
-{{/d-modal-body}}
+  </TapTileGrid>
+</DModalBody>

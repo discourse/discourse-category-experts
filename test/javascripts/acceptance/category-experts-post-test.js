@@ -24,7 +24,8 @@ acceptance(
       let topicResponse = JSON.parse(
         JSON.stringify(topicFixtures["/t/2480/1.json"])
       );
-      topicResponse.post_stream.posts[2].category_expert_approved_group = groupName;
+      topicResponse.post_stream.posts[2].category_expert_approved_group =
+        groupName;
       server.get("/t/2480.json", () => helper.response(topicResponse));
 
       let cardResponse = JSON.parse(
@@ -78,7 +79,8 @@ acceptance(
       topicResponse.post_stream.posts[1].needs_category_expert_approval = true;
       topicResponse.post_stream.posts[1].can_manage_category_expert_posts = true;
 
-      topicResponse.post_stream.posts[2].category_expert_approved_group = groupName;
+      topicResponse.post_stream.posts[2].category_expert_approved_group =
+        groupName;
       topicResponse.post_stream.posts[2].can_manage_category_expert_posts = true;
 
       server.get("/t/2480.json", () => helper.response(topicResponse));
