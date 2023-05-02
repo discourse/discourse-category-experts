@@ -31,10 +31,9 @@ function setPostCategoryExpertAttributes(
 }
 
 function initializeWithApi(api) {
-  const requiresApproval =
-    api.container.lookup(
-      "site-settings:main"
-    ).category_experts_posts_require_approval;
+  const requiresApproval = api.container.lookup(
+    "service:site-settings"
+  ).category_experts_posts_require_approval;
 
   if (requiresApproval) {
     const appEvents = api.container.lookup("service:app-events");
