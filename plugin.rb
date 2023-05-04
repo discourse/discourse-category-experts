@@ -182,9 +182,7 @@ after_initialize do
             object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] &&
             object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] > 0
         end,
-      ) do
-        true
-      end
+      ) { true }
 
       add_to_serializer(
         serializer,
@@ -192,26 +190,18 @@ after_initialize do
         include_condition: -> do
           !object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
         end,
-      ) do
-        object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|")
-      end
+      ) { object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|") }
 
       add_to_serializer(
         serializer,
         :first_expert_post_id,
-        include_condition: -> do
-          include_expert_post_group_names?
-        end,
-      ) do
-        object.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]
-      end
+        include_condition: -> { include_expert_post_group_names? },
+      ) { object.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] }
 
       add_to_serializer(
         serializer,
         :is_category_expert_question,
-        include_condition: -> do
-          object.is_category_expert_question?
-        end,
+        include_condition: -> { object.is_category_expert_question? },
       ) { true }
     end
   end
@@ -226,9 +216,7 @@ after_initialize do
     include_condition: -> do
       !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
     end,
-  ) do
-    object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|")
-  end
+  ) { object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|") }
 
   add_to_serializer(
     :topic_view,
