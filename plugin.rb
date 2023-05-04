@@ -174,37 +174,45 @@ after_initialize do
 
   reloadable_patch do
     %i[topic_list_item search_topic_list_item].each do |serializer|
-      add_to_serializer(serializer, :needs_category_expert_post_approval) do
-        object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL]
+      add_to_serializer(
+        serializer,
+        :needs_category_expert_post_approval,
+        include_condition: -> do
+          scope.is_staff? &&
+            object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] &&
+            object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] > 0
+        end,
+      ) do
+        true
       end
 
-      add_to_serializer(serializer, :include_needs_category_expert_post_approval?) do
-        scope.is_staff? &&
-          object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] &&
-          object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] > 0
-      end
-
-      add_to_serializer(serializer, :expert_post_group_names) do
+      add_to_serializer(
+        serializer,
+        :expert_post_group_names,
+        include_condition: -> do
+          !object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+        end,
+      ) do
         object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|")
       end
 
-      add_to_serializer(serializer, :include_expert_post_group_names?) do
-        !object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
-      end
-
-      add_to_serializer(serializer, :first_expert_post_id) do
+      add_to_serializer(
+        serializer,
+        :first_expert_post_id,
+        include_condition: -> do
+          include_expert_post_group_names?
+        end,
+      ) do
         object.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]
       end
 
-      add_to_serializer(serializer, :include_first_expert_post_id?) do
-        include_expert_post_group_names?
-      end
-
-      add_to_serializer(serializer, :is_category_expert_question) { true }
-
-      add_to_serializer(serializer, :include_is_category_expert_question?) do
-        object.is_category_expert_question?
-      end
+      add_to_serializer(
+        serializer,
+        :is_category_expert_question,
+        include_condition: -> do
+          object.is_category_expert_question?
+        end,
+      ) { true }
     end
   end
 
@@ -212,15 +220,23 @@ after_initialize do
     object.topic.is_category_expert_question?
   end
 
-  add_to_serializer(:topic_view, :expert_post_group_names) do
+  add_to_serializer(
+    :topic_view,
+    :expert_post_group_names,
+    include_condition: -> do
+      !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+    end,
+  ) do
     object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|")
   end
 
-  add_to_serializer(:topic_view, :include_expert_post_group_names?) do
-    !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
-  end
-
-  add_to_serializer(:topic_view, :expert_post_group_count) do
+  add_to_serializer(
+    :topic_view,
+    :expert_post_group_count,
+    include_condition: -> do
+      !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+    end,
+  ) do
     object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]
       .split("|")
       .inject({}) do |hash, group_name|
@@ -232,10 +248,6 @@ after_initialize do
           .count
         hash
       end
-  end
-
-  add_to_serializer(:topic_view, :include_expert_post_group_count?) do
-    !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
   end
 
   add_permitted_post_create_param(:is_category_expert_question)
