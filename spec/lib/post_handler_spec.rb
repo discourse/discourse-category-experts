@@ -9,7 +9,8 @@ describe CategoryExperts::PostHandler do
   fab!(:category) { Fabricate(:category) }
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:second_group) { Fabricate(:group, users: [second_expert]) }
-  fab!(:topic) { Fabricate(:topic, category: category) }
+  fab!(:tag) { Fabricate(:tag) }
+  fab!(:topic) { Fabricate(:topic, category: category, tags: [tag]) }
   fab!(:private_message_topic) do
     Fabricate(
       :private_message_topic,
@@ -121,6 +122,30 @@ describe CategoryExperts::PostHandler do
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
         "#{group.name}|#{second_group.name}",
       )
+    end
+  end
+
+  describe "Auto tagging" do
+    fab!(:auto_tag) { Fabricate(:tag) }
+
+    before do
+      category.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG] = auto_tag.name
+      category.save!
+    end
+
+    it "Doesn't error when the auto tag is already present on the topic" do
+      post = create_post(topic_id: topic.id, user: user)
+      PostRevisor.new(post).revise!(Discourse.system_user, tags: [auto_tag.name])
+
+      expert_post = create_post(topic_id: topic.id, user: expert)
+      CategoryExperts::PostHandler.new(post: expert_post).mark_post_as_approved
+    end
+
+    it "Adds the auto tag when topic doesn't already have it" do
+      expert_post = create_post(topic_id: topic.id, user: expert)
+      CategoryExperts::PostHandler.new(post: expert_post).mark_post_as_approved
+
+      expect(topic.tag_names).to include(auto_tag.name)
     end
   end
 end

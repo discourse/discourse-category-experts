@@ -22,18 +22,20 @@ export default Component.extend({
       this.set("allGroups", groups.filterBy("automatic", false));
     });
 
-    ajax("/badges.json").then((response) => {
-      const badgeOptions = [];
-      response.badges.forEach((badge) => {
-        if (badge.enabled) {
-          const tempBadge = Object.assign({}, badge);
-          tempBadge.id = tempBadge.id.toString();
-          badgeOptions.push(tempBadge);
-        }
-      });
+    if (this.siteSettings.enable_badges) {
+      ajax("/badges.json").then((response) => {
+        const badgeOptions = [];
+        response.badges.forEach((badge) => {
+          if (badge.enabled) {
+            const tempBadge = Object.assign({}, badge);
+            tempBadge.id = tempBadge.id.toString();
+            badgeOptions.push(tempBadge);
+          }
+        });
 
-      this.set("badgeOptions", badgeOptions);
-    });
+        this.set("badgeOptions", badgeOptions);
+      });
+    }
   },
 
   @action

@@ -86,6 +86,7 @@ module CategoryExperts
       end
 
       topic.save!
+      auto_tag_topic(topic)
       users_expert_group.name
     end
 
@@ -110,6 +111,23 @@ module CategoryExperts
 
       group_id = user.expert_group_ids_for_category(category)&.first
       @users_expert_group = group_id.nil? ? nil : Group.find_by(id: group_id)
+    end
+
+    def auto_tag_topic(topic)
+      return if !SiteSetting.tagging_enabled
+
+      auto_tag = topic.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG]
+      # Return early if there is no automatic tag for the category
+      return if auto_tag.blank?
+
+      existing_tag_names = topic.tag_names
+      # Return early if the topic already has the automatic tag
+      return if existing_tag_names.include?(auto_tag)
+
+      PostRevisor.new(topic.ordered_posts.first).revise!(
+        Discourse.system_user,
+        { tags: (existing_tag_names << auto_tag) },
+      )
     end
   end
 end

@@ -29,6 +29,7 @@ after_initialize do
   module ::CategoryExperts
     PLUGIN_NAME ||= "discourse-category-experts".freeze
     CATEGORY_EXPERT_GROUP_IDS = "category_expert_group_ids"
+    CATEGORY_EXPERT_AUTO_TAG = "category_expert_auto_tag"
     CATEGORY_ACCEPTING_ENDORSEMENTS = "category_accepting_endorsements"
     CATEGORY_ACCEPTING_QUESTIONS = "category_accepting_questions"
     CATEGORY_BADGE_ID = "category_experts_badge_id"
@@ -84,11 +85,13 @@ after_initialize do
   end
 
   register_category_custom_field_type(CategoryExperts::CATEGORY_EXPERT_GROUP_IDS, :string)
+  register_category_custom_field_type(CategoryExperts::CATEGORY_EXPERT_AUTO_TAG, :string)
   register_category_custom_field_type(CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS, :boolean)
   register_category_custom_field_type(CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS, :boolean)
   register_category_custom_field_type(CategoryExperts::CATEGORY_BADGE_ID, :string)
 
   Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
+  Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_EXPERT_AUTO_TAG
   Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS
   Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS
   Site.preloaded_category_custom_fields << CategoryExperts::CATEGORY_BADGE_ID
