@@ -144,9 +144,10 @@ describe CategoryExperts::PostHandler do
 
       it "Adds the auto tag when topic doesn't already have it" do
         expert_post = create_post(topic_id: topic.id, user: expert)
+        expert_post.topic.reload
         CategoryExperts::PostHandler.new(post: expert_post).mark_post_as_approved
 
-        expect(topic.tag_names).to include(auto_tag.name)
+        expect(topic.reload.tag_names).to include(auto_tag.name)
       end
     end
 
