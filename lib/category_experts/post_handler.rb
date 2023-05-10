@@ -121,7 +121,7 @@ module CategoryExperts
       return if !SiteSetting.tagging_enabled
       return if auto_tag_for_category.blank?
 
-      existing_tag_names = topic.tag_names
+      existing_tag_names = topic.tags.map(&:name)
       # Return early if the topic already has the automatic tag
       return if existing_tag_names.include?(auto_tag_for_category)
 
@@ -135,7 +135,7 @@ module CategoryExperts
       return if !SiteSetting.tagging_enabled
       return if auto_tag_for_category.blank?
 
-      existing_tag_names = topic.tag_names
+      existing_tag_names = topic.tags.map(&:name)
       # Return early if the topic doesn't have the automatic tag
       return if !existing_tag_names.include?(auto_tag_for_category)
 
