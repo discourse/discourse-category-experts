@@ -155,6 +155,8 @@ describe CategoryExperts::PostHandler do
         post = create_post(topic_id: topic.id, user: expert)
         expect(topic.tags.map(&:name)).to include(auto_tag.name)
 
+        # Have to reload, otherwise `PostRevisor` changes aren't picked up
+        post.topic.reload
         CategoryExperts::PostHandler.new(post: post).mark_post_for_approval
 
         expect(topic.reload.tags.map(&:name)).not_to include(auto_tag.name)
