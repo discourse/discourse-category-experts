@@ -2,10 +2,11 @@
 
 module CategoryExperts
   class PostHandler
-    attr_accessor :post, :user
+    attr_accessor :post, :topic, :user
 
     def initialize(post:, user: nil)
       @post = post
+      @topic = post.topic
       @user = user || post.user
     end
 
@@ -27,6 +28,7 @@ module CategoryExperts
       if !skip_validations
         raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
       end
+      should_remove_auto_tag = false
 
       post_group_name = post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
 
@@ -43,7 +45,7 @@ module CategoryExperts
             value: post_group_name,
           ).exists?
 
-      unless has_accepted_posts_from_same_group
+      if !has_accepted_posts_from_same_group
         groups =
           (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) -
             [post_group_name]
@@ -58,11 +60,13 @@ module CategoryExperts
       if topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
         topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = post.post_number
         topic.custom_fields.delete(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID)
+        should_remove_auto_tag = true
       else
         topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
       end
 
       topic.save!
+      remove_auto_tag if should_remove_auto_tag
     end
 
     def mark_post_as_approved(skip_validations: false)
@@ -86,6 +90,7 @@ module CategoryExperts
       end
 
       topic.save!
+      add_auto_tag
       users_expert_group.name
     end
 
@@ -110,6 +115,41 @@ module CategoryExperts
 
       group_id = user.expert_group_ids_for_category(category)&.first
       @users_expert_group = group_id.nil? ? nil : Group.find_by(id: group_id)
+    end
+
+    def add_auto_tag
+      return if !SiteSetting.tagging_enabled
+      return if auto_tag_for_category.blank?
+
+      existing_tag_names = topic.tags.map(&:name)
+      # Return early if the topic already has the automatic tag
+      return if existing_tag_names.include?(auto_tag_for_category)
+
+      PostRevisor.new(topic.ordered_posts.first).revise!(
+        Discourse.system_user,
+        { tags: (existing_tag_names << auto_tag_for_category) },
+      )
+    end
+
+    def remove_auto_tag
+      return if !SiteSetting.tagging_enabled
+      return if auto_tag_for_category.blank?
+
+      existing_tag_names = topic.tags.map(&:name)
+      # Return early if the topic doesn't have the automatic tag
+      return if !existing_tag_names.include?(auto_tag_for_category)
+
+      PostRevisor.new(topic.ordered_posts.first).revise!(
+        Discourse.system_user,
+        { tags: ((existing_tag_names || []) - [auto_tag_for_category]) },
+      )
+    end
+
+    def auto_tag_for_category
+      return @auto_tag_for_category if defined?(@auto_tag_for_category)
+
+      @auto_tag_for_category =
+        @topic.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG]
     end
   end
 end

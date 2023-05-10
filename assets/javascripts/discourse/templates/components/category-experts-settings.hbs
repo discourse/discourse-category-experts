@@ -14,22 +14,45 @@
     </div>
   </section>
 
-  <section class="field">
-    <label class="checkbox-label">
-      {{i18n "category_experts.badge"}}
-    </label>
-    <div class="controls">
-      <ComboBox
-        @value={{category.custom_fields.category_experts_badge_id}}
-        @content={{badgeOptions}}
-        @nameProperty="name"
-        @onChange={{action
-          (mut category.custom_fields.category_experts_badge_id)
-        }}
-        @options={{hash none="category_experts.no_badge"}}
-      />
-    </div>
-  </section>
+  {{#if siteSettings.tagging_enabled}}
+    <section class="field category-experts-auto-tagging">
+      <label class="checkbox-label">
+        {{i18n "category_experts.auto_tagging.title"}}
+      </label>
+      <div class="controls">
+        <TagChooser
+          @tags={{category.custom_fields.category_expert_auto_tag}}
+          @categoryId={{category.id}}
+          @options={{hash limit=1}}
+          @onChange={{action
+            (mut category.custom_fields.category_expert_auto_tag)
+          }}
+        />
+      </div>
+      <div class="instructions">
+        {{i18n "category_experts.auto_tagging.description"}}
+      </div>
+    </section>
+  {{/if}}
+
+  {{#if badgeOptions}}
+    <section class="field">
+      <label class="checkbox-label">
+        {{i18n "category_experts.badge"}}
+      </label>
+      <div class="controls">
+        <ComboBox
+          @value={{category.custom_fields.category_experts_badge_id}}
+          @content={{badgeOptions}}
+          @nameProperty="name"
+          @onChange={{action
+            (mut category.custom_fields.category_experts_badge_id)
+          }}
+          @options={{hash none="category_experts.no_badge"}}
+        />
+      </div>
+    </section>
+  {{/if}}
 
   {{#if category.custom_fields.category_expert_group_ids}}
     <section class="field">

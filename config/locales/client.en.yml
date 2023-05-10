@@ -16,6 +16,10 @@ en:
       approve: "Approve"
       unapprove: "Unapprove Category Expert Post"
       ask_category_expert: "Ask a category expert to respond"
+      auto_tagging:
+        title: "Automatic tagging"
+        description: "This tag will be automatically added to topics when an approved category expert post is created. Disable auto tagging by leaving the tag blank."
+
       manage_endorsements:
         title: "Endorse user"
         subtitle: "What are %{username}'s strengths?"
