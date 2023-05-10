@@ -125,7 +125,7 @@ describe CategoryExperts::PostHandler do
     end
   end
 
-  describe "Auto tagging" do
+  describe "Auto Tagging" do
     fab!(:auto_tag) { Fabricate(:tag) }
 
     before do
@@ -133,19 +133,42 @@ describe CategoryExperts::PostHandler do
       category.save!
     end
 
-    it "Doesn't error when the auto tag is already present on the topic" do
-      post = create_post(topic_id: topic.id, user: user)
-      PostRevisor.new(post).revise!(Discourse.system_user, tags: [auto_tag.name])
+    describe "Adding" do
+      it "Doesn't error when the auto tag is already present on the topic" do
+        post = create_post(topic_id: topic.id, user: user)
+        PostRevisor.new(post).revise!(Discourse.system_user, tags: [auto_tag.name])
 
-      expert_post = create_post(topic_id: topic.id, user: expert)
-      CategoryExperts::PostHandler.new(post: expert_post).mark_post_as_approved
+        expert_post = create_post(topic_id: topic.id, user: expert)
+        CategoryExperts::PostHandler.new(post: expert_post).mark_post_as_approved
+      end
+
+      it "Adds the auto tag when topic doesn't already have it" do
+        expert_post = create_post(topic_id: topic.id, user: expert)
+        CategoryExperts::PostHandler.new(post: expert_post).mark_post_as_approved
+
+        expect(topic.tag_names).to include(auto_tag.name)
+      end
     end
 
-    it "Adds the auto tag when topic doesn't already have it" do
-      expert_post = create_post(topic_id: topic.id, user: expert)
-      CategoryExperts::PostHandler.new(post: expert_post).mark_post_as_approved
+    describe "Removing" do
+      it "Removes the auto tag when the experts post is marked for approval" do
+        post = create_post(topic_id: topic.id, user: expert)
+        expect(topic.tags.map(&:name)).to include(auto_tag.name)
 
-      expect(topic.tag_names).to include(auto_tag.name)
+        CategoryExperts::PostHandler.new(post: post).mark_post_for_approval
+
+        expect(topic.reload.tags.map(&:name)).not_to include(auto_tag.name)
+      end
+
+      it "Doesn't remove the auto tag when another category expert post is present" do
+        post = create_post(topic_id: topic.id, user: expert)
+        other_post = create_post(topic_id: topic.id, user: expert)
+        expect(topic.tags.map(&:name)).to include(auto_tag.name)
+
+        CategoryExperts::PostHandler.new(post: post).mark_post_for_approval
+
+        expect(topic.reload.tags.map(&:name)).to include(auto_tag.name)
+      end
     end
   end
 end
