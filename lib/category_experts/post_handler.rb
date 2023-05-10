@@ -148,7 +148,8 @@ module CategoryExperts
     def auto_tag_for_category
       return @auto_tag_for_category if defined?(@auto_tag_for_category)
 
-      @auto_tag_for_category = @topic.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG]
+      @auto_tag_for_category =
+        @topic.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG]
     end
   end
 end
