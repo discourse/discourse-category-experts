@@ -12,6 +12,8 @@ fa_IR:
       no_group: "هیچ کدام"
       edit: "ویرایش‌"
       approve: "تایید"
+      auto_tagging:
+        title: "برچسب زدن خودکار"
       review:
         approve: "تایید"
         deny: "چشم پوشی"
