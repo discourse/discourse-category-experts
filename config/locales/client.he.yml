@@ -18,6 +18,9 @@ he:
       edit: "עריכה"
       approve: "אישור"
       ask_category_expert: "לבקש ממומחה הקטגוריה להגיב"
+      auto_tagging:
+        title: "תיוג אוטומטי"
+        description: "התגית הזאת תווסף אוטומטית כאשר פוסט שאושר על ידי מומחה קטגוריה נוצר. אפשר להשבית תיוג אוטומטי על ידי השארת התגית ריקה."
       manage_endorsements:
         title: "תמיכה במשתמש"
         subtitle: "מהן החוזקות של %{username}?"
