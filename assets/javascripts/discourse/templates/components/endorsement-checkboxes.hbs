@@ -5,7 +5,7 @@
     }}</h3>
 
   {{#if loading}}
-    {{loading-spinner size="large"}}
+    <LoadingSpinner @size="large" />
   {{else}}
     {{#if showingSuccess}}
       <div class="endorsement-successful">
