@@ -92,8 +92,9 @@ describe CategoryExpertsController do
         sign_in(user)
         SiteSetting.max_category_expert_endorsements_per_day = 1
         RateLimiter.enable
-        RateLimiter.clear_all!
       end
+
+      use_redis_snapshotting
 
       it "returns a 429 when rate limits are hit for tl0" do
         freeze_time
