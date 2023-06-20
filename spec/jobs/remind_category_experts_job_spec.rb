@@ -49,15 +49,15 @@ describe CategoryExperts::RemindCategoryExpertsJob do
     split_raw = expert1_message.first_post.raw.split("\n")
 
     expect(split_raw.count).to eq(2)
-    expect(split_raw.first.include?("There are [2 unanswered")).to eq(true)
-    expect(split_raw.second.include?("There are [1 unanswered")).to eq(true)
+    expect(split_raw.first).to include("There are [2 unanswered")
+    expect(split_raw.second).to include("There are [1 unanswered")
 
     # Expert 2 should only get 1 row
     expert2_message = expert2.topics_allowed.where(archetype: Archetype.private_message).last
     split_raw = expert2_message.first_post.raw.split("\n")
 
     expect(split_raw.count).to eq(1)
-    expect(split_raw.first.include?("There are [2 unanswered")).to eq(true)
+    expect(split_raw.first).to include("There are [2 unanswered")
   end
 
   it "Does nothing if the site setting is disabled" do
