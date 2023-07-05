@@ -22,7 +22,7 @@ export function categoryExpertTopicListIndicators(context) {
 
 const addApprovedPills = (topic, siteSettings) => {
   let html = "";
-  (topic.expert_post_group_names || []).forEach((groupName) => {
+  siteSettings.first_post_can_be_considered_expert_post && (topic.expert_post_group_names || []).forEach((groupName) => {
     const href = siteSettings.category_experts_topic_list_link_to_posts
       ? `${topic.url}/${topic.first_expert_post_id}`
       : "/search?q=with:category_expert_response";
