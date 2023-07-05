@@ -1,6 +1,7 @@
 en:
   site_settings:
     enable_category_experts: "Enable category experts plugin"
+    first_post_can_be_considered_expert_post: "First post can be considered expert post"
     show_category_expert_advanced_search_filters: "Show category expert filters in advanced search"
     category_expert_suggestion_threshold: "Suggest category experts after this many endorsements."
     category_experts_posts_require_approval: "Posts from category experts require staff approval for expert decoration."

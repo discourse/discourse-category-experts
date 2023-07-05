@@ -2,6 +2,9 @@ plugins:
   enable_category_experts:
     default: true
     client: true
+  first_post_can_be_considered_expert_post:
+    default: false
+    client: true
   show_category_expert_advanced_search_filters:
     default: true
     client: true
