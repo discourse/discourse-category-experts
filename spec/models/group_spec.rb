@@ -32,10 +32,10 @@ describe Group do
     end
 
     describe "SiteSetting.category_experts_posts_require_approval = false" do
-      before {
+      before do
         SiteSetting.category_experts_posts_require_approval = false
         SiteSetting.first_post_can_be_considered_expert_post = true
-      }
+      end
 
       it "marks past posts as requiring approval" do
         post = create_post(topic_id: topic.id, user: user)

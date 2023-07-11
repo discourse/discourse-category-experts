@@ -75,7 +75,7 @@ module CategoryExperts
       end
 
       # if this is not the topic post (post>1) OR it's the topic post/first post and it's ok for that to be an expert post
-      if post.post_number>1 || SiteSetting.first_post_can_be_considered_expert_post
+      if post.post_number > 1 || SiteSetting.first_post_can_be_considered_expert_post
         post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
         post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = false
         post.save!

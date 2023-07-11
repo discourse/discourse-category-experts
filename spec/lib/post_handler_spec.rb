@@ -30,10 +30,10 @@ describe CategoryExperts::PostHandler do
   end
 
   describe "SiteSetting.category_experts_posts_require_approval enabled" do
-    before {
+    before do
       SiteSetting.category_experts_posts_require_approval = true
       SiteSetting.first_post_can_be_considered_expert_post = true
-    }
+    end
 
     describe "No existing approved expert posts" do
       it "marks the post as needing approval, as well as the topic" do
@@ -94,10 +94,10 @@ describe CategoryExperts::PostHandler do
   end
 
   describe "SiteSetting.category_experts_posts_require_approval disabled" do
-    before {
+    before do
       SiteSetting.category_experts_posts_require_approval = false
       SiteSetting.first_post_can_be_considered_expert_post = true
-    }
+    end
 
     it "marks posts as approved automatically" do
       result = NewPostManager.new(expert, raw: "this is a new post", topic_id: topic.id).perform
@@ -181,39 +181,30 @@ describe CategoryExperts::PostHandler do
   end
 
   describe "SiteSetting.first_post_can_be_considered_expert_post false" do
-    before {
+    before do
       SiteSetting.category_experts_posts_require_approval = false
       SiteSetting.first_post_can_be_considered_expert_post = false
-    }
+    end
 
     it "adds expert group names to the topic custom fields on second post, but not first post" do
       post = create_post(topic_id: topic.id, user: expert)
       CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
-      expect(post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
-                                                                                            nil,
-                                                                                            )
+      expect(post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
 
       result =
         NewPostManager.new(second_expert, raw: "this is a new post", topic_id: topic.id).perform
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
-                                                                                                   second_group.name,
-                                                                                                   )
+        second_group.name,
+      )
     end
 
     it "adds expert group names to the post custom fields on second post, but not first post" do
       post = create_post(topic_id: topic.id, user: expert)
       CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
-      expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
-                                                                                            nil,
-                                                                                            )
+      expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
 
-      result =
-        NewPostManager.new(expert, raw: "this is a new post", topic_id: topic.id).perform
-      expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
-                                                                                            group.name,
-                                                                                                   )
+      result = NewPostManager.new(expert, raw: "this is a new post", topic_id: topic.id).perform
+      expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
     end
-
   end
-
 end
