@@ -75,25 +75,24 @@ module CategoryExperts
       end
 
       # if this is not the topic post (post>1) OR it's the topic post/first post and it's ok for that to be an expert post
-      if post.post_number > 1 || SiteSetting.first_post_can_be_considered_expert_post
-        post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
-        post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = false
-        post.save!
+      return unless post.post_number > 1 || SiteSetting.first_post_can_be_considered_expert_post
 
-        topic = post.topic
-        topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = (
-          topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []
-        ).push(users_expert_group.name).uniq.join("|")
-        topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
+      post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
+      post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = false
+      post.save!
 
-        if !topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] ||
-             topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] == 0
-          topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] = post.post_number
-        end
+      topic = post.topic
+      topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = (
+        topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []
+      ).push(users_expert_group.name).uniq.join("|")
+      topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
 
-        topic.save!
+      if !topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] ||
+           topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] == 0
+        topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] = post.post_number
       end
 
+      topic.save!
       add_auto_tag
       users_expert_group.name
     end
