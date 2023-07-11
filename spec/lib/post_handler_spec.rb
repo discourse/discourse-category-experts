@@ -195,8 +195,8 @@ describe CategoryExperts::PostHandler do
       result =
         NewPostManager.new(second_expert, raw: "this is a new post", topic_id: topic.id).perform
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
-                                                                                                   second_group.name,
-                                                                                                   )
+        second_group.name,
+      )
     end
 
     it "adds expert group names to the post custom fields on second post, but not first post" do
