@@ -4,7 +4,6 @@ import { htmlSafe } from "@ember/template";
 
 export function categoryExpertTopicListIndicators(context) {
   let html = "";
-
   html += addApprovedPills(context.topic, context.siteSettings);
   html += addNeedsApprovalPill(
     context.topic,
@@ -22,7 +21,7 @@ export function categoryExpertTopicListIndicators(context) {
 
 const addApprovedPills = (topic, siteSettings) => {
   let html = "";
-  siteSettings.first_post_can_be_considered_expert_post && (topic.expert_post_group_names || []).forEach((groupName) => {
+  (topic.expert_post_group_names || []).forEach((groupName) => {
     const href = siteSettings.category_experts_topic_list_link_to_posts
       ? `${topic.url}/${topic.first_expert_post_id}`
       : "/search?q=with:category_expert_response";
