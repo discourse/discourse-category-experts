@@ -137,6 +137,7 @@ describe CategoryExperts::PostHandler do
     before do
       category.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG] = auto_tag.name
       category.save!
+      SiteSetting.first_post_can_be_considered_expert_post = true
     end
 
     describe "Adding" do
