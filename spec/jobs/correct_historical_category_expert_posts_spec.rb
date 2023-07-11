@@ -29,6 +29,7 @@ describe Jobs::CorrectHistoricalCategoryExpertPosts do
     SiteSetting.enable_category_experts = true
     SiteSetting.category_experts_posts_require_approval = false
     SiteSetting.approve_past_posts_on_becoming_category_expert = true
+    SiteSetting.first_post_can_be_considered_expert_post = true
     Jobs.run_immediately!
   end
 
