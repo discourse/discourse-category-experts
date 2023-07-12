@@ -4,7 +4,6 @@ import { htmlSafe } from "@ember/template";
 
 export function categoryExpertTopicListIndicators(context) {
   let html = "";
-
   html += addApprovedPills(context.topic, context.siteSettings);
   html += addNeedsApprovalPill(
     context.topic,

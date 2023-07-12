@@ -215,6 +215,7 @@ describe CategoryExpertsController do
       before do
         sign_in(admin)
         SiteSetting.category_experts_posts_require_approval = true
+        SiteSetting.first_post_can_be_considered_expert_post = true
       end
 
       it "approves the post and returns the expert group name" do
@@ -280,6 +281,7 @@ describe CategoryExpertsController do
       before do
         sign_in(admin)
         SiteSetting.category_experts_posts_require_approval = true
+        SiteSetting.first_post_can_be_considered_expert_post = true
       end
 
       it "unapproves the post and returns the expert group name" do
