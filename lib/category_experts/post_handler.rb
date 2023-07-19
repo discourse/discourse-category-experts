@@ -93,7 +93,6 @@ module CategoryExperts
       end
 
       topic.save!
-
       add_auto_tag
       users_expert_group.name
     end
