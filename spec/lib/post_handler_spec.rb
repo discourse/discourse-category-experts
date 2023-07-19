@@ -19,7 +19,7 @@ describe CategoryExperts::PostHandler do
         Fabricate.build(:topic_allowed_user, user: expert),
         Fabricate.build(:topic_allowed_user, user: second_expert),
       ],
-      )
+    )
   end
 
   before do
