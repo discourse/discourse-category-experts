@@ -7,9 +7,13 @@
 pl_PL:
   site_settings:
     enable_category_experts: "Włącz wtyczkę ekspertów kategorii"
+    first_post_can_be_considered_expert_post: "Pierwszy post można uznać za post eksperta"
+    show_category_expert_advanced_search_filters: "Pokaż filtry ekspertów kategorii w wyszukiwaniu zaawansowanym"
     category_expert_suggestion_threshold: "Zaproponuj ekspertów kategorii po tylu zatwierdzeniach."
+    category_experts_posts_require_approval: "Posty ekspertów kategorii wymagają zgody personelu na odznaczenie eksperckie."
     send_admin_category_experts_posts_reminder_pm: "Wyślij przypomnienia do personelu, aby przejrzeli niezatwierdzone posty ekspertów kategorii."
     approve_past_posts_on_becoming_category_expert: "Gdy użytkownik staje się ekspertem, wszystkie jego wcześniejsze posty w kategorii są automatycznie zatwierdzane. Gdy użytkownik przestanie być ekspertem, wszystkie jego posty są niezatwierdzone."
+    max_category_expert_endorsements_per_day: "Maksymalna liczba rekomendacji dozwolona dla użytkownika w ciągu dnia."
   system_messages:
     user_add_as_category_expert:
       title: "Gratulacje, jesteś ekspertem tej kategorii!"
@@ -24,6 +28,7 @@ pl_PL:
       raw_for_category: |
         Istnieje [%{topic_count} pytań bez odpowiedzi](%{search_url}) dla eksperta kategorii w kategorii [%{category_name}](%{category_url}).
     admin_reminder:
+      title: "Istnieją niezatwierdzone posty eksperta kategorii do sprawdzenia."
       body: |
         Istnieją [%{topic_count} pytania ekspertów kategorii](%{search_url}), które mają co najmniej jeden niezatwierdzony post eksperta kategorii.
 
