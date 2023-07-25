@@ -13,6 +13,7 @@ pl_PL:
       no_badge: "Brak"
       no_group: "Brak"
       accepting_endorsements: "Aktualnie akceptuje zatwierdzenie użytkownika"
+      accepting_questions: "Obecnie przyjmuje pytania do ekspertów kategorii"
       endorse: "Zatwierdź"
       out_of_endorsements: "Wykorzystałeś wszystkie swoje rekomendacje na dany dzień."
       remaining_endorsements: "%{count} zatwierdzeń pozostałych na dziś"
@@ -21,6 +22,9 @@ pl_PL:
       approve: "Zatwierdź"
       unapprove: "Cofnij zatwierdzenie postu eksperta kategorii"
       ask_category_expert: "Poproś eksperta kategorii o odpowiedź"
+      auto_tagging:
+        title: "Automatyczne tagowanie"
+        description: "Ten tag zostanie automatycznie dodany do tematów po utworzeniu zatwierdzonego posta eksperta kategorii. Wyłącz automatyczne tagowanie, pozostawiając pusty tag."
       manage_endorsements:
         title: "Zatwierdź użytkownika"
         subtitle: "Jakie są mocne strony %{username}?"
