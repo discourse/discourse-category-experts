@@ -19,6 +19,7 @@ after_initialize do
     ../app/serializers/reviewable_category_expert_suggestion_serializer
     ../app/jobs/regular/approve_past_category_expert_posts
     ../app/jobs/regular/correct_historical_category_expert_posts
+    ../app/jobs/regular/remove_expert_post_properties_from_first_posts
     ../app/jobs/regular/unapprove_past_category_expert_posts
     ../app/jobs/scheduled/remind_admin_of_category_experts_posts_job
     ../app/jobs/scheduled/remind_category_experts_job
