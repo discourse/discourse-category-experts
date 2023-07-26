@@ -6,8 +6,7 @@ module Jobs
 
     def fix_post(post)
       return if !post
-      return if post.post_number!=1
-
+      return if post.post_number != 1
 
       post_group_name = post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
 
@@ -44,20 +43,18 @@ module Jobs
       end
 
       # if the first_expert_topic_id is 1, delete that custom_field.
-      if topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]==1
+      if topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] == 1
         topic.custom_fields.delete(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID)
       end
       topic.save!
     end
 
-    def execute(args={})
+    def execute(args = {})
       Post
-         .joins("inner JOIN post_custom_fields AS pcf ON pcf.post_id = posts.id")
-         .where(post_number:1)
-         .where("pcf.name=?",CategoryExperts::POST_APPROVED_GROUP_NAME)
-      .map { |post|
-        fix_post(post)
-      }
+        .joins("inner JOIN post_custom_fields AS pcf ON pcf.post_id = posts.id")
+        .where(post_number: 1)
+        .where("pcf.name=?", CategoryExperts::POST_APPROVED_GROUP_NAME)
+        .map { |post| fix_post(post) }
     end
   end
 end

@@ -19,7 +19,7 @@ describe CategoryExperts::PostHandler do
         Fabricate.build(:topic_allowed_user, user: expert),
         Fabricate.build(:topic_allowed_user, user: second_expert),
       ],
-      )
+    )
   end
 
   before do
@@ -41,11 +41,11 @@ describe CategoryExperts::PostHandler do
 
         expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
         expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(
-                                                                                                  nil,
-                                                                                                  )
+          nil,
+        )
         expect(
           result.post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL],
-          ).to eq(result.post.post_number)
+        ).to eq(result.post.post_number)
       end
     end
 
@@ -55,7 +55,7 @@ describe CategoryExperts::PostHandler do
           expert,
           raw: "this is a new post",
           topic_id: private_message_topic.id,
-          ).perform
+        ).perform
       }.not_to raise_error
     end
 
@@ -69,11 +69,11 @@ describe CategoryExperts::PostHandler do
         expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
 
         expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(
-                                                                                                  existing_post.post_number,
-                                                                                                  )
+          existing_post.post_number,
+        )
         expect(
           result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
-          ).to eq(group.name)
+        ).to eq(group.name)
       end
 
       it "does nothing for non-regular posts" do
@@ -87,7 +87,7 @@ describe CategoryExperts::PostHandler do
               CategoryExperts::POST_APPROVED_GROUP_NAME,
               CategoryExperts::POST_PENDING_EXPERT_APPROVAL,
             ],
-            ).count
+          ).count
         }
       end
     end
@@ -105,29 +105,29 @@ describe CategoryExperts::PostHandler do
       expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
       expect(result.post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
-                                                                                                   group.name,
-                                                                                                   )
+        group.name,
+      )
 
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(
-                                                                                                result.post.post_number,
-                                                                                                )
+        result.post.post_number,
+      )
       expect(
         result.post.topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL],
-        ).to eq(nil)
+      ).to eq(nil)
     end
 
     it "correctly adds the expert group names to the topic custom fields" do
       post = create_post(topic_id: topic.id, user: expert)
       CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
       expect(post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
-                                                                                            group.name,
-                                                                                            )
+        group.name,
+      )
 
       result =
         NewPostManager.new(second_expert, raw: "this is a new post", topic_id: topic.id).perform
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
-                                                                                                   "#{group.name}|#{second_group.name}",
-                                                                                                   )
+        "#{group.name}|#{second_group.name}",
+      )
     end
   end
 

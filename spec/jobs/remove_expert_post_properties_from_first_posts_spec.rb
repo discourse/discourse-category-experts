@@ -7,12 +7,10 @@ describe Jobs::RemoveExpertPostPropertiesFromFirstPosts do
   fab!(:expert) { Fabricate(:user) }
   fab!(:category) { Fabricate(:category) }
   fab!(:group) { Fabricate(:group, users: [expert]) }
-  fab!(:topic) { Fabricate(:topic, category: category)}
+  fab!(:topic) { Fabricate(:topic, category: category) }
 
   before do
-    category.custom_fields[
-      CategoryExperts::CATEGORY_EXPERT_GROUP_IDS
-    ] = "#{group.id}"
+    category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group.id}"
     category.save
     Jobs.run_immediately!
     SiteSetting.category_experts_posts_require_approval = false
@@ -20,7 +18,6 @@ describe Jobs::RemoveExpertPostPropertiesFromFirstPosts do
   end
 
   it "removes expert post properties from first posts" do
-
     result = NewPostManager.new(expert, raw: "this is a new post", topic_id: topic.id).perform
     # pp result.post
     # pp result.post.custom_fields
@@ -28,7 +25,9 @@ describe Jobs::RemoveExpertPostPropertiesFromFirstPosts do
     # pp result.post.topic.custom_fields
     expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
     expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(1)
-    expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(group.name)
+    expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
+      group.name,
+    )
 
     Jobs::RemoveExpertPostPropertiesFromFirstPosts.new.execute
     post = Post.first
@@ -36,6 +35,5 @@ describe Jobs::RemoveExpertPostPropertiesFromFirstPosts do
     expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
     expect(post.topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(nil)
     expect(post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(nil)
-
   end
 end
