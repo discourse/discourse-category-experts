@@ -4,9 +4,10 @@ module Jobs
   class RemoveExpertPostPropertiesFromFirstPosts < ::Jobs::Base
     sidekiq_options queue: "low"
 
-    def fixPost(post)
-      return unless post
-      return unless post.post_number==1
+    def fix_post(post)
+      return if !post
+      return if post.post_number!=1
+
 
       post_group_name = post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
 
@@ -50,8 +51,12 @@ module Jobs
     end
 
     def execute(args={})
-      Post.where(post_number: 1).map { |post|
-        fixPost(post)
+      Post
+         .joins("inner JOIN post_custom_fields AS pcf ON pcf.post_id = posts.id")
+         .where(post_number:1)
+         .where("pcf.name=?",CategoryExperts::POST_APPROVED_GROUP_NAME)
+      .map { |post|
+        fix_post(post)
       }
     end
   end
