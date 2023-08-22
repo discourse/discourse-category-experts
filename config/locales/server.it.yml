@@ -7,6 +7,8 @@
 it:
   site_settings:
     enable_category_experts: "Abilita il plugin degli esperti di categoria"
+    first_post_can_be_considered_expert_post: "Il primo messaggio può essere considerato messaggio da esperti"
+    show_category_expert_advanced_search_filters: "Mostra i filtri per esperti di categoria nella ricerca avanzata"
     category_expert_suggestion_threshold: "Suggerisci esperti di categoria dopo averli sostenuti per il numero di volte indicato."
     category_experts_posts_require_approval: "I messaggi degli esperti di categoria richiedono l'approvazione dello staff per ricevere la decorazione di esperti."
     send_category_experts_reminder_pms: "Invia messaggi personali di promemoria agli esperti di categoria, per rispondere a domande che non hanno ricevuto risposta"

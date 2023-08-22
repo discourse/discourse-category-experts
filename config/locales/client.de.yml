@@ -22,6 +22,9 @@ de:
       approve: "Genehmigen"
       unapprove: "Genehmigung für Beitrag von Kategorie-Experten widerrufen"
       ask_category_expert: "Bitte einen Kategorie-Experten um eine Antwort"
+      auto_tagging:
+        title: "Automatische Schlagwort-Markierung"
+        description: "Dieses Schlagwort wird automatisch zu Themen hinzugefügt, wenn ein Beitrag eines genehmigten Kategorie-Experten erstellt wird. Deaktiviere die automatische Schlagwort-Markierung, indem du das Schlagwort leer lässt."
       manage_endorsements:
         title: "Benutzer empfehlen"
         subtitle: "Was sind die Stärken von %{username}?"

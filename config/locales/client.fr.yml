@@ -22,6 +22,9 @@ fr:
       approve: "Approuver"
       unapprove: "Désapprouver le message d'expert de la catégorie"
       ask_category_expert: "Demander à un expert de la catégorie de répondre"
+      auto_tagging:
+        title: "Marquage automatique"
+        description: "Cette étiquette sera automatiquement ajoutée aux sujets lorsqu'un message d'expert de catégorie approuvé sera créé. Désactivez le marquage automatique en laissant l'étiquette vide."
       manage_endorsements:
         title: "Approuver l'utilisateur"
         subtitle: "Quels sont les points forts de %{username} ?"

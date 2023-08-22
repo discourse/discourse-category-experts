@@ -7,6 +7,8 @@
 ja:
   site_settings:
     enable_category_experts: "カテゴリエキスパートプラグインを有効にする"
+    first_post_can_be_considered_expert_post: "最初の投稿はエキスパート投稿と見なされます"
+    show_category_expert_advanced_search_filters: "高度な検索にカテゴリエキスパートフィルタを表示する"
     category_expert_suggestion_threshold: "この数の支持を得たら、カテゴリエキスパートを提案します。"
     category_experts_posts_require_approval: "カテゴリエキスパートの投稿にエキスパートのデコレーションを付けるには、スタッフの承認を必要とします。"
     send_category_experts_reminder_pms: "未回答の質問に返信するように、カテゴリエキスパートにリマインダー PM を送信する"

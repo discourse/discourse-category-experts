@@ -7,6 +7,8 @@
 pt_BR:
   site_settings:
     enable_category_experts: "Ativar plugin de especialistas em categoria"
+    first_post_can_be_considered_expert_post: "A primeira postagem pode ser considerada uma postagem especializada"
+    show_category_expert_advanced_search_filters: "Mostrar filtros especializados em categorias na pesquisa avançada"
     category_expert_suggestion_threshold: "Sugerir especialistas em categoria após tantos endossos."
     category_experts_posts_require_approval: "Postagens de especialistas em categoria requerem a aprovação da equipe para a condecoração do especialista"
     send_category_experts_reminder_pms: "Enviar MPs de lembrete a especialistas em categoria para responderem a perguntas não respondidas"

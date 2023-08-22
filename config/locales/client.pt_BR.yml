@@ -22,6 +22,9 @@ pt_BR:
       approve: "Aprovar"
       unapprove: "Desaprovar postagem de especialista em categoria"
       ask_category_expert: "Pedir resposta a um(a) especialista em categoria"
+      auto_tagging:
+        title: "Marcação automática"
+        description: "Esta etiqueta será adicionada automaticamente aos tópicos quando uma postagem especializada da categoria aprovada for criada. Deixe esta etiqueta vazia para desativar a marcação automática."
       manage_endorsements:
         title: "Endossar usuário(a)"
         subtitle: "Quais são os pontos fortes de %{username}?"
