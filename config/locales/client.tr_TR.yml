@@ -22,6 +22,9 @@ tr_TR:
       approve: "Onayla"
       unapprove: "Kategori Uzmanı Gönderisinin Onayını Kaldır"
       ask_category_expert: "Bir kategori uzmanından yanıt vermesini isteyin"
+      auto_tagging:
+        title: "Otomatik etiketleme"
+        description: "Bu etiket, onaylı bir kategori uzmanı gönderisi oluşturulduğunda konulara otomatik olarak eklenir. Etiketi boş bırakarak otomatik etiketlemeyi devre dışı bırakın."
       manage_endorsements:
         title: "Kullanıcıyı onayla"
         subtitle: "%{username} adlı kullanıcının güçlü yönleri nelerdir?"

@@ -7,6 +7,8 @@
 ar:
   site_settings:
     enable_category_experts: "تفعيل المكوِّن الإضافي لخبراء الفئة"
+    first_post_can_be_considered_expert_post: "يمكن اعتبار المنشور الأول منشورًا من خبير"
+    show_category_expert_advanced_search_filters: "عرض عوامل تصفية خبراء الفئة في البحث المتقدم"
     category_expert_suggestion_threshold: "اقتراح خبراء الفئة بعد هذا العدد من المصادقات"
     category_experts_posts_require_approval: "تتطلب المنشورات من خبراء الفئة موافقة فريق العمل على التعيين كخبراء"
     send_category_experts_reminder_pms: "إرسال رسائل تذكيرية خاصة إلى خبراء الفئات للرد على الأسئلة التي لم تتم الإجابة عليها"

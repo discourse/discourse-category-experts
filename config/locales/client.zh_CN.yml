@@ -22,6 +22,9 @@ zh_CN:
       approve: "批准"
       unapprove: "取消批准类别专家帖子"
       ask_category_expert: "请类别专家回应"
+      auto_tagging:
+        title: "自动添加标签"
+        description: "创建一个经过批准的专家类别帖子时，此标签将自动添加到话题中。如果要禁用自动添加标签，请将标签留空。"
       manage_endorsements:
         title: "认可用户"
         subtitle: "%{username} 的优点是什么？"

@@ -22,6 +22,9 @@ it:
       approve: "Approva"
       unapprove: "Annulla approvazione del messaggio dell'esperto di categoria"
       ask_category_expert: "Chiedi a un esperto della categoria di rispondere"
+      auto_tagging:
+        title: "Etichettatura automatica"
+        description: "Questa etichetta verrà aggiunta automaticamente agli argomenti quando viene creato un messaggio da esperti di categoria approvati. Disabilita l'etichettatura automatica lasciando vuota l'etichetta."
       manage_endorsements:
         title: "Sostieni utente"
         subtitle: "Quali sono i punti di forza di %{username}?"

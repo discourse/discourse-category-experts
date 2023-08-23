@@ -22,6 +22,9 @@ es:
       approve: "Aprobar"
       unapprove: "Quitar la aprobación del puesto de experto en la categoría"
       ask_category_expert: "Pedir a un experto en la categoría que responda"
+      auto_tagging:
+        title: "Etiquetado automático"
+        description: "Esta etiqueta se añadirá automáticamente a los temas cuando se cree una publicación experta en la categoría aprobada. Desactive el etiquetado automático dejando la etiqueta en blanco."
       manage_endorsements:
         title: "Respaldar al usuario"
         subtitle: "¿Cuáles son los puntos fuertes de %{username}?"

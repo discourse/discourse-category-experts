@@ -22,6 +22,9 @@ ja:
       approve: "承認"
       unapprove: "未承認のカテゴリエキスパート投稿"
       ask_category_expert: "カテゴリエキスパートに回答を依頼する"
+      auto_tagging:
+        title: "自動タグ付け"
+        description: "このタグは、承認されたカテゴリエキスパート投稿が作成されると、トピックに自動的に追加されます。タグを空のままにすると、自動タグ付けは無効になります。"
       manage_endorsements:
         title: "ユーザーの支持"
         subtitle: "%{username} の強みは何ですか？"

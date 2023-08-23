@@ -7,6 +7,8 @@
 nl:
   site_settings:
     enable_category_experts: "Categorie-expertsplug-in inschakelen"
+    first_post_can_be_considered_expert_post: "Eerste bericht kan worden beschouwd als expertbericht"
+    show_category_expert_advanced_search_filters: "Categorie-expertfilters weergeven in geavanceerd zoeken"
     category_expert_suggestion_threshold: "Stel categorie-experts voor na zoveel aanbevelingen."
     category_experts_posts_require_approval: "Berichten van categorie-experts vereisen goedkeuring van een medewerker voor expertonderscheiding."
     send_category_experts_reminder_pms: "Herinnerings-PB's sturen naar categorie-experts om onbeantwoorde vragen te beantwoorden"

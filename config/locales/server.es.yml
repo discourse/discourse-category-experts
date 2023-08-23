@@ -7,6 +7,8 @@
 es:
   site_settings:
     enable_category_experts: "Habilitar complemento de expertos en categorías"
+    first_post_can_be_considered_expert_post: "La primera publicación puede considerarse publicación experta"
+    show_category_expert_advanced_search_filters: "Mostrar filtros expertos por categoría en la búsqueda avanzada"
     category_expert_suggestion_threshold: "Sugerir expertos en la categoría después de esta cantidad de respaldos."
     category_experts_posts_require_approval: "Las publicaciones de los expertos en la categoría requieren la aprobación del personal para la decoración de los expertos."
     send_category_experts_reminder_pms: "Enviar mensajes privados de recordatorio a los expertos en la categoría para que respondan a las preguntas no contestadas"

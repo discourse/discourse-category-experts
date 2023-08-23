@@ -7,6 +7,8 @@
 tr_TR:
   site_settings:
     enable_category_experts: "Kategori uzmanları eklentisini etkinleştirin"
+    first_post_can_be_considered_expert_post: "İlk gönderi, uzman gönderisi olarak kabul edilebilir"
+    show_category_expert_advanced_search_filters: "Gelişmiş aramada kategori uzmanı filtrelerini göster"
     category_expert_suggestion_threshold: "Bu kadar onaydan sonra kategori uzmanlarını önerin."
     category_experts_posts_require_approval: "Kategori uzmanlarından gelen gönderiler, uzmanlık nişanı için personel onayı gerektirir."
     send_category_experts_reminder_pms: "Yanıtlanmamış soruları yanıtlamaları için kategori uzmanlarına hatırlatma kişisel mesajları gönderin"

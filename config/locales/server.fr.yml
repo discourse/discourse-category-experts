@@ -7,6 +7,8 @@
 fr:
   site_settings:
     enable_category_experts: "Activer l'extension d'experts de catégorie"
+    first_post_can_be_considered_expert_post: "Le premier message peut être considéré comme un message d'expert"
+    show_category_expert_advanced_search_filters: "Afficher les filtres d'experts de catégorie dans la recherche avancée"
     category_expert_suggestion_threshold: "Suggérer des experts de la catégorie après ce nombre d'approbations."
     category_experts_posts_require_approval: "Les messages d'experts de catégorie nécessitent l'approbation du personnel pour obtenir la qualification d'expert."
     send_category_experts_reminder_pms: "Envoyer des messages de rappel aux experts de la catégorie pour qu'ils répondent aux questions restées sans réponse"

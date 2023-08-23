@@ -7,6 +7,8 @@
 de:
   site_settings:
     enable_category_experts: "Kategorie-Experten-Plug-in aktivieren"
+    first_post_can_be_considered_expert_post: "Der erste Beitrag kann als Expertenbeitrag betrachtet werden"
+    show_category_expert_advanced_search_filters: "Kategorie-Experten-Filter in der erweiterten Suche anzeigen"
     category_expert_suggestion_threshold: "Schlage nach so vielen Empfehlungen Kategorie-Experten vor."
     category_experts_posts_require_approval: "Beiträge von Kategorie-Experten müssen vom Team für die Expertenauszeichnung genehmigt werden."
     send_category_experts_reminder_pms: "Erinnerungs-PNs betreffend die Beantwortung nicht beantworteter Fragen an Kategorie-Experten senden"

@@ -22,6 +22,9 @@ nl:
       approve: "Goedkeuren"
       unapprove: "Goedkeuring van categorie-expertbericht ongedaan maken"
       ask_category_expert: "Categorie-expert vragen te antwoorden"
+      auto_tagging:
+        title: "Automatische tagging"
+        description: "Deze tag wordt automatisch toegevoegd aan topics wanneer een goedgekeurd categorie-expertbericht wordt gemaakt. Schakel automatische tagging uit door de tag leeg te laten."
       manage_endorsements:
         title: "Gebruiker aanbevelen"
         subtitle: "Wat zijn de sterke punten van %{username}?"
