@@ -1,4 +1,4 @@
-plugins:
+discourse_category_experts:
   enable_category_experts:
     default: true
     client: true

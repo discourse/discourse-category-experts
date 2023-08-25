@@ -1,4 +1,9 @@
 en:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_category_experts: "Discourse Category Experts"
   js:
     category_experts:
       title: "Category Experts"
@@ -24,7 +29,7 @@ en:
         title: "Endorse user"
         subtitle: "What are %{username}'s strengths?"
       review:
-        approve: "Approve"
+        approve: "Approve..."
         deny: "Ignore"
         endorsed_count:
           one: "has been endorsed %{count} time for "
@@ -44,6 +49,6 @@ en:
       types:
         reviewable_category_expert_suggestion:
           title: "Category Expert Suggestion"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Choose an expert group for the user"
       endorsed_username: "Endorsed user"

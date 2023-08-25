@@ -1,0 +1,14 @@
+<DModal
+  @closeModal={{@closeModal}}
+  @title={{i18n "review.expert_group_chooser_modal.title"}}
+  class="expert-group-chooser-modal"
+  {{did-insert this.loadGroups}}
+>
+  <TapTileGrid>
+    {{#each this.groupOptions as |group|}}
+      <TapTile @tileId={{group.id}} @onChange={{action "setGroupId"}}>
+        {{group.name}}
+      </TapTile>
+    {{/each}}
+  </TapTileGrid>
+</DModal>

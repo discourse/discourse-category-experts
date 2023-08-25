@@ -8,7 +8,6 @@ class ReviewableCategoryExpertSuggestion < Reviewable
 
     actions.add(:approve_category_expert) do |action|
       action.icon = "thumbs-up"
-      action.custom_modal = "expert-group-chooser"
       action.label = "js.category_experts.review.approve"
     end
 
