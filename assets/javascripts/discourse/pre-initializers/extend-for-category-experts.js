@@ -1,6 +1,7 @@
 import Composer from "discourse/models/composer";
 import { and } from "@ember/object/computed";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import ExpertGroupChooserModal from "../components/modal/expert-group-chooser";
 
 export default {
   name: "extend-for-category-experts",
@@ -34,6 +35,11 @@ export default {
       api.addPluginReviewableParam(
         "ReviewableCategoryExpertSuggestion",
         "group_id"
+      );
+
+      api.registerReviewableActionModal(
+        "approve_category_expert",
+        ExpertGroupChooserModal
       );
     });
   },
