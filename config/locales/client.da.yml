@@ -13,5 +13,4 @@ da:
       edit: "Ret"
       approve: "Godkend"
       review:
-        approve: "Godkend"
         deny: "Ignorér"

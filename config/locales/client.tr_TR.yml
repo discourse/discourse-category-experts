@@ -29,7 +29,6 @@ tr_TR:
         title: "Kullanıcıyı onayla"
         subtitle: "%{username} adlı kullanıcının güçlü yönleri nelerdir?"
       review:
-        approve: "Onayla"
         deny: "Yok say"
         endorsed_count:
           one: "şunun için %{count} kez onaylandı: "
@@ -48,6 +47,6 @@ tr_TR:
       types:
         reviewable_category_expert_suggestion:
           title: "Kategori Uzmanı Önerisi"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Kullanıcı için bir uzman grubu seçin"
       endorsed_username: "Onaylanan kullanıcı"

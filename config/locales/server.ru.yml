@@ -7,6 +7,8 @@
 ru:
   site_settings:
     enable_category_experts: "Включить плагин экспертов по категориям"
+    first_post_can_be_considered_expert_post: "Первое сообщение может считаться сообщением эксперта"
+    show_category_expert_advanced_search_filters: "Показывать фильтры экспертов категории в расширенном поиске"
     category_expert_suggestion_threshold: "Предложить экспертов категории после такого количества одобрений."
     category_experts_posts_require_approval: "Записи от экспертов категории требуют одобрения персонала для экспертного оформления."
     send_category_experts_reminder_pms: "Отправлять сообщения с напоминаниями экспертам категорий, чтобы они ответили на вопросы, которые остаются без ответа."

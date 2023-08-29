@@ -22,11 +22,13 @@ fi:
       approve: "Hyväksy"
       unapprove: "Peru alueen asiantuntijan viestin hyväksyntä"
       ask_category_expert: "Pyydä alueen asiantuntijaa vastaamaan"
+      auto_tagging:
+        title: "Automaattinen merkintä"
+        description: "Tämä tunniste lisätään automaattisesti ketjuihin, kun hyväksytyn alueen asiantuntijan viesti luodaan. Voit poistaa automaattisen merkinnän käytöstä jättämällä tunnisteen tyhjäksi."
       manage_endorsements:
         title: "Suosittele käyttäjää"
         subtitle: "Mitkä ovat käyttäjän %{username} vahvuudet?"
       review:
-        approve: "Hyväksy"
         deny: "Ohita"
         endorsed_count:
           one: "on saanut %{count} suosituksen alueella "
@@ -45,6 +47,6 @@ fi:
       types:
         reviewable_category_expert_suggestion:
           title: "Alueen asiantuntijan ehdotus"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Valitse käyttäjälle asiantuntijaryhmä"
       endorsed_username: "Suositeltu käyttäjä"

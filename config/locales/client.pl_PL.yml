@@ -29,7 +29,6 @@ pl_PL:
         title: "Zatwierdź użytkownika"
         subtitle: "Jakie są mocne strony %{username}?"
       review:
-        approve: "Zatwierdź"
         deny: "Ignoruj"
         endorsed_count:
           one: "został zatwierdzony %{count} raz za "
@@ -50,6 +49,6 @@ pl_PL:
       types:
         reviewable_category_expert_suggestion:
           title: "Sugestia eksperta kategorii"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Wybierz grupę eksperta dla użytkownika"
       endorsed_username: "Zatwierdzony użytkownik"

@@ -11,5 +11,4 @@ be:
       edit: "рэдагаваць"
       approve: "ўхваляць"
       review:
-        approve: "ўхваляць"
         deny: "ігнараваць"

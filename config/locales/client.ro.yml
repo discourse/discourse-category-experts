@@ -13,5 +13,4 @@ ro:
       edit: "Modifică"
       approve: "Aprobare"
       review:
-        approve: "Aprobare"
         deny: "Ignoră"

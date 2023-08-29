@@ -12,5 +12,4 @@ id:
       edit: "Ubah"
       approve: "Terima"
       review:
-        approve: "Terima"
         deny: "Abaikan"

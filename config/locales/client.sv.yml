@@ -26,7 +26,6 @@ sv:
         title: "Rekommendera användare"
         subtitle: "Vad är %{username}:s styrkor?"
       review:
-        approve: "Godkänn"
         deny: "Ignorera"
         endorsed_count:
           one: "har rekommenderats %{count} gång för "
@@ -45,6 +44,6 @@ sv:
       types:
         reviewable_category_expert_suggestion:
           title: "Kategoriexperts förslag"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Välj en expertgrupp för användaren"
       endorsed_username: "Rekommenderad användare"

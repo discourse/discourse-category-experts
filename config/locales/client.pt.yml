@@ -13,5 +13,4 @@ pt:
       edit: "Editar"
       approve: "Aprovar"
       review:
-        approve: "Aprovar"
         deny: "Ignorar"

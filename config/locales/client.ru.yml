@@ -22,11 +22,13 @@ ru:
       approve: "Одобрить"
       unapprove: "Отклонить одобрение записи эксперта категории"
       ask_category_expert: "Попросить эксперта категории ответить"
+      auto_tagging:
+        title: "Автодобавление тега"
+        description: "Тег будет автоматически добавляться в темы, когда создается сообщение, автор которого — утвержденный эксперт в категории. Если тег не указан, автоматическое добавление отключено."
       manage_endorsements:
         title: "Одобрение пользователя"
         subtitle: "Каковы сильные стороны %{username}?"
       review:
-        approve: "Одобрить"
         deny: "Пропустить"
         endorsed_count:
           one: "была одобрена %{count} раз в категории "
@@ -47,6 +49,6 @@ ru:
       types:
         reviewable_category_expert_suggestion:
           title: "Предложение эксперта категории"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Выберите группу экспертов для пользователя"
       endorsed_username: "Одобренный пользователь"

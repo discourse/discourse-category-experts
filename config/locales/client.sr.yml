@@ -12,5 +12,3 @@ sr:
       no_group: "Ništa"
       edit: "Izmeni"
       approve: "Odobri"
-      review:
-        approve: "Odobri"
