@@ -29,7 +29,6 @@ ja:
         title: "ユーザーの支持"
         subtitle: "%{username} の強みは何ですか？"
       review:
-        approve: "承認"
         deny: "無視"
         endorsed_count:
           other: "は、%{count} 回支持されています: "
@@ -47,6 +46,6 @@ ja:
       types:
         reviewable_category_expert_suggestion:
           title: "カテゴリエキスパートの提案"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "ユーザーのエキスパートグループを選択してください"
       endorsed_username: "支持済みのユーザー"

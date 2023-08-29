@@ -29,7 +29,6 @@ pt_BR:
         title: "Endossar usuário(a)"
         subtitle: "Quais são os pontos fortes de %{username}?"
       review:
-        approve: "Aprovar"
         deny: "Ignorar"
         endorsed_count:
           one: "recebeu endosso %{count} vez por "
@@ -48,6 +47,6 @@ pt_BR:
       types:
         reviewable_category_expert_suggestion:
           title: "Sugestão de especialista em categoria"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Escolha um grupo de especialistas para o(a) usuário(a)"
       endorsed_username: "Usuário(a) endossado(a)"

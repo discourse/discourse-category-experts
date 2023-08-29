@@ -29,7 +29,6 @@ nl:
         title: "Gebruiker aanbevelen"
         subtitle: "Wat zijn de sterke punten van %{username}?"
       review:
-        approve: "Goedkeuren"
         deny: "Negeren"
         endorsed_count:
           one: "is %{count} keer aanbevolen voor "
@@ -48,6 +47,6 @@ nl:
       types:
         reviewable_category_expert_suggestion:
           title: "Suggestie voor categorie-expert"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Kies een expertgroep voor de gebruiker"
       endorsed_username: "Aanbevolen gebruiker"

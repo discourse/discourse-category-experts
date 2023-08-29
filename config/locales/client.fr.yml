@@ -29,7 +29,6 @@ fr:
         title: "Approuver l'utilisateur"
         subtitle: "Quels sont les points forts de %{username} ?"
       review:
-        approve: "Approuver"
         deny: "Ignorer"
         endorsed_count:
           one: "a été approuvé %{count} fois depuis "
@@ -48,6 +47,6 @@ fr:
       types:
         reviewable_category_expert_suggestion:
           title: "Suggestion d'expert de la catégorie"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Choisissez un groupe d'experts pour l'utilisateur"
       endorsed_username: "Utilisateur approuvé"

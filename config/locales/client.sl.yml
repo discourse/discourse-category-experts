@@ -13,5 +13,4 @@ sl:
       edit: "Uredi"
       approve: "Odobri"
       review:
-        approve: "Odobri"
         deny: "Prezri"

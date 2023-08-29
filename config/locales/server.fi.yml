@@ -7,6 +7,8 @@
 fi:
   site_settings:
     enable_category_experts: "Ota alueen asiantuntija -lisäosa käyttöön"
+    first_post_can_be_considered_expert_post: "Ensimmäistä viestiä voidaan pitää asiantuntijan viestinä"
+    show_category_expert_advanced_search_filters: "Näytä alueen asiantuntijan suodattimet kehittyneessä haussa"
     category_expert_suggestion_threshold: "Ehdota alueen siantuntijoita näin monen suosituksen jälkeen."
     category_experts_posts_require_approval: "Alueen asiantuntijoiden viestit vaativat henkilökunnan hyväksynnän asiantuntijan merkintää varten."
     send_category_experts_reminder_pms: "Lähetä alueen asiantuntijoille muistutus yksityisviestinä vastaamattomiin kysymyksiin vastaamisesta"

@@ -29,7 +29,6 @@ it:
         title: "Sostieni utente"
         subtitle: "Quali sono i punti di forza di %{username}?"
       review:
-        approve: "Approva"
         deny: "Ignora"
         endorsed_count:
           one: "ha ricevuto sostegno %{count} volta per "
@@ -48,6 +47,6 @@ it:
       types:
         reviewable_category_expert_suggestion:
           title: "Suggerimento dell'esperto di categoria"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "Scegli un gruppo di esperti per l'utente"
       endorsed_username: "Utente sostenuto"

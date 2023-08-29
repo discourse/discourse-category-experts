@@ -13,5 +13,4 @@ lt:
       edit: "Redaguoti"
       approve: "Patvirtinti"
       review:
-        approve: "Patvirtinti"
         deny: "Ignoruoti"

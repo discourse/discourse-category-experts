@@ -29,7 +29,6 @@ zh_CN:
         title: "认可用户"
         subtitle: "%{username} 的优点是什么？"
       review:
-        approve: "批准"
         deny: "忽略"
         endorsed_count:
           other: "已获得 %{count} 次认可："
@@ -47,6 +46,6 @@ zh_CN:
       types:
         reviewable_category_expert_suggestion:
           title: "类别专家建议"
-      expert-group-chooser:
+      expert_group_chooser_modal:
         title: "为用户选择专家群组"
       endorsed_username: "认可的用户"

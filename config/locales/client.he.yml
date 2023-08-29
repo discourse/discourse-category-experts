@@ -25,7 +25,6 @@ he:
         title: "תמיכה במשתמש"
         subtitle: "מהן החוזקות של %{username}?"
       review:
-        approve: "אישור"
         deny: "התעלמות"
       topic_list:
         response_by_group: "תגובת מומחה"

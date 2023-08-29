@@ -13,5 +13,4 @@ ko:
       edit: "편집"
       approve: "승인"
       review:
-        approve: "승인"
         deny: "무시"
