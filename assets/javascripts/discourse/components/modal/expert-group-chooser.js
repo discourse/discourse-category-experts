@@ -9,13 +9,13 @@ export default class ExpertGroupChooserModal extends Component {
 
   @action
   loadGroups() {
-    const groupIds =
+    const expertGroupIds =
       this.args.model.reviewable.category.custom_fields.category_expert_group_ids.split(
         "|"
       );
     ajax("/groups.json").then((response) => {
-      this.groupOptions = response.groups.filter((g) =>
-        groupIds.includes(g.id.toString())
+      this.groupOptions = response.groups.filter((group) =>
+        expertGroupIds.includes(group.id.toString())
       );
     });
   }
@@ -24,6 +24,6 @@ export default class ExpertGroupChooserModal extends Component {
   setGroupId(val) {
     this.args.model.reviewable.set("group_id", val);
     this.args.closeModal();
-    this.args.model.performConfirmed(this.action);
+    this.args.model.performConfirmed(this.args.model.action);
   }
 }
