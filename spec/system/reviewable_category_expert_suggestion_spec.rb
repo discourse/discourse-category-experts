@@ -42,7 +42,7 @@ describe "Reviewables - Category expert suggestion", type: :system, js: true do
       reviewable = ReviewableCategoryExpertSuggestion.find_by(target: endorsement)
       expect(page).to have_css(".reviewable-item[data-reviewable-id=\"#{reviewable.id}\"]")
 
-      find(".reviewable-action.approve-category-expert").click
+      find(".reviewable-action", text: /Approve/).click
       expect(modal).to have_content(group.name)
       find("#tap_tile_#{group.id}").click
       expect(page).to have_content(I18n.t("js.review.none"), wait: 5)
@@ -57,7 +57,7 @@ describe "Reviewables - Category expert suggestion", type: :system, js: true do
       reviewable = ReviewableCategoryExpertSuggestion.find_by(target: endorsement)
       expect(page).to have_css(".reviewable-item[data-reviewable-id=\"#{reviewable.id}\"]")
 
-      find(".reviewable-action.deny-category-expert").click
+      find(".reviewable-action", text: /Ignore/).click
       expect(page).to have_content(I18n.t("js.review.none"), wait: 5)
       expect(reviewable.reload.status).to eq("rejected")
     end

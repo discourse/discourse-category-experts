@@ -29,7 +29,7 @@ en:
         title: "Endorse user"
         subtitle: "What are %{username}'s strengths?"
       review:
-        approve: "Approve..."
+        approve: "Approve"
         deny: "Ignore"
         endorsed_count:
           one: "has been endorsed %{count} time for "
