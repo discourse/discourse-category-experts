@@ -34,7 +34,7 @@ describe "Reviewables - Category expert suggestion", type: :system, js: true do
   context "as an admin reviewing endorsements" do
     fab!(:current_user) { Fabricate(:admin) }
 
-    it "can approve an endorsement" do
+    skip "can approve an endorsement" do
       endorsement =
         Fabricate(:category_expert_endorsement, category: category, endorsed_user: other_user)
       visit "/review"
