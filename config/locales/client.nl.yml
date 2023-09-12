@@ -29,6 +29,7 @@ nl:
         title: "Gebruiker aanbevelen"
         subtitle: "Wat zijn de sterke punten van %{username}?"
       review:
+        approve: "Goedkeuren"
         deny: "Negeren"
         endorsed_count:
           one: "is %{count} keer aanbevolen voor "

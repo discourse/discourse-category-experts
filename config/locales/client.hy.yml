@@ -13,4 +13,5 @@ hy:
       edit: "Խմբագրել"
       approve: "Հաստատել"
       review:
+        approve: "Հաստատել"
         deny: "Անտեսել"

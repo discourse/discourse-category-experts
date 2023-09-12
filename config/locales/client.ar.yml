@@ -29,6 +29,7 @@ ar:
         title: "المصادقة على المستخدم"
         subtitle: "ما نقاط قوة %{username}؟"
       review:
+        approve: "موافقة"
         deny: "تجاهل"
         endorsed_count:
           zero: "تم المصادقة عليه %{count} مرة في "

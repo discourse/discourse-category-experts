@@ -29,6 +29,7 @@ tr_TR:
         title: "Kullanıcıyı onayla"
         subtitle: "%{username} adlı kullanıcının güçlü yönleri nelerdir?"
       review:
+        approve: "Onayla"
         deny: "Yok say"
         endorsed_count:
           one: "şunun için %{count} kez onaylandı: "

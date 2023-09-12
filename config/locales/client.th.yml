@@ -13,4 +13,5 @@ th:
       edit: "แก้ไข"
       approve: "อนุมัติ"
       review:
+        approve: "อนุมัติ"
         deny: "ไม่สนใจ"

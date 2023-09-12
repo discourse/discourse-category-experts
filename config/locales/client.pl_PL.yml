@@ -29,6 +29,7 @@ pl_PL:
         title: "Zatwierdź użytkownika"
         subtitle: "Jakie są mocne strony %{username}?"
       review:
+        approve: "Zatwierdź"
         deny: "Ignoruj"
         endorsed_count:
           one: "został zatwierdzony %{count} raz za "

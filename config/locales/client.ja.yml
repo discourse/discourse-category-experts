@@ -29,6 +29,7 @@ ja:
         title: "ユーザーの支持"
         subtitle: "%{username} の強みは何ですか？"
       review:
+        approve: "承認"
         deny: "無視"
         endorsed_count:
           other: "は、%{count} 回支持されています: "

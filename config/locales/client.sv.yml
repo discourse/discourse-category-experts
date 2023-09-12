@@ -26,6 +26,7 @@ sv:
         title: "Rekommendera användare"
         subtitle: "Vad är %{username}:s styrkor?"
       review:
+        approve: "Godkänn"
         deny: "Ignorera"
         endorsed_count:
           one: "har rekommenderats %{count} gång för "

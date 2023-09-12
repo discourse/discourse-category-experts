@@ -13,4 +13,5 @@ cs:
       edit: "Upravit"
       approve: "Schválit"
       review:
+        approve: "Schválit"
         deny: "ignorovat"

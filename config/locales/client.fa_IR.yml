@@ -15,4 +15,5 @@ fa_IR:
       auto_tagging:
         title: "برچسب زدن خودکار"
       review:
+        approve: "تایید"
         deny: "چشم پوشی"

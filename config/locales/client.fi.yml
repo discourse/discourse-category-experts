@@ -29,6 +29,7 @@ fi:
         title: "Suosittele käyttäjää"
         subtitle: "Mitkä ovat käyttäjän %{username} vahvuudet?"
       review:
+        approve: "Hyväksy"
         deny: "Ohita"
         endorsed_count:
           one: "on saanut %{count} suosituksen alueella "

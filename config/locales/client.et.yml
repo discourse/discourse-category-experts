@@ -13,4 +13,5 @@ et:
       edit: "Muuda"
       approve: "Kinnita"
       review:
+        approve: "Kinnita"
         deny: "Ignoreeri"

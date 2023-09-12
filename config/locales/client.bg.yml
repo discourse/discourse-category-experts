@@ -13,4 +13,5 @@ bg:
       edit: "Редактирай"
       approve: "Одобри"
       review:
+        approve: "Одобри"
         deny: "Игнорирай"

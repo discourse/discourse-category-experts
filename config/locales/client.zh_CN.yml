@@ -29,6 +29,7 @@ zh_CN:
         title: "认可用户"
         subtitle: "%{username} 的优点是什么？"
       review:
+        approve: "批准"
         deny: "忽略"
         endorsed_count:
           other: "已获得 %{count} 次认可："

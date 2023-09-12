@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 he:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_category_experts: "מומחי קטגוריית ב־Discourse"
   js:
     category_experts:
       title: "מומחי קטגוריה"
@@ -25,6 +30,7 @@ he:
         title: "תמיכה במשתמש"
         subtitle: "מהן החוזקות של %{username}?"
       review:
+        approve: "אישור"
         deny: "התעלמות"
       topic_list:
         response_by_group: "תגובת מומחה"
@@ -34,4 +40,6 @@ he:
         question: "שאלה למומחה"
         unapproved_post: "עם פוסט שלא אושר"
     review:
+      expert_group_chooser_modal:
+        title: "נא לבחור קבוצת מומחים למשתמש"
       endorsed_username: "משתמש שהובעה כלפיו תמיכה"

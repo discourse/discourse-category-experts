@@ -13,4 +13,5 @@ hr:
       edit: "Uredi"
       approve: "Odobri"
       review:
+        approve: "Odobri"
         deny: "Zanemari"
