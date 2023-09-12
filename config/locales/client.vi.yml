@@ -13,4 +13,5 @@ vi:
       edit: "Sửa"
       approve: "Duyệt"
       review:
+        approve: "Duyệt"
         deny: "Bỏ qua"

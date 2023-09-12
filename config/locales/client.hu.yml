@@ -13,4 +13,5 @@ hu:
       edit: "Szerkesztés"
       approve: "Jóváhagyás"
       review:
+        approve: "Jóváhagyás"
         deny: "Letiltás"

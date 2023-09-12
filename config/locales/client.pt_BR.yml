@@ -29,6 +29,7 @@ pt_BR:
         title: "Endossar usuário(a)"
         subtitle: "Quais são os pontos fortes de %{username}?"
       review:
+        approve: "Aprovar"
         deny: "Ignorar"
         endorsed_count:
           one: "recebeu endosso %{count} vez por "

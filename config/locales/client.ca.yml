@@ -13,4 +13,5 @@ ca:
       edit: "Edita"
       approve: "Aprova"
       review:
+        approve: "Aprova"
         deny: "Ignora"

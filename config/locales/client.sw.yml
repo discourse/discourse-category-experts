@@ -13,4 +13,5 @@ sw:
       edit: "Hariri"
       approve: "Imethibitishwa"
       review:
+        approve: "Imethibitishwa"
         deny: "Puuzia"

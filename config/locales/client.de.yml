@@ -29,6 +29,7 @@ de:
         title: "Benutzer empfehlen"
         subtitle: "Was sind die Stärken von %{username}?"
       review:
+        approve: "Genehmigen"
         deny: "Ignorieren"
         endorsed_count:
           one: "wurde %{count} Mal empfohlen für "

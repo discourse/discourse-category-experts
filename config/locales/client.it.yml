@@ -29,6 +29,7 @@ it:
         title: "Sostieni utente"
         subtitle: "Quali sono i punti di forza di %{username}?"
       review:
+        approve: "Approva"
         deny: "Ignora"
         endorsed_count:
           one: "ha ricevuto sostegno %{count} volta per "

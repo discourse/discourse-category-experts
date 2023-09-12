@@ -29,6 +29,7 @@ fr:
         title: "Approuver l'utilisateur"
         subtitle: "Quels sont les points forts de %{username} ?"
       review:
+        approve: "Approuver"
         deny: "Ignorer"
         endorsed_count:
           one: "a été approuvé %{count} fois depuis "

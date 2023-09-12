@@ -13,4 +13,5 @@ el:
       edit: "Επεξεργασία"
       approve: "Έγκριση"
       review:
+        approve: "Έγκριση"
         deny: "Αγνόηση"

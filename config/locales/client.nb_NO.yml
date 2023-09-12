@@ -13,4 +13,5 @@ nb_NO:
       edit: "Endre"
       approve: "Godkjenn"
       review:
+        approve: "Godkjenn"
         deny: "Ignorer"

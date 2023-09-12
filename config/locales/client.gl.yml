@@ -13,4 +13,5 @@ gl:
       edit: "Editar"
       approve: "Aprobar"
       review:
+        approve: "Aprobar"
         deny: "Ignorar"

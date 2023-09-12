@@ -29,6 +29,7 @@ ru:
         title: "Одобрение пользователя"
         subtitle: "Каковы сильные стороны %{username}?"
       review:
+        approve: "Одобрить"
         deny: "Пропустить"
         endorsed_count:
           one: "была одобрена %{count} раз в категории "

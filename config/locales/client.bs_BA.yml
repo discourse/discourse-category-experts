@@ -13,4 +13,5 @@ bs_BA:
       edit: "Edit"
       approve: "Odobri"
       review:
+        approve: "Odobri"
         deny: "Zanemari"

@@ -12,3 +12,5 @@ sq:
       no_group: "Asnjë"
       edit: "Redakto"
       approve: "Aprovo"
+      review:
+        approve: "Aprovo"

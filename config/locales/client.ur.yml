@@ -13,4 +13,5 @@ ur:
       edit: "ترمیم کریں"
       approve: "منظور"
       review:
+        approve: "منظور"
         deny: "نظر انداز کریں"
