@@ -5,6 +5,7 @@ import userFixtures from "discourse/tests/fixtures/user-fixtures";
 import {
   acceptance,
   exists,
+  query,
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
 
@@ -57,7 +58,7 @@ acceptance(
       await visit("/t/topic-for-group-moderators/2480");
       await click("article#post_2 .trigger-user-card");
       await click(".usercard-controls .btn-default");
-      assert.equal(find(".topic-post").length, 3);
+      assert.equal(query(".topic-post").length, 3);
     });
   }
 );
