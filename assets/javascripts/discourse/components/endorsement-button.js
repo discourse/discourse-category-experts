@@ -1,7 +1,7 @@
 import Component from "@ember/component";
 import { action } from "@ember/object";
-import discourseComputed from "discourse-common/utils/decorators";
 import showModal from "discourse/lib/show-modal";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
   tagName: "",

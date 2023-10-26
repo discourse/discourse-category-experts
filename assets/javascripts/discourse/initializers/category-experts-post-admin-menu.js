@@ -1,6 +1,6 @@
+import { ajax } from "discourse/lib/ajax";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { createWidget } from "discourse/widgets/widget";
-import { ajax } from "discourse/lib/ajax";
 
 export default {
   name: "category-experts-post-admin-menu",

@@ -1,10 +1,10 @@
-import discourseComputed from "discourse-common/utils/decorators";
 import Component from "@ember/component";
 import { action } from "@ember/object";
 import { lt } from "@ember/object/computed";
 import { later, next } from "@ember/runloop";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
   user: null,

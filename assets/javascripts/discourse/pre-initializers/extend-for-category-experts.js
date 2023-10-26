@@ -1,6 +1,6 @@
-import Composer from "discourse/models/composer";
 import { and } from "@ember/object/computed";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import Composer from "discourse/models/composer";
 import ExpertGroupChooserModal from "../components/modal/expert-group-chooser";
 
 export default {

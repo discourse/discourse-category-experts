@@ -1,8 +1,8 @@
-import { ajax } from "discourse/lib/ajax";
-import { iconNode } from "discourse-common/lib/icon-library";
 import { next } from "@ember/runloop";
+import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import { iconNode } from "discourse-common/lib/icon-library";
 
 function setPostCategoryExpertAttributes(
   post,
