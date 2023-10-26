@@ -1,34 +1,7 @@
 import { next } from "@ember/runloop";
-import { ajax } from "discourse/lib/ajax";
-import { popupAjaxError } from "discourse/lib/ajax-error";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { iconNode } from "discourse-common/lib/icon-library";
-
-function setPostCategoryExpertAttributes(
-  post,
-  appEvents,
-  opts = { approved: true }
-) {
-  ajax(`/category-experts/${opts.approved ? "approve" : "unapprove"}`, {
-    type: "POST",
-    data: { post_id: post.id },
-  })
-    .then((response) => {
-      post.setProperties({
-        needs_category_expert_approval: !opts.approved,
-        category_expert_approved_group: opts.approved
-          ? response.group_name
-          : false,
-      });
-      post.topic.setProperties({
-        needs_category_expert_post_approval:
-          response.topic_needs_category_expert_approval,
-        expert_post_group_names: response.topic_expert_post_group_names,
-      });
-      appEvents.trigger("post-stream:refresh", { id: post.id });
-    })
-    .catch(popupAjaxError);
-}
+import setPostCategoryExpertAttributes from "discourse/plugins/discourse-category-experts/discourse/lib/set-post-category-expert-attributes";
 
 function initializeWithApi(api) {
   const requiresApproval = api.container.lookup(
