@@ -1,7 +1,7 @@
 import Component from "@ember/component";
-import Group from "discourse/models/group";
 import { action } from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
+import Group from "discourse/models/group";
 
 export default Component.extend({
   groupIds: null,

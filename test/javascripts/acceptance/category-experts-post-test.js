@@ -1,12 +1,12 @@
+import { click, visit } from "@ember/test-helpers";
+import { test } from "qunit";
+import topicFixtures from "discourse/tests/fixtures/topic";
+import userFixtures from "discourse/tests/fixtures/user-fixtures";
 import {
   acceptance,
   exists,
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
-import topicFixtures from "discourse/tests/fixtures/topic";
-import userFixtures from "discourse/tests/fixtures/user-fixtures";
-import { test } from "qunit";
-import { click, visit } from "@ember/test-helpers";
 
 const groupName = "some-group";
 
