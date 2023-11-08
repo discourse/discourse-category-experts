@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # name: discourse-category-experts
-# about: Distinguish groups of users as experts in categories.
+# about: Allows users to endorse each other as experts in specific categories.
+# meta_topic_id: 190814
 # version: 0.0.1
 # authors: Mark VanLandingham
 # url: https://github.com/discourse/discourse-category-experts
