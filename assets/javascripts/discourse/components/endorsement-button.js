@@ -1,9 +1,11 @@
 import Component from "@ember/component";
 import { action } from "@ember/object";
-import showModal from "discourse/lib/show-modal";
+import { inject as service } from "@ember/service";
 import discourseComputed from "discourse-common/utils/decorators";
+import EndorseUserModal from "./modal/endorse-user";
 
 export default Component.extend({
+  modal: service(),
   tagName: "",
   disabled: true,
   user: null,
@@ -56,13 +58,12 @@ export default Component.extend({
       });
     }
 
-    showModal("endorse-user", {
+    this.modal.show(EndorseUserModal, {
       model: {
         user: this.user,
         endorsements: this.endorsements,
         location: this.location,
       },
-      title: "category_experts.manage_endorsements.title",
     });
   },
 });
