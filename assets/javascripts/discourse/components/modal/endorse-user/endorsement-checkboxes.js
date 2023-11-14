@@ -128,7 +128,7 @@ export default Component.extend({
   isChecked(categoryId) {
     return (
       this.get("selectedCategoryIds")?.includes(categoryId) ||
-      this.get("endorsements")?.find((e) => e.category_id === categoryId)
+      this.isDisabled(categoryId)
     );
   },
 
