@@ -1,10 +1,10 @@
 import Component from "@ember/component";
 import { action } from "@ember/object";
 import { lt } from "@ember/object/computed";
-import { later, next } from "@ember/runloop";
+import { later } from "@ember/runloop";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed, { bind } from "discourse-common/utils/decorators";
 
 export default Component.extend({
   user: null,
@@ -36,17 +36,6 @@ export default Component.extend({
           categories: response.categories,
           selectedCategoryIds: [...this.startingCategoryIds],
           loading: false,
-        });
-        next(() => {
-          this.endorsements.forEach((endorsement) => {
-            const checkbox = this.element.querySelector(
-              `#category-endorsement-${endorsement.category_id}`
-            );
-            if (checkbox) {
-              checkbox.checked = true;
-              checkbox.disabled = true;
-            }
-          });
         });
       })
       .catch(popupAjaxError);
@@ -122,26 +111,29 @@ export default Component.extend({
       return;
     }
 
-    let checked;
     if (this.selectedCategoryIds.includes(categoryId)) {
       this.set(
         "selectedCategoryIds",
         this.selectedCategoryIds.filter((id) => id !== categoryId)
       );
-      checked = false;
     } else {
       this.set(
         "selectedCategoryIds",
         [...this.selectedCategoryIds].concat([categoryId])
       );
-      checked = true;
     }
+  },
 
-    next(
-      () =>
-        (this.element.querySelector(
-          `#category-endorsement-${categoryId}`
-        ).checked = checked)
+  @bind
+  isChecked(categoryId) {
+    return (
+      this.get("selectedCategoryIds")?.includes(categoryId) ||
+      this.isDisabled(categoryId)
     );
+  },
+
+  @bind
+  isDisabled(categoryId) {
+    return this.get("endorsements")?.find((e) => e.category_id === categoryId);
   },
 });
