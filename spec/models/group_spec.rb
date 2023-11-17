@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Group do
-  fab!(:user) { Fabricate(:user) }
+  fab!(:user) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:category) { Fabricate(:category) }
   fab!(:group) { Fabricate(:group) }
   fab!(:topic) { Fabricate(:topic, category: category) }
@@ -51,7 +51,7 @@ describe Group do
   end
 
   describe "Removing expert from group" do
-    fab!(:other_expert) { Fabricate(:user) }
+    fab!(:other_expert) { Fabricate(:user, refresh_auto_groups: true) }
 
     before do
       group.add(user)
