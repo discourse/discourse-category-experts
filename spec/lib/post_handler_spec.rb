@@ -3,9 +3,9 @@
 require "rails_helper"
 
 describe CategoryExperts::PostHandler do
-  fab!(:user) { Fabricate(:user) }
-  fab!(:expert) { Fabricate(:user) }
-  fab!(:second_expert) { Fabricate(:user) }
+  fab!(:user) { Fabricate(:user, refresh_auto_groups: true) }
+  fab!(:expert) { Fabricate(:user, refresh_auto_groups: true) }
+  fab!(:second_expert) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:category) { Fabricate(:category) }
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:second_group) { Fabricate(:group, users: [second_expert]) }
