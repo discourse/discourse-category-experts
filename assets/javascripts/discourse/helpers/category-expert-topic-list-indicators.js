@@ -1,5 +1,5 @@
 import { htmlSafe } from "@ember/template";
-import { registerUnbound } from "discourse-common/lib/helpers";
+import { registerRawHelper } from "discourse-common/lib/helpers";
 import I18n from "I18n";
 
 export function categoryExpertTopicListIndicators(context) {
@@ -76,7 +76,9 @@ const addIsQuestionPill = (topic, currentUser, siteSettings) => {
   }
 };
 
-registerUnbound(
+export default categoryExpertTopicListIndicators;
+
+registerRawHelper(
   "category-expert-topic-list-indicators",
   categoryExpertTopicListIndicators
 );

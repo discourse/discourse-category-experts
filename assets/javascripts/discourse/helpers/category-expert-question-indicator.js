@@ -1,5 +1,4 @@
 import { htmlSafe } from "@ember/template";
-import { registerUnbound } from "discourse-common/lib/helpers";
 import I18n from "I18n";
 
 export function categoryExpertQuestionIndicator(topic, currentUser) {
@@ -20,7 +19,4 @@ export function categoryExpertQuestionIndicator(topic, currentUser) {
   }
 }
 
-registerUnbound(
-  "category-expert-question-indicator",
-  categoryExpertQuestionIndicator
-);
+export default categoryExpertQuestionIndicator;
