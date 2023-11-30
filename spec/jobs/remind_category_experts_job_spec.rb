@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe CategoryExperts::RemindCategoryExpertsJob do
+  subject(:execute) { described_class.new.execute }
+
   fab!(:user) { Fabricate(:user) }
   fab!(:expert1) { Fabricate(:user) }
   fab!(:expert2) { Fabricate(:user) }
@@ -22,6 +24,8 @@ describe CategoryExperts::RemindCategoryExpertsJob do
   end
 
   before do
+    SiteSetting.send_category_experts_reminder_pms = true
+
     3.times do |n|
       # Create 2 questions, and 1 unapproved answered question for category 1
       topic = Fabricate(:topic, category: category1)
@@ -40,9 +44,7 @@ describe CategoryExperts::RemindCategoryExpertsJob do
   end
 
   it "Sends out the correct PM to each category expert" do
-    SiteSetting.send_category_experts_reminder_pms = true
-
-    expect { subject.execute() }.to change { Topic.count }.by (2) # Sent a PM to each expert
+    expect { execute }.to change { Topic.count }.by (2) # Sent a PM to each expert
 
     # Expert 1 should get 2 rows, 1 for each category
     expert1_message = expert1.topics_allowed.where(archetype: Archetype.private_message).last
@@ -60,8 +62,11 @@ describe CategoryExperts::RemindCategoryExpertsJob do
     expect(split_raw.first).to include("There are [2 unanswered")
   end
 
-  it "Does nothing if the site setting is disabled" do
-    SiteSetting.send_category_experts_reminder_pms = false
-    expect { subject.execute() }.to change { Topic.count }.by (0)
+  context "when the site setting is disabled" do
+    before { SiteSetting.send_category_experts_reminder_pms = false }
+
+    it "does nothing" do
+      expect { execute }.to change { Topic.count }.by (0)
+    end
   end
 end
