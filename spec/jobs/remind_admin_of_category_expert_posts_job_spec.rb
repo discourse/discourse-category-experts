@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
+  subject(:execute) { described_class.new.execute }
+
   fab!(:expert) { Fabricate(:user) }
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:category) { fabricate_category_with_category_experts }
@@ -30,9 +32,10 @@ describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
   end
 
   describe "with site setting enabled" do
+    before { SiteSetting.send_category_experts_reminder_pms = true }
+
     it "sends a PM to staff and moderators with the proper topic count" do
-      SiteSetting.send_category_experts_reminder_pms = true
-      expect { subject.execute() }.to change { Topic.count }.by (1)
+      expect { execute }.to change { Topic.count }.by (1)
 
       pm = Topic.where(archetype: Archetype.private_message).last
       expect(pm.first_post.raw.start_with?("There are [2 category expert questions]")).to eq(true)
@@ -40,9 +43,10 @@ describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
   end
 
   describe "with site setting disabled" do
+    before { SiteSetting.send_category_experts_reminder_pms = false }
+
     it "does nothing" do
-      SiteSetting.send_category_experts_reminder_pms = false
-      expect { subject.execute() }.to change { Topic.count }.by (0)
+      expect { execute }.to change { Topic.count }.by (0)
     end
   end
 end
