@@ -58,7 +58,7 @@ module CategoryExperts
       end
 
       if topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
-        topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = post.post_number
+        topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = true
         topic.custom_fields.delete(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID)
         should_remove_auto_tag = true
       else

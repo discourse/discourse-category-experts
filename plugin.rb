@@ -73,7 +73,7 @@ after_initialize do
 
   register_topic_custom_field_type(CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES, :string)
   register_topic_custom_field_type(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID, :integer)
-  register_topic_custom_field_type(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL, :integer)
+  register_topic_custom_field_type(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL, :boolean)
   register_topic_custom_field_type(CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION, :boolean)
 
   [
