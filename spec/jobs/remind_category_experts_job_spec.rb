@@ -44,7 +44,7 @@ describe CategoryExperts::RemindCategoryExpertsJob do
   end
 
   it "Sends out the correct PM to each category expert" do
-    expect { execute }.to change { Topic.count }.by (2) # Sent a PM to each expert
+    expect { execute }.to change { Topic.count }.by(2) # Sent a PM to each expert
 
     # Expert 1 should get 2 rows, 1 for each category
     expert1_message = expert1.topics_allowed.where(archetype: Archetype.private_message).last
@@ -66,7 +66,7 @@ describe CategoryExperts::RemindCategoryExpertsJob do
     before { SiteSetting.send_category_experts_reminder_pms = false }
 
     it "does nothing" do
-      expect { execute }.to change { Topic.count }.by (0)
+      expect { execute }.not_to change { Topic.count }
     end
   end
 end
