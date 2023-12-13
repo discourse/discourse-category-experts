@@ -35,7 +35,7 @@ describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
     before { SiteSetting.send_category_experts_reminder_pms = true }
 
     it "sends a PM to staff and moderators with the proper topic count" do
-      expect { execute }.to change { Topic.count }.by (1)
+      expect { execute }.to change { Topic.count }.by(1)
 
       pm = Topic.where(archetype: Archetype.private_message).last
       expect(pm.first_post.raw.start_with?("There are [2 category expert questions]")).to eq(true)
@@ -46,7 +46,7 @@ describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
     before { SiteSetting.send_category_experts_reminder_pms = false }
 
     it "does nothing" do
-      expect { execute }.to change { Topic.count }.by (0)
+      expect { execute }.not_to change { Topic.count }
     end
   end
 end

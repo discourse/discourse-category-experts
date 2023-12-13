@@ -34,7 +34,7 @@ describe CategoryExpertEndorsement do
 
       expect {
         CategoryExpertEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
-      }.to change { Reviewable.count }.by (1)
+      }.to change { Reviewable.count }.by(1)
     end
 
     it "does not create a reviewable if the new count does not match the site setting" do
@@ -42,7 +42,7 @@ describe CategoryExpertEndorsement do
 
       expect {
         CategoryExpertEndorsement.create(user: user, endorsed_user: endorsee, category: category1)
-      }.to change { Reviewable.count }.by (0)
+      }.not_to change { Reviewable.count }
     end
   end
 end

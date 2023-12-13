@@ -6,7 +6,6 @@
 # version: 0.0.1
 # authors: Mark VanLandingham
 # url: https://github.com/discourse/discourse-category-experts
-# transpile_js: true
 
 register_asset "stylesheets/common.scss"
 

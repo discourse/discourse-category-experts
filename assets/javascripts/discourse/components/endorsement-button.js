@@ -9,7 +9,6 @@ export default Component.extend({
   tagName: "",
   disabled: true,
   user: null,
-  endorsements: null,
   categoriesAllowingEndorsements: null,
 
   init() {
