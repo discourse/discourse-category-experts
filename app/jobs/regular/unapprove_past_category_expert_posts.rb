@@ -22,19 +22,19 @@ module Jobs
           .where(id: args[:category_ids])
           .filter { |c| user.expert_group_ids_for_category(c).empty? }
 
-      posts =
-        Post
-          .joins(:topic)
-          .joins("LEFT OUTER JOIN post_custom_fields AS pcf ON pcf.post_id = posts.id")
-          .where(
-            "pcf.name = ? or pcf.name = ?",
-            CategoryExperts::POST_APPROVED_GROUP_NAME,
-            CategoryExperts::POST_PENDING_EXPERT_APPROVAL,
-          )
-          .where(user_id: user.id)
-          .where(topic: { category_id: categories.map(&:id) })
-
-      posts
+      Post
+        .where(
+          id:
+            PostCustomField.where(
+              name: [
+                CategoryExperts::POST_APPROVED_GROUP_NAME,
+                CategoryExperts::POST_PENDING_EXPERT_APPROVAL,
+              ],
+            ).select(:post_id),
+          topic: Topic.where(category_id: categories.map(&:id)),
+          user: user,
+        )
+        .includes(:topic)
         .group_by(&:topic)
         .each do |topic, grouped_posts|
           grouped_posts.each do |post|
