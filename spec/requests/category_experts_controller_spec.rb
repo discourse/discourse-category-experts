@@ -22,7 +22,7 @@ describe CategoryExpertsController do
 
   def enable_custom_fields_for(category)
     category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_QUESTIONS] = "true"
-    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = "true"
+    category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = true
   end
 
   def set_expert_group_for_category(category, group_ids)
@@ -168,7 +168,7 @@ describe CategoryExpertsController do
         private_category.set_permissions({ private_group.id => :full })
         private_category.save
 
-        category3.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = "false"
+        category3.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = false
         category3.save
 
         # Endorsee and current user cannot see the new category

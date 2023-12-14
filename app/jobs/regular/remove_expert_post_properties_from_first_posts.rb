@@ -51,9 +51,11 @@ module Jobs
 
     def execute(args = {})
       Post
-        .joins("inner JOIN post_custom_fields AS pcf ON pcf.post_id = posts.id")
-        .where(post_number: 1)
-        .where("pcf.name=?", CategoryExperts::POST_APPROVED_GROUP_NAME)
+        .where(
+          id:
+            PostCustomField.where(name: CategoryExperts::POST_APPROVED_GROUP_NAME).select(:post_id),
+          post_number: 1,
+        )
         .map { |post| fix_post(post) }
     end
   end
