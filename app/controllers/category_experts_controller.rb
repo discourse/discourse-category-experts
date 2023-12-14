@@ -35,27 +35,19 @@ class CategoryExpertsController < ApplicationController
     endorsee_guardian = Guardian.new(@user)
 
     categories =
-      Category
-        .where(
-          id:
-            CategoryCustomField
-              .where(
-                name: CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS,
-              )
-              .true_fields
-              .select(:category_id),
-        )
-        .where(
-          id:
-            CategoryCustomField
-              .where(
-                name: CategoryExperts::CATEGORY_EXPERT_GROUP_IDS,
-              )
-              .where.not(
-                value: '',
-              )
-              .select(:category_id),
-        )
+      Category.where(
+        id:
+          CategoryCustomField
+            .where(name: CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS)
+            .true_fields
+            .select(:category_id),
+      ).where(
+        id:
+          CategoryCustomField
+            .where(name: CategoryExperts::CATEGORY_EXPERT_GROUP_IDS)
+            .where.not(value: "")
+            .select(:category_id),
+      )
 
     categories =
       categories.select do |category|

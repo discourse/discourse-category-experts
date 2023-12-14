@@ -53,9 +53,7 @@ module Jobs
       Post
         .where(
           id:
-            PostCustomField
-              .where(name: CategoryExperts::POST_APPROVED_GROUP_NAME)
-              .select(:post_id),
+            PostCustomField.where(name: CategoryExperts::POST_APPROVED_GROUP_NAME).select(:post_id),
           post_number: 1,
         )
         .map { |post| fix_post(post) }
