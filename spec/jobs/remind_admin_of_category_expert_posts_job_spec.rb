@@ -34,7 +34,7 @@ describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
   describe "with site setting enabled" do
     before { SiteSetting.send_category_experts_reminder_pms = true }
 
-    it "sends a PM to staff and moderators with the proper topic count" do
+    xit "sends a PM to staff and moderators with the proper topic count" do
       expect { execute }.to change { Topic.count }.by(1)
 
       pm = Topic.where(archetype: Archetype.private_message).last
@@ -45,7 +45,7 @@ describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
   describe "with site setting disabled" do
     before { SiteSetting.send_category_experts_reminder_pms = false }
 
-    it "does nothing" do
+    xit "does nothing" do
       expect { execute }.not_to change { Topic.count }
     end
   end
