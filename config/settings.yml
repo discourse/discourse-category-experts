@@ -14,6 +14,7 @@ discourse_category_experts:
     default: false
     client: true
   send_category_experts_reminder_pms:
+    hidden: true
     default: false
   send_admin_category_experts_posts_reminder_pm:
     default: false
