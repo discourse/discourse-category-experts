@@ -30,23 +30,8 @@ module CategoryExperts
     end
 
     def questions_with_unapproved_posts_count
-      DB.query(<<~SQL).count
-            SELECT topics.id
-            FROM topics
-            INNER JOIN topic_custom_fields tc1 ON topics.id = tc1.topic_id
-            INNER JOIN topic_custom_fields tc2 ON topics.id = tc2.topic_id
-            WHERE tc1.name = '#{CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION}' AND
-                  tc1.value = 't' AND
-                  tc2.name = '#{CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL}' AND
-                  tc2.value = 't'
-            EXCEPT
-            SELECT topics.id
-            FROM topics
-            INNER JOIN topic_custom_fields tc3 ON topics.id = tc3.topic_id
-            WHERE tc3.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
-                  tc3.value <> '' AND
-                  tc3.value IS NOT NULL
-      SQL
+      # disabled for now, custom field type is not matching correctly
+      0
     end
   end
 end

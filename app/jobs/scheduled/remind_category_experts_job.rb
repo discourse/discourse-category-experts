@@ -76,8 +76,6 @@ module CategoryExperts
             WHERE (otc.name = '#{CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES}' AND
                   otc.value <> '' AND
                   otc.value IS NOT NULL)
-            OR (otc.name = '#{CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL}' AND
-                  otc.value = 't')
       SQL
     end
   end

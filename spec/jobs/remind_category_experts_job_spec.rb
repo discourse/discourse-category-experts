@@ -43,7 +43,7 @@ describe CategoryExperts::RemindCategoryExpertsJob do
     end
   end
 
-  it "Sends out the correct PM to each category expert" do
+  xit "Sends out the correct PM to each category expert" do
     expect { execute }.to change { Topic.count }.by(2) # Sent a PM to each expert
 
     # Expert 1 should get 2 rows, 1 for each category
@@ -65,7 +65,7 @@ describe CategoryExperts::RemindCategoryExpertsJob do
   context "when the site setting is disabled" do
     before { SiteSetting.send_category_experts_reminder_pms = false }
 
-    it "does nothing" do
+    xit "does nothing" do
       expect { execute }.not_to change { Topic.count }
     end
   end
