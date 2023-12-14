@@ -30,7 +30,8 @@ module CategoryExperts
     end
 
     def questions_with_unapproved_posts_count
-      0
+      # disabled for now, custom field type is not matching correctly
+      0 
     end
   end
 end
