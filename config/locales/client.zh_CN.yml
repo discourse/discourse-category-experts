@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_category_experts: "Discourse Category Experts"
   js:
     category_experts:
       title: "类别专家"

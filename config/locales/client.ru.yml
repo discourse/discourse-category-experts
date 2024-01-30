@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 ru:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_category_experts: "Плагин Discourse «Эксперты категории»"
   js:
     category_experts:
       title: "Эксперты категории"
