@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 es:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_category_experts: "Expertos en categorías de Discourse"
   js:
     category_experts:
       title: "Expertos en la categoría"

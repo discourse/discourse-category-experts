@@ -5,6 +5,11 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_category_experts: "Discourse Kategorisi Uzmanları"
   js:
     category_experts:
       title: "Kategori Uzmanları"
