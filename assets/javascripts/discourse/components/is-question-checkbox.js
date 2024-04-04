@@ -1,7 +1,11 @@
 import Component from "@ember/component";
+import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
 import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
+  appEvents: service(),
+
   init() {
     this._super(...arguments);
 
@@ -21,5 +25,12 @@ export default Component.extend({
     }
 
     return model.editingFirstPost || model.creatingTopic;
+  },
+
+  @action
+  triggerAppEvent(e) {
+    this.appEvents.trigger("category-experts:is-question-checkbox-toggled", {
+      checked: e.target.checked,
+    });
   },
 });
