@@ -22,10 +22,7 @@
             <Input
               @type="checkbox"
               @checked={{this.isChecked category.id}}
-              {{on
-                "change"
-                (fn this.checkboxChanged category.id)
-              }}
+              {{on "change" (fn this.checkboxChanged category.id)}}
               disabled={{this.isDisabled category.id}}
               name="category"
               class="category-endorsement-checkbox"
