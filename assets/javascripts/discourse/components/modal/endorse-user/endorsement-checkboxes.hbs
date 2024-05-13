@@ -19,15 +19,17 @@
       {{else}}
         {{#each categories as |category|}}
           <label class="category-experts-endorsement-row">
-            <input
-              type="checkbox"
+            <Input
+              @type="checkbox"
+              @checked={{this.isChecked category.id}}
+              {{on
+                "change"
+                (fn this.checkboxChanged category.id)
+              }}
+              disabled={{this.isDisabled category.id}}
               name="category"
               class="category-endorsement-checkbox"
-              value={{category.id}}
               id="category-endorsement-{{category.id}}"
-              {{action "checkboxChanged" category.id}}
-              checked={{this.isChecked category.id}}
-              disabled={{this.isDisabled category.id}}
             />
             {{category.name}}
           </label>
