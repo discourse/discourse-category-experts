@@ -12,21 +12,6 @@ register_asset "stylesheets/common.scss"
 enabled_site_setting :enable_category_experts
 
 after_initialize do
-  %w[
-    ../app/controllers/category_experts_controller
-    ../app/models/category_expert_endorsement
-    ../app/models/reviewable_category_expert_suggestion
-    ../app/serializers/reviewable_category_expert_suggestion_serializer
-    ../app/jobs/regular/approve_past_category_expert_posts
-    ../app/jobs/regular/correct_historical_category_expert_posts
-    ../app/jobs/regular/remove_expert_post_properties_from_first_posts
-    ../app/jobs/regular/unapprove_past_category_expert_posts
-    ../app/jobs/scheduled/remind_admin_of_category_experts_posts_job
-    ../app/jobs/scheduled/remind_category_experts_job
-    ../lib/category_experts/post_handler
-    ../lib/category_experts/endorsement_rate_limiter
-  ].each { |path| require File.expand_path(path, __FILE__) }
-
   module ::CategoryExperts
     PLUGIN_NAME ||= "discourse-category-experts".freeze
     CATEGORY_EXPERT_GROUP_IDS = "category_expert_group_ids"
@@ -46,6 +31,22 @@ after_initialize do
       isolate_namespace CategoryExperts
     end
   end
+
+  %w[
+    ../app/controllers/category_experts_controller
+    ../app/models/category_expert_endorsement
+    ../app/models/reviewable_category_expert_suggestion
+    ../app/serializers/reviewable_category_expert_suggestion_serializer
+    ../app/jobs/regular/approve_past_category_expert_posts
+    ../app/jobs/regular/correct_historical_category_expert_posts
+    ../app/jobs/regular/remove_expert_post_properties_from_first_posts
+    ../app/jobs/regular/unapprove_past_category_expert_posts
+    ../app/jobs/scheduled/remind_admin_of_category_experts_posts_job
+    ../app/jobs/scheduled/remind_category_experts_job
+    ../lib/category_experts/post_handler
+    ../lib/category_experts/endorsement_rate_limiter
+    ../lib/category_experts/user_extension
+  ].each { |path| require File.expand_path(path, __FILE__) }
 
   register_reviewable_type ReviewableCategoryExpertSuggestion
 
@@ -109,16 +110,7 @@ after_initialize do
     end
   end
 
-  reloadable_patch do
-    User.class_eval do
-      has_many :given_category_expert_endorsements,
-               foreign_key: "user_id",
-               class_name: "CategoryExpertEndorsement"
-      has_many :received_category_expert_endorsements,
-               foreign_key: "endorsed_user_id",
-               class_name: "CategoryExpertEndorsement"
-    end
-  end
+  reloadable_patch { User.prepend(CategoryExperts::UserExtension) }
 
   add_to_class(:user, :given_category_expert_endorsements_for) do |user|
     given_category_expert_endorsements.where(endorsed_user_id: user.id)

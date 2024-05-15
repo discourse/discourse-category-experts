@@ -4,8 +4,8 @@ require "rails_helper"
 
 describe Group do
   fab!(:user) { Fabricate(:user, refresh_auto_groups: true) }
-  fab!(:category) { Fabricate(:category) }
-  fab!(:group) { Fabricate(:group) }
+  fab!(:category)
+  fab!(:group)
   fab!(:topic) { Fabricate(:topic, category: category) }
 
   before do

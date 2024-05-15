@@ -5,7 +5,7 @@ require "rails_helper"
 describe Jobs::RemoveExpertPostPropertiesFromFirstPosts do
   fab!(:user) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:expert) { Fabricate(:user, refresh_auto_groups: true) }
-  fab!(:category) { Fabricate(:category) }
+  fab!(:category)
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:topic) { Fabricate(:topic, category: category) }
 
