@@ -6,10 +6,10 @@ describe CategoryExperts::PostHandler do
   fab!(:user) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:expert) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:second_expert) { Fabricate(:user, refresh_auto_groups: true) }
-  fab!(:category) { Fabricate(:category) }
+  fab!(:category)
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:second_group) { Fabricate(:group, users: [second_expert]) }
-  fab!(:tag) { Fabricate(:tag) }
+  fab!(:tag)
   fab!(:topic) { Fabricate(:topic, category: category, tags: [tag]) }
   fab!(:private_message_topic) do
     Fabricate(

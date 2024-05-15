@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe CategoryExpertsController do
-  fab!(:admin) { Fabricate(:admin) }
-  fab!(:user) { Fabricate(:user) }
+  fab!(:admin)
+  fab!(:user)
   fab!(:other_user) { Fabricate(:user) }
   fab!(:endorsee) { Fabricate(:user) }
   fab!(:group) { Fabricate(:group, users: [user]) }

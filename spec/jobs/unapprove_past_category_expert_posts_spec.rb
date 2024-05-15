@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Jobs::UnapprovePastCategoryExpertPosts do
-  fab!(:user) { Fabricate(:user) }
+  fab!(:user)
   fab!(:group) { Fabricate(:group, users: [user]) }
   fab!(:category) { fabricate_category_with_category_experts }
   fab!(:topic) { Fabricate(:topic, category: category) }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe CategoryExpertEndorsement do
-  fab!(:user) { Fabricate(:user) }
+  fab!(:user)
   fab!(:endorsee) { Fabricate(:user) }
   fab!(:other) { Fabricate(:user) }
   fab!(:category1) { Fabricate(:category) }

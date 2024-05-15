@@ -5,7 +5,7 @@ require "rails_helper"
 describe CategoryExperts::RemindCategoryExpertsJob do
   subject(:execute) { described_class.new.execute }
 
-  fab!(:user) { Fabricate(:user) }
+  fab!(:user)
   fab!(:expert1) { Fabricate(:user) }
   fab!(:expert2) { Fabricate(:user) }
 

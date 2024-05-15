@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CategoryExpertsController < ApplicationController
+  requires_plugin CategoryExperts::PLUGIN_NAME
+
   before_action :find_post,
                 :ensure_staff,
                 :ensure_needs_approval_enabled,

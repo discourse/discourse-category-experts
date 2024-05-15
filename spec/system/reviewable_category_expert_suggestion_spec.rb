@@ -3,8 +3,8 @@
 describe "Reviewables - Category expert suggestion", type: :system, js: true do
   fab!(:current_user) { Fabricate(:user) }
   fab!(:other_user) { Fabricate(:user) }
-  fab!(:category) { Fabricate(:category) }
-  fab!(:group) { Fabricate(:group) }
+  fab!(:category)
+  fab!(:group)
   let(:modal) { PageObjects::Modals::Base.new }
 
   before do

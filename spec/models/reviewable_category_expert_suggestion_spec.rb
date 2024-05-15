@@ -3,10 +3,10 @@
 require "rails_helper"
 
 describe ReviewableCategoryExpertSuggestion do
-  fab!(:admin) { Fabricate(:admin) }
-  fab!(:user) { Fabricate(:user) }
-  fab!(:category) { Fabricate(:category) }
-  fab!(:group) { Fabricate(:group) }
+  fab!(:admin)
+  fab!(:user)
+  fab!(:category)
+  fab!(:group)
   let(:category_expert_endorsement) do
     CategoryExpertEndorsement.create(user: admin, endorsed_user: user, category: category)
   end
