@@ -24,7 +24,7 @@ class ReviewableCategoryExpertSuggestion < Reviewable
     category = target.category
     possible_group_ids =
       category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].split("|").map(&:to_i)
-    raise Discourse::NotFound unless possible_group_ids.include?(group_id.to_i)
+    raise Discourse::NotFound if possible_group_ids.exclude?(group_id.to_i)
 
     group = Group.find_by(id: group_id)
     group.add(target.endorsed_user)
