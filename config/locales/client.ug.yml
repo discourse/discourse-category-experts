@@ -4,14 +4,14 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-sk:
+ug:
   js:
     category_experts:
-      badge: "Odznak"
-      no_badge: "Žiadny"
-      no_group: "Žiadny"
-      edit: "Upraviť"
-      approve: "Schváliť"
+      badge: "تارتۇق"
+      no_badge: "يوق"
+      no_group: "يوق"
+      edit: "تەھرىر"
+      approve: "تەستىقلا"
       review:
-        approve: "Schváliť"
-        deny: "Ignorovať"
+        approve: "تەستىقلا"
+        deny: "پەرۋا قىلما"

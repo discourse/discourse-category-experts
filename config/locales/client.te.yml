@@ -8,7 +8,10 @@ te:
   js:
     category_experts:
       badge: "బ్యాడ్జీ"
+      no_badge: "ఏదీ లేదు"
+      no_group: "ఏదీ లేదు"
       edit: "సవరణ"
       approve: "అంగీకరించు"
       review:
         approve: "అంగీకరించు"
+        deny: "విస్మరించండి"
