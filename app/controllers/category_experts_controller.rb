@@ -27,10 +27,13 @@ class CategoryExpertsController < ApplicationController
       )
     end
 
-    render json: {
-             category_expert_endorsements:
-               current_user.given_category_expert_endorsements_for(@user),
-           }.to_json
+    user_endorsements = current_user.given_category_expert_endorsements_for(@user)
+    category_expert_endorsements =
+      user_endorsements.map do |endorsement|
+        endorsement.as_json(only: %i[id user_id endorsed_user_id category_id])
+      end
+
+    render json: { category_expert_endorsements: }
   end
 
   def endorsable_categories
