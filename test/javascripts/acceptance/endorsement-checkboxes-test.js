@@ -35,6 +35,7 @@ acceptance(
 
     test("It allows the current user to endorse another via the user card", async (assert) => {
       await visit("/t/internationalization-localization/280");
+      await click(".topic-map__users-trigger");
       await click('a[data-user-card="charlie"]');
 
       await click(".category-expert-endorse-btn");
@@ -86,6 +87,7 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
 
   test("It shows the endorse button when the current user hasn't endorsed the user yet", async (assert) => {
     await visit("/t/internationalization-localization/280");
+    await click(".topic-map__users-trigger");
     await click('a[data-user-card="charlie"]');
 
     assert.equal(queryAll(".category-expert-existing-endorsements").length, 1);
@@ -132,6 +134,7 @@ acceptance(
 
     test("shows the out of endorsements alert instead of the save button", async (assert) => {
       await visit("/t/internationalization-localization/280");
+      await click(".topic-map__users-trigger");
       await click('a[data-user-card="charlie"]');
 
       await click(".category-expert-endorse-btn");
