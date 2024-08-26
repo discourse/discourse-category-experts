@@ -94,7 +94,6 @@ module CategoryExperts
 
       topic.save!
 
-      puts "Triggering category_expert_approved event"
       DiscourseEvent.trigger(:category_experts_approved, post)
 
       add_auto_tag

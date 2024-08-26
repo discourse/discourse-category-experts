@@ -91,6 +91,18 @@ describe CategoryExperts::PostHandler do
         }
       end
     end
+
+    describe "marking post as approved" do
+      it "triggers a Discourse event" do
+        post = create_post(topic_id: topic.id, user: expert)
+
+        DiscourseEvent.expects(:trigger).with(
+          :category_experts_approved,
+          instance_of(CategoryExperts::PostHandler.new(post: post).mark_post_as_approved),
+          post,
+        )
+      end
+    end
   end
 
   describe "SiteSetting.category_experts_posts_require_approval disabled" do
