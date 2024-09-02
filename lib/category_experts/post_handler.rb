@@ -93,6 +93,9 @@ module CategoryExperts
       end
 
       topic.save!
+
+      DiscourseEvent.trigger(:category_experts_approved, post)
+
       add_auto_tag
       users_expert_group.name
     end

@@ -46,6 +46,7 @@ after_initialize do
     ../lib/category_experts/post_handler
     ../lib/category_experts/endorsement_rate_limiter
     ../lib/category_experts/user_extension
+    ../lib/category_experts/outgoing_web_hook_extension
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   register_reviewable_type ReviewableCategoryExpertSuggestion
@@ -110,7 +111,10 @@ after_initialize do
     end
   end
 
-  reloadable_patch { User.prepend(CategoryExperts::UserExtension) }
+  reloadable_patch do
+    User.prepend(CategoryExperts::UserExtension)
+    WebHook.prepend(CategoryExperts::OutgoingWebHookExtension)
+  end
 
   add_to_class(:user, :given_category_expert_endorsements_for) do |user|
     given_category_expert_endorsements.where(endorsed_user_id: user.id)
@@ -340,6 +344,14 @@ after_initialize do
       user_id: user.id,
       category_ids: category_ids,
     )
+  end
+
+  # outgoing webhook events
+  on(:category_experts_approved) do |post|
+    if WebHook.active_web_hooks(:category_experts_approved).exists?
+      payload = WebHook.generate_payload(:post, post)
+      WebHook.enqueue_category_experts_hooks(:category_experts_approved, post, payload)
+    end
   end
 
   Discourse::Application.routes.append do

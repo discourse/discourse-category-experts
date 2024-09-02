@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "webmock/rspec"
 
 describe CategoryExperts::PostHandler do
   fab!(:user) { Fabricate(:user, refresh_auto_groups: true) }
@@ -206,6 +207,31 @@ describe CategoryExperts::PostHandler do
 
       result = NewPostManager.new(expert, raw: "this is a new post", topic_id: topic.id).perform
       expect(result.post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+    end
+  end
+
+  describe "Webhook integration" do
+    fab!(:webhook) { Fabricate(:outgoing_category_experts_web_hook) }
+
+    before do
+      SiteSetting.category_experts_posts_require_approval = true
+      SiteSetting.first_post_can_be_considered_expert_post = true
+
+      stub_request(:post, webhook.payload_url)
+      Jobs.run_immediately!
+    end
+
+    it "sends a webhook event when a post is approved" do
+      post = create_post(topic_id: topic.id, user: expert)
+      CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+
+      expect(WebMock).to have_requested(:post, webhook.payload_url)
+        .with { |req|
+          json = JSON.parse(req.body)
+          req.headers["X-Discourse-Event"] == "category_experts_approved" &&
+            json.dig("category_experts", "id") == post.id
+        }
+        .once
     end
   end
 end
