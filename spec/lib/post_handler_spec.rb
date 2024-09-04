@@ -229,7 +229,7 @@ describe CategoryExperts::PostHandler do
         .with { |req|
           json = JSON.parse(req.body)
           req.headers["X-Discourse-Event"] == "category_experts_approved" &&
-            json.dig("category_experts", "id") == post.id
+            json.dig("post", "id") == post.id
         }
         .once
     end

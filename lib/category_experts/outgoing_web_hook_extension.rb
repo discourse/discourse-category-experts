@@ -8,7 +8,7 @@ module CategoryExperts
           payload ||= WebHook.generate_payload(:post, post)
 
           WebHook.enqueue_hooks(
-            :category_experts,
+            :post,
             event,
             id: post.id,
             category_id: post.topic&.category_id,
