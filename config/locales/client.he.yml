@@ -11,6 +11,11 @@ he:
         categories:
           discourse_category_experts: "מומחי קטגוריית ב־Discourse"
   js:
+    admin:
+      web_hooks:
+        category_experts_event:
+          group_name: "אירוע מומחי קטגוריה"
+          category_experts_approved: "הפוסט אושר על ידי מומחי הקטגוריה"
     category_experts:
       title: "מומחי קטגוריה"
       group: "קבוצת מומחי קטגוריה"
@@ -34,12 +39,17 @@ he:
         deny: "התעלמות"
       topic_list:
         response_by_group: "תגובת מומחה"
+        needs_approval: "זקוק לאישור"
         question: "שאלה למומחה"
       search:
         expert_response: "עם תגובת מומחה"
         question: "שאלה למומחה"
+        without_post: "פוסט בלי מומחי קטגוריה"
         unapproved_post: "עם פוסט שלא אושר"
     review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "הצעת מומחי קטגוריה"
       expert_group_chooser_modal:
         title: "נא לבחור קבוצת מומחים למשתמש"
       endorsed_username: "משתמש שהובעה כלפיו תמיכה"
