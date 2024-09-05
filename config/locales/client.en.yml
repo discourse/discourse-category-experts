@@ -5,11 +5,6 @@ en:
         categories:
           discourse_category_experts: "Discourse Category Experts"
   js:
-    admin:
-      web_hooks:
-        category_experts_event:
-          group_name: "Category experts event"
-          category_experts_approved: "Post approved by category experts"
     category_experts:
       title: "Category Experts"
       group: "Category experts group"
