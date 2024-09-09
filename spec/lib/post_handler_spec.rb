@@ -212,6 +212,7 @@ describe CategoryExperts::PostHandler do
 
   describe "Webhook integration" do
     fab!(:webhook) { Fabricate(:outgoing_category_experts_web_hook) }
+    fab!(:post) { create_post(topic_id: topic.id, user: expert) }
 
     before do
       SiteSetting.category_experts_posts_require_approval = true
@@ -222,7 +223,6 @@ describe CategoryExperts::PostHandler do
     end
 
     it "sends a webhook event when a post is approved" do
-      post = create_post(topic_id: topic.id, user: expert)
       CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
 
       expect(WebMock).to have_requested(:post, webhook.payload_url)
@@ -235,8 +235,7 @@ describe CategoryExperts::PostHandler do
     end
 
     it "sends a webhook event when a post is unapproved" do
-      post = create_post(topic_id: topic.id, user: expert)
-      # CategoryExperts::PostHandler.new(post: post).mark_post_for_approval
+      CategoryExperts::PostHandler.new(post: post).mark_post_for_approval
 
       expect(WebMock).to have_requested(:post, webhook.payload_url)
         .with { |req|
