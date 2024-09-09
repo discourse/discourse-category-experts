@@ -66,6 +66,9 @@ module CategoryExperts
       end
 
       topic.save!
+
+      DiscourseEvent.trigger(:category_experts_unapproved, post)
+
       remove_auto_tag if should_remove_auto_tag
     end
 
