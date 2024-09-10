@@ -9,6 +9,7 @@ Fabricator(:outgoing_category_experts_web_hook, from: :web_hook) do
   active true
 
   after_build do |web_hook|
-    web_hook.web_hook_event_types = WebHookEventType.where(name: %w[category_experts_approved])
+    web_hook.web_hook_event_types =
+      WebHookEventType.where(name: %w[category_experts_approved category_experts_unapproved])
   end
 end

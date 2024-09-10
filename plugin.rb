@@ -347,10 +347,12 @@ after_initialize do
   end
 
   # outgoing webhook events
-  on(:category_experts_approved) do |post|
-    if WebHook.active_web_hooks(:category_experts_approved).exists?
-      payload = WebHook.generate_payload(:post, post)
-      WebHook.enqueue_category_experts_hooks(:category_experts_approved, post, payload)
+  %i[category_experts_approved category_experts_unapproved].each do |category_experts_event|
+    on(category_experts_event) do |post|
+      if WebHook.active_web_hooks(category_experts_event).exists?
+        payload = WebHook.generate_payload(:post, post)
+        WebHook.enqueue_category_experts_hooks(category_experts_event, post, payload)
+      end
     end
   end
 
