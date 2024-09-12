@@ -72,14 +72,14 @@ class CategoryExpertsController < ApplicationController
 
   def approve_post
     post_handler = CategoryExperts::PostHandler.new(post: @post)
-    group_name = post_handler.mark_post_as_approved
+    group_name = post_handler.mark_post_as_approved(new_post: false)
 
     render json: { group_name: group_name }.merge(topic_custom_fields)
   end
 
   def unapprove_post
     post_handler = CategoryExperts::PostHandler.new(post: @post)
-    post_handler.mark_post_for_approval
+    post_handler.mark_post_for_approval(new_post: false)
 
     render json: topic_custom_fields
   end
