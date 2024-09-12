@@ -56,7 +56,7 @@ acceptance(
     test("Filter posts by user works", async function (assert) {
       await visit("/t/topic-for-group-moderators/2480");
       await click("article#post_2 .trigger-user-card");
-      await click(".usercard-controls .btn-default");
+      await click(".d-user-card__controls .btn-default");
       assert.equal(queryAll(".topic-post").length, 3);
     });
   }
