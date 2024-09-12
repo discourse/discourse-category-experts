@@ -24,7 +24,7 @@ module CategoryExperts
       end
     end
 
-    def mark_post_for_approval(skip_validations: false)
+    def mark_post_for_approval(skip_validations: false, new_post: true)
       if !skip_validations
         raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
       end
@@ -67,12 +67,12 @@ module CategoryExperts
 
       topic.save!
 
-      DiscourseEvent.trigger(:category_experts_unapproved, post)
+      DiscourseEvent.trigger(:category_experts_unapproved, post) unless new_post
 
       remove_auto_tag if should_remove_auto_tag
     end
 
-    def mark_post_as_approved(skip_validations: false)
+    def mark_post_as_approved(skip_validations: false, new_post: true)
       if !skip_validations
         raise Discourse::InvalidParameters unless ensure_poster_is_category_expert
       end
@@ -97,7 +97,7 @@ module CategoryExperts
 
       topic.save!
 
-      DiscourseEvent.trigger(:category_experts_approved, post)
+      DiscourseEvent.trigger(:category_experts_approved, post) unless new_post
 
       add_auto_tag
       users_expert_group.name

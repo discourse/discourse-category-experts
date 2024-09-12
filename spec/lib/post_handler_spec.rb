@@ -223,7 +223,7 @@ describe CategoryExperts::PostHandler do
     end
 
     it "sends a webhook event when a post is approved" do
-      CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+      CategoryExperts::PostHandler.new(post: post).mark_post_as_approved(new_post: false)
 
       expect(WebMock).to have_requested(:post, webhook.payload_url)
         .with { |req|
@@ -235,7 +235,7 @@ describe CategoryExperts::PostHandler do
     end
 
     it "sends a webhook event when a post is unapproved" do
-      CategoryExperts::PostHandler.new(post: post).mark_post_for_approval
+      CategoryExperts::PostHandler.new(post: post).mark_post_for_approval(new_post: false)
 
       expect(WebMock).to have_requested(:post, webhook.payload_url)
         .with { |req|
@@ -244,6 +244,16 @@ describe CategoryExperts::PostHandler do
             json.dig("post", "id") == post.id
         }
         .once
+    end
+
+    it "does not send a webhook event when a post is created" do
+      post1 = create_post(topic_id: topic.id, user: expert)
+
+      expect(WebMock).not_to have_requested(:post, webhook.payload_url).with { |req|
+        json = JSON.parse(req.body)
+        req.headers["X-Discourse-Event"] == "category_experts_unapproved" &&
+          json.dig("post", "id") == post1.id
+      }
     end
   end
 end
