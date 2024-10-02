@@ -11,11 +11,6 @@ he:
         categories:
           discourse_category_experts: "מומחי קטגוריית ב־Discourse"
   js:
-    admin:
-      web_hooks:
-        category_experts_event:
-          group_name: "אירוע מומחי קטגוריה"
-          category_experts_approved: "הפוסט אושר על ידי מומחי הקטגוריה"
     category_experts:
       title: "מומחי קטגוריה"
       group: "קבוצת מומחי קטגוריה"
