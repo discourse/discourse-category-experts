@@ -94,8 +94,6 @@ describe CategoryExpertsController do
         RateLimiter.enable
       end
 
-      use_redis_snapshotting
-
       it "returns a 429 when rate limits are hit for tl0" do
         freeze_time
         user.update(trust_level: TrustLevel[0])
