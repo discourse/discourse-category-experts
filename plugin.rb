@@ -12,6 +12,14 @@ register_asset "stylesheets/common.scss"
 enabled_site_setting :enable_category_experts
 
 after_initialize do
+  WebHookEventType.const_set(:CATEGORY_EXPERTS_APPROVED, 30_478)
+  WebHookEventType.const_set(:CATEGORY_EXPERTS_UNAPPROVED, 30_479)
+
+  SeedFu.fixture_paths << Rails
+    .root
+    .join("plugins", "discourse-category-experts", "db", "fixtures")
+    .to_s
+
   module ::CategoryExperts
     PLUGIN_NAME ||= "discourse-category-experts".freeze
     CATEGORY_EXPERT_GROUP_IDS = "category_expert_group_ids"

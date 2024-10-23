@@ -4,6 +4,10 @@ en:
       site_settings:
         categories:
           discourse_category_experts: "Discourse Category Experts"
+      web_hooks:
+        post_event:
+          category_experts_approved: "Post marked as category experts post"
+          category_experts_unapproved: "Post unmarked as category experts post"
   js:
     category_experts:
       title: "Category Experts"
