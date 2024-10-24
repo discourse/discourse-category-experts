@@ -34,3 +34,19 @@ class CategoryExpertEndorsement < ActiveRecord::Base
     errors.add(:user_id, "cannot endorse self") if user == endorsed_user
   end
 end
+
+# == Schema Information
+#
+# Table name: category_expert_endorsements
+#
+#  id               :bigint           not null, primary key
+#  user_id          :integer          not null
+#  endorsed_user_id :integer          not null
+#  category_id      :integer          not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+# Indexes
+#
+#  category_expert_endorsements_index  (user_id,endorsed_user_id,category_id) UNIQUE
+#
