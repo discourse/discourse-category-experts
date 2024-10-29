@@ -10,6 +10,10 @@ he:
       site_settings:
         categories:
           discourse_category_experts: "מומחי קטגוריית ב־Discourse"
+      web_hooks:
+        post_event:
+          category_experts_approved: "הפוסט מסומן כפוסט מומחי קטגוריה"
+          category_experts_unapproved: "הסימון כפוסט מומחי קטגוריה הוסר מהפוסט"
   js:
     category_experts:
       title: "מומחי קטגוריה"
