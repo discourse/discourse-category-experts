@@ -10,12 +10,13 @@ import {
 
 const groupName = "some-group";
 
+// TODO (glimmer-post-menu): Remove this file when the post menu widget code is removed from core
 acceptance(
-  "Discourse Category Experts - Posts - Auto-approved",
+  "Discourse Category Experts - Widget Post Menu - Posts - Auto-approved",
   function (needs) {
     needs.user();
     needs.settings({
-      glimmer_post_menu_mode: "enabled",
+      glimmer_post_menu_mode: "disabled",
 
       enable_category_experts: true,
       category_experts_posts_require_approval: false,
@@ -52,7 +53,7 @@ acceptance(
 
       await click(lastArticle.querySelector("button.show-more-actions"));
 
-      assert.notOk(exists(".post-controls .unapprove-category-expert-post"));
+      assert.notOk(exists(".widget-button.unapprove-category-expert-post"));
     });
 
     test("Filter posts by user works", async function (assert) {
@@ -65,11 +66,11 @@ acceptance(
 );
 
 acceptance(
-  "Discourse Category Experts - Posts - Need approved",
+  "Discourse Category Experts - Widget Post Menu - Posts - Need approved",
   function (needs) {
     needs.user();
     needs.settings({
-      glimmer_post_menu_mode: "enabled",
+      glimmer_post_menu_mode: "disabled",
 
       enable_category_experts: true,
       category_experts_posts_require_approval: true,
@@ -106,7 +107,7 @@ acceptance(
       assert.ok(lastArticle.classList.contains(`category-expert-${groupName}`));
 
       await click(lastArticle.querySelector("button.show-more-actions"));
-      await click(".post-controls .unapprove-category-expert-post");
+      await click(".widget-button.unapprove-category-expert-post");
 
       assert.notOk(lastArticle.classList.contains("category-expert-post"));
     });
@@ -120,9 +121,7 @@ acceptance(
       assert.notOk(article.classList.contains("category-expert-post"));
       assert.notOk(article.classList.contains(`category-expert-${groupName}`));
 
-      await click(
-        article.querySelector(".post-controls .approve-category-expert-post")
-      );
+      await click(article.querySelector("button.approve-category-expert-post"));
 
       assert.ok(article.classList.contains("category-expert-post"));
       assert.ok(article.classList.contains(`category-expert-${groupName}`));
