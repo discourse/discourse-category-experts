@@ -1,4 +1,4 @@
-{{#if siteSettings.enable_category_experts}}
+{{#if this.siteSettings.enable_category_experts}}
   <h3>{{i18n "category_experts.title"}}</h3>
   <section class="field">
     <label class="checkbox-label">
@@ -6,26 +6,26 @@
     </label>
     <div class="controls">
       <GroupChooser
-        @content={{allGroups}}
-        @value={{groupIds}}
+        @content={{this.allGroups}}
+        @value={{this.groupIds}}
         @labelProperty="name"
         @onChange={{action "onChangeGroupIds"}}
       />
     </div>
   </section>
 
-  {{#if siteSettings.tagging_enabled}}
+  {{#if this.siteSettings.tagging_enabled}}
     <section class="field category-experts-auto-tagging">
       <label class="checkbox-label">
         {{i18n "category_experts.auto_tagging.title"}}
       </label>
       <div class="controls">
         <TagChooser
-          @tags={{category.custom_fields.category_expert_auto_tag}}
-          @categoryId={{category.id}}
+          @tags={{this.category.custom_fields.category_expert_auto_tag}}
+          @categoryId={{this.category.id}}
           @options={{hash limit=1}}
           @onChange={{action
-            (mut category.custom_fields.category_expert_auto_tag)
+            (mut this.category.custom_fields.category_expert_auto_tag)
           }}
         />
       </div>
@@ -35,18 +35,18 @@
     </section>
   {{/if}}
 
-  {{#if badgeOptions}}
+  {{#if this.badgeOptions}}
     <section class="field">
       <label class="checkbox-label">
         {{i18n "category_experts.badge"}}
       </label>
       <div class="controls">
         <ComboBox
-          @value={{category.custom_fields.category_experts_badge_id}}
-          @content={{badgeOptions}}
+          @value={{this.category.custom_fields.category_experts_badge_id}}
+          @content={{this.badgeOptions}}
           @nameProperty="name"
           @onChange={{action
-            (mut category.custom_fields.category_experts_badge_id)
+            (mut this.category.custom_fields.category_experts_badge_id)
           }}
           @options={{hash none="category_experts.no_badge"}}
         />
@@ -54,13 +54,13 @@
     </section>
   {{/if}}
 
-  {{#if category.custom_fields.category_expert_group_ids}}
+  {{#if this.category.custom_fields.category_expert_group_ids}}
     <section class="field">
       <label class="checkbox-label">
         <Input
           @type="checkbox"
           @checked={{readonly
-            category.custom_fields.category_accepting_endorsements
+            this.category.custom_fields.category_accepting_endorsements
           }}
           {{on
             "change"
@@ -78,7 +78,7 @@
         <Input
           @type="checkbox"
           @checked={{readonly
-            category.custom_fields.category_accepting_questions
+            this.category.custom_fields.category_accepting_questions
           }}
           {{on
             "change"

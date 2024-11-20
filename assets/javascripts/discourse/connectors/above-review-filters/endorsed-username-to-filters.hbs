@@ -1,7 +1,7 @@
 <div class="reviewable-filter reviewable-filter-endorsed-username-to-filter">
   <label class="filter-label">{{i18n "review.endorsed_username"}}</label>
   <EmailGroupUserChooser
-    @value={{additionalFilters.endorsed_username}}
+    @value={{this.additionalFilters.endorsed_username}}
     @onChange={{action "updateEndorsedUsername"}}
     @autocomplete="off"
     @options={{hash fullWidthWrap=true maximum=1}}

@@ -17,7 +17,7 @@
           <Input
             @type="checkbox"
             class="with-category-expert-response"
-            @checked={{readonly searchedTerms.withCategoryExpertResponse}}
+            @checked={{readonly this.searchedTerms.withCategoryExpertResponse}}
             {{on
               "change"
               (action
@@ -30,13 +30,13 @@
           {{i18n "category_experts.search.expert_response"}}
         </label>
       </section>
-      {{#if canSeeIsQuestionFilter}}
+      {{#if this.canSeeIsQuestionFilter}}
         <section class="field is-category-expert-question-field">
           <label>
             <Input
               @type="checkbox"
               class="is-category-expert-question"
-              @checked={{readonly searchedTerms.isCategoryExpertQuestion}}
+              @checked={{readonly this.searchedTerms.isCategoryExpertQuestion}}
               {{on
                 "change"
                 (action
@@ -54,7 +54,7 @@
             <Input
               @type="checkbox"
               class="without-category-expert-post"
-              @checked={{readonly searchedTerms.withoutCategoryExpertPost}}
+              @checked={{readonly this.searchedTerms.withoutCategoryExpertPost}}
               {{on
                 "change"
                 (action
@@ -68,13 +68,13 @@
           </label>
         </section>
       {{/if}}
-      {{#if currentUser.staff}}
+      {{#if this.currentUser.staff}}
         <section class="field with-unapproved-ce-post-field">
           <label>
             <Input
               @type="checkbox"
               class="with-unapproved-post"
-              @checked={{readonly searchedTerms.withUnapprovedPost}}
+              @checked={{readonly this.searchedTerms.withUnapprovedPost}}
               {{on
                 "change"
                 (action

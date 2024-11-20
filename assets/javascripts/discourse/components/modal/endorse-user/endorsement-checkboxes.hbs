@@ -6,18 +6,18 @@
   <:body>
     <h3>{{i18n
         "category_experts.manage_endorsements.subtitle"
-        username=user.username
+        username=this.user.username
       }}</h3>
 
-    {{#if loading}}
+    {{#if this.loading}}
       {{loading-spinner size="large"}}
     {{else}}
-      {{#if showingSuccess}}
+      {{#if this.showingSuccess}}
         <div class="endorsement-successful">
           {{d-icon "check"}}
         </div>
       {{else}}
-        {{#each categories as |category|}}
+        {{#each this.categories as |category|}}
           <label class="category-experts-endorsement-row">
             <Input
               @type="checkbox"
@@ -35,8 +35,8 @@
     {{/if}}
   </:body>
   <:footer>
-    {{#unless loading}}
-      {{#if outOfEndorsements}}
+    {{#unless this.loading}}
+      {{#if this.outOfEndorsements}}
         <div class="alert alert-danger out-of-endorsements-alert">
           {{i18n "category_experts.out_of_endorsements"}}
         </div>
@@ -44,14 +44,14 @@
         <DButton
           class="btn-primary category-endorsement-save"
           @action={{action "save"}}
-          @disabled={{saveDisabled}}
+          @disabled={{this.saveDisabled}}
           @label="category_experts.endorse"
         />
-        {{#unless currentUser.staff}}
+        {{#unless this.currentUser.staff}}
           <div class="remaining-endorsements-notice">
             {{i18n
               "category_experts.remaining_endorsements"
-              count=remainingEndorsements
+              count=this.remainingEndorsements
             }}
           </div>
         {{/unless}}

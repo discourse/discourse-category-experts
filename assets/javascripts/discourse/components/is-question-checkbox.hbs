@@ -1,8 +1,8 @@
-{{#if show}}
+{{#if this.show}}
   <label class="checkbox-label is-category-expert-question">
     <Input
       @type="checkbox"
-      @checked={{model.is_category_expert_question}}
+      @checked={{this.model.is_category_expert_question}}
       {{on "input" this.triggerAppEvent}}
     />
     {{i18n "category_experts.ask_category_expert"}}

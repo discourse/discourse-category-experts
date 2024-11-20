@@ -1,7 +1,10 @@
-{{#unless disabled}}
-  {{#if endorsements}}
+{{#unless this.disabled}}
+  {{#if this.endorsements}}
     <div class="category-expert-existing-endorsements">
-      {{i18n "category_experts.existing_endorsements" count=endorsementsCount}}
+      {{i18n
+        "category_experts.existing_endorsements"
+        count=this.endorsementsCount
+      }}
       <DButton
         @action={{action "openEndorsementModal"}}
         class="btn-flat category-expert-endorse-edit"
