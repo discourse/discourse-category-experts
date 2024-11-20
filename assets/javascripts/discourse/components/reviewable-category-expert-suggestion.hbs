@@ -1,13 +1,13 @@
 <div class="row">
-  <LinkTo @route="user" @model={{reviewable.user.username}}>
-    {{avatar reviewable.user imageSize="small"}}
-    {{reviewable.user.username}}
+  <LinkTo @route="user" @model={{this.reviewable.user.username}}>
+    {{avatar this.reviewable.user imageSize="small"}}
+    {{this.reviewable.user.username}}
   </LinkTo>
   <CountI18n
     @key="category_experts.review.endorsed_count"
-    @count={{reviewable.endorsed_count}}
+    @count={{this.reviewable.endorsed_count}}
   />
-  {{category-link reviewable.category}}
+  {{category-link this.reviewable.category}}
 </div>
 
 <div class="row">
@@ -16,12 +16,12 @@
       <th>
         <td>{{i18n
             "category_experts.review.endorsed_by"
-            count=reviewable.endorsed_count
+            count=this.reviewable.endorsed_count
           }}</td>
       </th>
     </thead>
     <tbody>
-      {{#each reviewable.endorsed_by as |user|}}
+      {{#each this.reviewable.endorsed_by as |user|}}
         <tr>
           <td class="endorsed-by">
             <LinkTo @route="user" @model={{user.username}}>
