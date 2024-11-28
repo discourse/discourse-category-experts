@@ -44,10 +44,10 @@ acceptance(
       assert.equal(checkboxRows.length, 2);
 
       let saveBtn = query(".category-endorsement-save");
-      assert.equal(saveBtn.disabled, true);
+      assert.true(saveBtn.disabled);
 
       await click(checkboxRows[0]);
-      assert.equal(saveBtn.disabled, false);
+      assert.false(saveBtn.disabled);
     });
   }
 );
@@ -97,14 +97,14 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
     let checkboxes = queryAll(".category-experts-endorsement-row input");
     assert.equal(checkboxes.length, 2);
 
-    assert.equal(checkboxes[0].disabled, true);
-    assert.equal(checkboxes[1].disabled, false);
+    assert.true(checkboxes[0].disabled);
+    assert.false(checkboxes[1].disabled);
 
     let saveBtn = query(".category-endorsement-save");
-    assert.equal(saveBtn.disabled, true);
+    assert.true(saveBtn.disabled);
 
     await click(checkboxes[1]);
-    assert.equal(saveBtn.disabled, false);
+    assert.false(saveBtn.disabled);
   });
 });
 
