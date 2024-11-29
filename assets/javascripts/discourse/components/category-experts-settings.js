@@ -3,12 +3,12 @@ import { action } from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 import Group from "discourse/models/group";
 
-export default Component.extend({
-  groupIds: null,
-  allGroups: null,
+export default class CategoryExpertsSettings extends Component {
+  groupIds = null;
+  allGroups = null;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     this.set(
       "groupIds",
       this.category.custom_fields.category_expert_group_ids
@@ -36,7 +36,7 @@ export default Component.extend({
         this.set("badgeOptions", badgeOptions);
       });
     }
-  },
+  }
 
   @action
   onChangeGroupIds(value) {
@@ -45,7 +45,7 @@ export default Component.extend({
       "category.custom_fields.category_expert_group_ids",
       value.join("|")
     );
-  },
+  }
 
   @action
   onChangeAcceptingExpertEndorsements(value) {
@@ -53,7 +53,7 @@ export default Component.extend({
       "category.custom_fields.category_accepting_endorsements",
       value ? "true" : null
     );
-  },
+  }
 
   @action
   onChangeAcceptingExpertQuestions(value) {
@@ -61,5 +61,5 @@ export default Component.extend({
       "category.custom_fields.category_accepting_questions",
       value ? "true" : null
     );
-  },
-});
+  }
+}
