@@ -14,6 +14,7 @@ describe "Reviewables - Category expert suggestion", type: :system, js: true do
     sign_in(current_user)
     category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = group.id.to_s
     category.custom_fields[CategoryExperts::CATEGORY_ACCEPTING_ENDORSEMENTS] = true
+    other_user.user_stat.update!(post_count: 1)
     category.save!
   end
 
