@@ -1,18 +1,20 @@
 import Component from "@ember/component";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
+import { tagName } from "@ember-decorators/component";
 import discourseComputed from "discourse-common/utils/decorators";
 import EndorseUserModal from "./modal/endorse-user";
 
-export default Component.extend({
-  modal: service(),
-  tagName: "",
-  disabled: true,
-  user: null,
-  categoriesAllowingEndorsements: null,
+@tagName("")
+export default class EndorsementButton extends Component {
+  @service modal;
+
+  disabled = true;
+  user = null;
+  categoriesAllowingEndorsements = null;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     if (
       !this.siteSettings.enable_category_experts ||
@@ -30,7 +32,7 @@ export default Component.extend({
     if (this.categoriesAllowingEndorsements.length) {
       this.set("disabled", false);
     }
-  },
+  }
 
   @discourseComputed("user.category_expert_endorsements")
   endorsements(categoryExpertEndorsements) {
@@ -41,7 +43,7 @@ export default Component.extend({
     });
     this.set("endorsementsCount", endorsements.length);
     return endorsements;
-  },
+  }
 
   @action
   openEndorsementModal() {
@@ -64,5 +66,5 @@ export default Component.extend({
         location: this.location,
       },
     });
-  },
-});
+  }
+}

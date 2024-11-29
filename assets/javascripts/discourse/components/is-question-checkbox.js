@@ -3,11 +3,11 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import discourseComputed from "discourse-common/utils/decorators";
 
-export default Component.extend({
-  appEvents: service(),
+export default class IsQuestionCheckbox extends Component {
+  @service appEvents;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     if (
       (this.model.creatingTopic || this.model.editingFirstPost) &&
@@ -16,7 +16,7 @@ export default Component.extend({
     ) {
       this.set("model.is_category_expert_question", true);
     }
-  },
+  }
 
   @discourseComputed("model", "model.category")
   show(model, category) {
@@ -25,12 +25,12 @@ export default Component.extend({
     }
 
     return model.editingFirstPost || model.creatingTopic;
-  },
+  }
 
   @action
   triggerAppEvent(e) {
     this.appEvents.trigger("category-experts:is-question-checkbox-toggled", {
       checked: e.target.checked,
     });
-  },
-});
+  }
+}

@@ -6,20 +6,21 @@ import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import discourseComputed, { bind } from "discourse-common/utils/decorators";
 
-export default Component.extend({
-  user: null,
-  saving: false,
-  categories: null,
-  endorsements: null,
-  selectedCategoryIds: null,
-  startingCategoryIds: null,
-  showingSuccess: false,
-  loading: true,
-  remainingEndorsements: null,
-  outOfEndorsements: lt("remainingEndorsements", 1),
+export default class EndorsementCheckboxes extends Component {
+  user = null;
+  saving = false;
+  categories = null;
+  endorsements = null;
+  selectedCategoryIds = null;
+  startingCategoryIds = null;
+  showingSuccess = false;
+  loading = true;
+  remainingEndorsements = null;
+
+  @lt("remainingEndorsements", 1) outOfEndorsements;
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
 
     if (!this.endorsements) {
       this.set("endorsements", []);
@@ -39,7 +40,7 @@ export default Component.extend({
         });
       })
       .catch(popupAjaxError);
-  },
+  }
 
   @discourseComputed(
     "saving",
@@ -62,7 +63,7 @@ export default Component.extend({
       return true;
     }
     return !categoryIds.filter((c) => !startingCategoryIds.includes(c)).length;
-  },
+  }
 
   @action
   save() {
@@ -103,7 +104,7 @@ export default Component.extend({
         }
       })
       .catch(popupAjaxError);
-  },
+  }
 
   @action
   checkboxChanged(categoryId) {
@@ -122,7 +123,7 @@ export default Component.extend({
         [...this.selectedCategoryIds].concat([categoryId])
       );
     }
-  },
+  }
 
   @bind
   isChecked(categoryId) {
@@ -130,10 +131,10 @@ export default Component.extend({
       this.get("selectedCategoryIds")?.includes(categoryId) ||
       this.isDisabled(categoryId)
     );
-  },
+  }
 
   @bind
   isDisabled(categoryId) {
     return this.get("endorsements")?.find((e) => e.category_id === categoryId);
-  },
-});
+  }
+}
