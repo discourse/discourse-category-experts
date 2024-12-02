@@ -7,79 +7,81 @@ function initialize(api) {
   const REGEXP_WITHOUT_CATEGORY_EXPERT_POST = /^without:category_expert_post/gi;
   const REGEX_WITH_UNAPPROVED_POST = /^with:unapproved_ce_post/gi;
 
-  api.modifyClass("component:search-advanced-options", {
-    pluginId: "discourse-category-experts",
+  api.modifyClass(
+    "component:search-advanced-options",
+    (Superclass) =>
+      class extends Superclass {
+        init() {
+          super.init(...arguments);
 
-    init() {
-      this._super(...arguments);
-
-      this.set("searchedTerms.withCategoryExpertResponse", null);
-    },
-
-    didReceiveAttrs() {
-      this._super(...arguments);
-      [
-        {
-          regex: REGEXP_WITH_CATEGORY_EXPERT_RESPONSE,
-          attr: "searchedTerms.withCategoryExpertResponse",
-        },
-        {
-          regex: REGEXP_IS_CATEGORY_EXPERT_QUESTION,
-          attr: "searchedTerms.isCategoryExpertQuestion",
-        },
-        {
-          regex: REGEXP_WITHOUT_CATEGORY_EXPERT_POST,
-          attr: "searchedTerms.withoutCategoryExpertPost",
-        },
-        {
-          regex: REGEX_WITH_UNAPPROVED_POST,
-          attr: "searchedTerms.withUnapprovedPost",
-        },
-      ].forEach((search) => {
-        if (this.filterBlocks(search.regex).length !== 0) {
-          this.set(search.attr, true);
+          this.set("searchedTerms.withCategoryExpertResponse", null);
         }
-      });
-    },
 
-    _updateCategoryExpertTerm(checked, term) {
-      let searchTerm = this.searchTerm || "";
-      if (checked) {
-        searchTerm += ` ${term}`;
-      } else {
-        searchTerm = searchTerm.replace(term, "");
+        didReceiveAttrs() {
+          super.didReceiveAttrs(...arguments);
+          [
+            {
+              regex: REGEXP_WITH_CATEGORY_EXPERT_RESPONSE,
+              attr: "searchedTerms.withCategoryExpertResponse",
+            },
+            {
+              regex: REGEXP_IS_CATEGORY_EXPERT_QUESTION,
+              attr: "searchedTerms.isCategoryExpertQuestion",
+            },
+            {
+              regex: REGEXP_WITHOUT_CATEGORY_EXPERT_POST,
+              attr: "searchedTerms.withoutCategoryExpertPost",
+            },
+            {
+              regex: REGEX_WITH_UNAPPROVED_POST,
+              attr: "searchedTerms.withUnapprovedPost",
+            },
+          ].forEach((search) => {
+            if (this.filterBlocks(search.regex).length !== 0) {
+              this.set(search.attr, true);
+            }
+          });
+        }
+
+        _updateCategoryExpertTerm(checked, term) {
+          let searchTerm = this.searchTerm || "";
+          if (checked) {
+            searchTerm += ` ${term}`;
+          } else {
+            searchTerm = searchTerm.replace(term, "");
+          }
+          this._updateSearchTerm(searchTerm);
+        }
+
+        updateWithCategoryExpertResponse() {
+          this._updateCategoryExpertTerm(
+            this.searchedTerms.withCategoryExpertResponse,
+            "with:category_expert_response"
+          );
+        }
+
+        updateIsCategoryExpertQuestion() {
+          this._updateCategoryExpertTerm(
+            this.searchedTerms.isCategoryExpertQuestion,
+            "is:category_expert_question"
+          );
+        }
+
+        updateWithoutCategoryExpertPost() {
+          this._updateCategoryExpertTerm(
+            this.searchedTerms.withoutCategoryExpertPost,
+            "without:category_expert_post"
+          );
+        }
+
+        updateWithUnapprovedPost() {
+          this._updateCategoryExpertTerm(
+            this.searchedTerms.withUnapprovedPost,
+            "with:unapproved_ce_post"
+          );
+        }
       }
-      this._updateSearchTerm(searchTerm);
-    },
-
-    updateWithCategoryExpertResponse() {
-      this._updateCategoryExpertTerm(
-        this.searchedTerms.withCategoryExpertResponse,
-        "with:category_expert_response"
-      );
-    },
-
-    updateIsCategoryExpertQuestion() {
-      this._updateCategoryExpertTerm(
-        this.searchedTerms.isCategoryExpertQuestion,
-        "is:category_expert_question"
-      );
-    },
-
-    updateWithoutCategoryExpertPost() {
-      this._updateCategoryExpertTerm(
-        this.searchedTerms.withoutCategoryExpertPost,
-        "without:category_expert_post"
-      );
-    },
-
-    updateWithUnapprovedPost() {
-      this._updateCategoryExpertTerm(
-        this.searchedTerms.withUnapprovedPost,
-        "with:unapproved_ce_post"
-      );
-    },
-  });
+  );
 }
 
 export default {

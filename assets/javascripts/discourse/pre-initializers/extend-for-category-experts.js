@@ -20,17 +20,23 @@ export default {
     );
 
     withPluginApi("0.8.31", (api) => {
-      api.modifyClass("model:category", {
-        pluginId: "discourse-category-experts",
-        allowingCategoryExpertEndorsements: and(
-          "custom_fields.category_expert_group_ids",
-          "custom_fields.category_accepting_endorsements"
-        ),
-        allowingCategoryExpertQuestions: and(
-          "custom_fields.category_expert_group_ids",
-          "custom_fields.category_accepting_questions"
-        ),
-      });
+      api.modifyClass(
+        "model:category",
+        (Superclass) =>
+          class extends Superclass {
+            @and(
+              "custom_fields.category_expert_group_ids",
+              "custom_fields.category_accepting_endorsements"
+            )
+            allowingCategoryExpertEndorsements;
+
+            @and(
+              "custom_fields.category_expert_group_ids",
+              "custom_fields.category_accepting_questions"
+            )
+            allowingCategoryExpertQuestions;
+          }
+      );
 
       api.addPluginReviewableParam(
         "ReviewableCategoryExpertSuggestion",
