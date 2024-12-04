@@ -10,7 +10,7 @@ zh_CN:
     first_post_can_be_considered_expert_post: "第一篇帖子可被视为专家帖子"
     show_category_expert_advanced_search_filters: "在高级搜索中显示专家类别筛选器"
     category_expert_suggestion_threshold: "在此数值的认可之后建议类别专家。"
-    category_experts_posts_require_approval: "类别专家的帖子需要管理人员批准才能授予专家奖章。"
+    category_experts_posts_require_approval: "类别专家帖子需要管理人员批准才能授予专家奖章。"
     send_category_experts_reminder_pms: "向类别专家发送提醒 PM，请求回复未回答的问题"
     send_admin_category_experts_posts_reminder_pm: "向管理人员发送提醒 PM，请求审核未批准的类别专家帖子。"
     approve_past_posts_on_becoming_category_expert: "当用户成为专家时，他们在该类别中的所有旧帖子都会自动获得批准。当用户的专家身份被移除时，其所有帖子都会被取消批准。"

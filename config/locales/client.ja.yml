@@ -10,6 +10,10 @@ ja:
       site_settings:
         categories:
           discourse_category_experts: "Discourse カテゴリエキスパート"
+      web_hooks:
+        post_event:
+          category_experts_approved: "投稿はカテゴリエキスパート投稿としてマークされています"
+          category_experts_unapproved: "投稿はカテゴリエキスパート投稿としてマークされていません"
   js:
     category_experts:
       title: "カテゴリエキスパート"

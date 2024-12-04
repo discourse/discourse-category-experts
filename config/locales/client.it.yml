@@ -10,6 +10,10 @@ it:
       site_settings:
         categories:
           discourse_category_experts: "Esperti di categorie di Discourse"
+      web_hooks:
+        post_event:
+          category_experts_approved: "Il messaggio è contrassegnato come messaggio di esperti di categoria"
+          category_experts_unapproved: "Il messaggio non è più contrassegnato come messaggio di esperti di categoria"
   js:
     category_experts:
       title: "Esperti di categoria"

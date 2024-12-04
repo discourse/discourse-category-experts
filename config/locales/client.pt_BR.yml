@@ -10,6 +10,10 @@ pt_BR:
       site_settings:
         categories:
           discourse_category_experts: "Discourse Category Experts"
+      web_hooks:
+        post_event:
+          category_experts_approved: "A postagem foi marcada como postagem de especialista na categoria"
+          category_experts_unapproved: "A postagem foi desmarcada como postagem de especialista na categoria"
   js:
     category_experts:
       title: "Especialistas em categoria"

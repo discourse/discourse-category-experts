@@ -10,6 +10,10 @@ nl:
       site_settings:
         categories:
           discourse_category_experts: "Discourse-categorie-experts"
+      web_hooks:
+        post_event:
+          category_experts_approved: "Bericht is gemarkeerd als categorie-expertbericht"
+          category_experts_unapproved: "Bericht is niet langer gemarkeerd als categorie-expertbericht"
   js:
     category_experts:
       title: "Categorie-experts"

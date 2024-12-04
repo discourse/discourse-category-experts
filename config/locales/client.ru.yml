@@ -10,6 +10,10 @@ ru:
       site_settings:
         categories:
           discourse_category_experts: "Плагин Discourse «Эксперты категории»"
+      web_hooks:
+        post_event:
+          category_experts_approved: "Публикация отмечена как экспертная в категории"
+          category_experts_unapproved: "С публикации снята отметка экспертной в категории"
   js:
     category_experts:
       title: "Эксперты категории"

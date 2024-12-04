@@ -10,6 +10,10 @@ de:
       site_settings:
         categories:
           discourse_category_experts: "Discourse – Kategorieexperten"
+      web_hooks:
+        post_event:
+          category_experts_approved: "Beitrag markiert als Kategorie-Expertenbeitrag"
+          category_experts_unapproved: "Beitrag nicht mehr markiert als Kategorie-Expertenbeitrag"
   js:
     category_experts:
       title: "Kategorie-Experten"

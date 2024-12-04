@@ -10,6 +10,10 @@ tr_TR:
       site_settings:
         categories:
           discourse_category_experts: "Discourse Kategorisi Uzmanları"
+      web_hooks:
+        post_event:
+          category_experts_approved: "Gönderi, kategori uzmanları gönderisi olarak işaretlendi"
+          category_experts_unapproved: "Gönderinin kategori uzmanları gönderisi olarak işareti kaldırıldı"
   js:
     category_experts:
       title: "Kategori Uzmanları"

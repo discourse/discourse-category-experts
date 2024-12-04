@@ -10,6 +10,10 @@ zh_CN:
       site_settings:
         categories:
           discourse_category_experts: "Discourse Category Experts"
+      web_hooks:
+        post_event:
+          category_experts_approved: "帖子被标记为类别专家帖子"
+          category_experts_unapproved: "帖子被取消标记为类别专家帖子"
   js:
     category_experts:
       title: "类别专家"
