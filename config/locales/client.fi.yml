@@ -10,6 +10,10 @@ fi:
       site_settings:
         categories:
           discourse_category_experts: "Discoursen Alueen asiantuntijat"
+      web_hooks:
+        post_event:
+          category_experts_approved: "Viesti on merkitty alueen asiantuntijan viestiksi"
+          category_experts_unapproved: "Viestin merkintä alueen asiantuntijan viestiksi on poistettu"
   js:
     category_experts:
       title: "Alueen asiantuntijat"

@@ -10,6 +10,10 @@ fr:
       site_settings:
         categories:
           discourse_category_experts: "Experts de la catégorie de Discourse"
+      web_hooks:
+        post_event:
+          category_experts_approved: "La publication est marquée comme une publication d'expert de la catégorie"
+          category_experts_unapproved: "La publication n'est pas marquée comme une publication d'expert de la catégorie"
   js:
     category_experts:
       title: "Experts de la catégorie"
