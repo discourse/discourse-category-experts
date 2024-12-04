@@ -46,7 +46,7 @@ function initializeWithApi(api) {
     if (post && post.category_expert_approved_group) {
       return helper.h(
         `span.category-expert-indicator.category-expert-${post.category_expert_approved_group}`,
-        iconNode("check-circle")
+        iconNode("circle-check")
       );
     }
   });
