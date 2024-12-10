@@ -10,6 +10,10 @@ ar:
       site_settings:
         categories:
           discourse_category_experts: "خبراء فئات Discourse"
+      web_hooks:
+        post_event:
+          category_experts_approved: "تم وضع علامة \"منشور من خبراء الفئة\" على المنشور"
+          category_experts_unapproved: "تم إزالة علامة \"منشور من خبراء الفئة\" من المنشور"
   js:
     category_experts:
       title: "خبراء الفئة"
