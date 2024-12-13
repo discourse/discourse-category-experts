@@ -28,7 +28,7 @@ RSpec.describe CategoryExperts do
 
   describe "Events" do
     describe "on 'post_moved'" do
-      context "Moving post to a topic without existing category expert post" do
+      describe "Moving post to a topic without existing category expert post" do
         it "moves topic custom fields to new topic" do
           expect(
             original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
