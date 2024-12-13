@@ -4,10 +4,10 @@ module CategoryExperts
   class PostHandler
     attr_accessor :post, :topic, :user
 
-    def initialize(post:, user: nil)
+    def initialize(post: nil, topic: nil, user: nil)
       @post = post
-      @topic = post.topic
-      @user = user || post.user
+      @topic = topic || post&.topic
+      @user = user || post&.user
     end
 
     def process_new_post(skip_validations: false)
@@ -36,40 +36,7 @@ module CategoryExperts
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = true
       post.save!
 
-      topic = post.topic
-      has_accepted_posts_from_same_group =
-        post_group_name &&
-          PostCustomField.where(
-            post_id: topic.post_ids,
-            name: CategoryExperts::POST_APPROVED_GROUP_NAME,
-            value: post_group_name,
-          ).exists?
-
-      if !has_accepted_posts_from_same_group
-        groups =
-          (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) -
-            [post_group_name]
-
-        if groups.any?
-          topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = groups.join("|")
-        else
-          topic.custom_fields.delete(CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES)
-        end
-      end
-
-      if topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
-        topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = post.post_number
-        topic.custom_fields.delete(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID)
-        should_remove_auto_tag = true
-      else
-        topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
-      end
-
-      topic.save!
-
-      DiscourseEvent.trigger(:category_experts_unapproved, post) unless new_post
-
-      remove_auto_tag if should_remove_auto_tag
+      correct_topic_custom_fields_after_removal(group_name: post_group_name, new_post: new_post)
     end
 
     def mark_post_as_approved(skip_validations: false, new_post: true)
@@ -84,7 +51,58 @@ module CategoryExperts
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = false
       post.save!
 
+      correct_topic_custom_fields_after_addition(new_post: new_post)
+
+      users_expert_group.name
+    end
+
+    def mark_topic_as_question
       topic = post.topic
+      raise Discourse::InvalidParameters unless topic.category.accepting_category_expert_questions?
+
+      topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = true
+      topic.save!
+    end
+
+    def correct_topic_custom_fields_after_removal(group_name:, new_post: false)
+      has_accepted_posts_from_same_group =
+        group_name &&
+          PostCustomField.where(
+            post_id: topic.post_ids,
+            name: CategoryExperts::POST_APPROVED_GROUP_NAME,
+            value: group_name,
+          ).exists?
+
+      if !has_accepted_posts_from_same_group
+        groups =
+          (topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []) -
+            [group_name]
+
+        if groups.any?
+          topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = groups.join("|")
+        else
+          topic.custom_fields.delete(CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES)
+        end
+      end
+
+      if topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+        if post
+          topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = post.post_number
+        end
+        topic.custom_fields.delete(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID)
+        should_remove_auto_tag = true
+      else
+        topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
+      end
+
+      topic.save!
+
+      DiscourseEvent.trigger(:category_experts_unapproved, post) if post && !new_post
+
+      remove_auto_tag if should_remove_auto_tag
+    end
+
+    def correct_topic_custom_fields_after_addition(new_post: false)
       topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES] = (
         topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]&.split("|") || []
       ).push(users_expert_group.name).uniq.join("|")
@@ -100,15 +118,6 @@ module CategoryExperts
       DiscourseEvent.trigger(:category_experts_approved, post) unless new_post
 
       add_auto_tag
-      users_expert_group.name
-    end
-
-    def mark_topic_as_question
-      topic = post.topic
-      raise Discourse::InvalidParameters unless topic.category.accepting_category_expert_questions?
-
-      topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = true
-      topic.save!
     end
 
     private

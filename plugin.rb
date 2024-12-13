@@ -315,6 +315,35 @@ after_initialize do
     end
   end
 
+  on(:post_moved) do |post, original_topic_id, original_post|
+    if original_post&.id && original_post.id != post.id
+      # The post was duplicated using `freeze_original`, check if the original post was category experts post
+      # and if so, dupliate custom fields over to new topic
+      expert_group_name = original_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
+      next if expert_group_name.nil?
+
+      # The old post was an expert post -- mark the new post as approved!
+      CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+    else
+      # Post was moved, not duplicated. We now have to correct the original topic if it still exists,
+      # and update the new topic custom fields
+      expert_group_name = post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
+      next if expert_group_name.nil?
+
+      original_topic = Topic.find_by(id: original_topic_id)
+
+      # Correct original_topic custom fields for topic the post was moved FROM
+      if original_topic
+        CategoryExperts::PostHandler.new(
+          topic: original_topic,
+        ).correct_topic_custom_fields_after_removal(group_name: expert_group_name)
+      end
+
+      # Now add the correct custom fields to the new topic the post was moved TO
+      CategoryExperts::PostHandler.new(post: post).correct_topic_custom_fields_after_addition
+    end
+  end
+
   add_to_class(:group, :category_expert_category_ids) do
     category_ids = []
 
