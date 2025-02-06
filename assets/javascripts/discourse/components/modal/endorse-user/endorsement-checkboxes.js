@@ -4,7 +4,7 @@ import { lt } from "@ember/object/computed";
 import { later } from "@ember/runloop";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import discourseComputed, { bind } from "discourse-common/utils/decorators";
+import discourseComputed, { bind } from "discourse/lib/decorators";
 
 export default class EndorsementCheckboxes extends Component {
   user = null;
