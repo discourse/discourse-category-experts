@@ -1,7 +1,7 @@
 import { next } from "@ember/runloop";
+import { withSilencedDeprecations } from "discourse/lib/deprecated";
+import { iconNode } from "discourse/lib/icon-library";
 import { withPluginApi } from "discourse/lib/plugin-api";
-import { withSilencedDeprecations } from "discourse-common/lib/deprecated";
-import { iconNode } from "discourse-common/lib/icon-library";
 import CategoryExpertsApproveButton from "../components/category-experts-approve-button";
 import CategoryExpertsUnapproveButton from "../components/category-experts-unapprove-button";
 

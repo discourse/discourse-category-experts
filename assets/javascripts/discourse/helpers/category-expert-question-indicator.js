@@ -1,5 +1,5 @@
 import { htmlSafe } from "@ember/template";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 export function categoryExpertQuestionIndicator(topic, currentUser) {
   if (!currentUser || topic.expert_post_group_names?.length) {
@@ -12,7 +12,7 @@ export function categoryExpertQuestionIndicator(topic, currentUser) {
     currentUser.expert_for_category_ids.includes(topic.category_id)
   ) {
     return htmlSafe(
-      `<a href="/search?q=is:category_expert_question" class='topic-list-category-expert-question'>${I18n.t(
+      `<a href="/search?q=is:category_expert_question" class='topic-list-category-expert-question'>${i18n(
         "category_experts.topic_list.question"
       )}</a>`
     );
