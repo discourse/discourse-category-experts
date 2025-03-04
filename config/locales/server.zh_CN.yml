@@ -1,10 +1,4 @@
-# WARNING: Never edit this file.
-# It will be overwritten when translations are pulled from Crowdin.
-#
-# To work with us on translations, join this project:
-# https://translate.discourse.org/
-
-zh_CN:
+zh-CN:
   site_settings:
     enable_category_experts: "启用类别专家插件"
     first_post_can_be_considered_expert_post: "第一篇帖子可被视为专家帖子"

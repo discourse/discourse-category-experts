@@ -1,10 +1,4 @@
-# WARNING: Never edit this file.
-# It will be overwritten when translations are pulled from Crowdin.
-#
-# To work with us on translations, join this project:
-# https://translate.discourse.org/
-
-pt_BR:
+pt:
   site_settings:
     enable_category_experts: "Ativar plugin de especialistas em categoria"
     first_post_can_be_considered_expert_post: "A primeira postagem pode ser considerada uma postagem especializada"
