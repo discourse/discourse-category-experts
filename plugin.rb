@@ -21,7 +21,7 @@ after_initialize do
     .to_s
 
   module ::CategoryExperts
-    PLUGIN_NAME ||= "discourse-category-experts".freeze
+    PLUGIN_NAME = "discourse-category-experts".freeze
     CATEGORY_EXPERT_GROUP_IDS = "category_expert_group_ids"
     CATEGORY_EXPERT_AUTO_TAG = "category_expert_auto_tag"
     CATEGORY_ACCEPTING_ENDORSEMENTS = "category_accepting_endorsements"
