@@ -15,8 +15,6 @@ acceptance(
   function (needs) {
     needs.user();
     needs.settings({
-      glimmer_post_menu_mode: "enabled",
-
       enable_category_experts: true,
       category_experts_posts_require_approval: false,
     });
@@ -69,8 +67,6 @@ acceptance(
   function (needs) {
     needs.user();
     needs.settings({
-      glimmer_post_menu_mode: "enabled",
-
       enable_category_experts: true,
       category_experts_posts_require_approval: true,
     });

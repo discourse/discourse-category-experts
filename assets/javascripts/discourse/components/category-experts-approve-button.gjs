@@ -13,13 +13,6 @@ export default class CategoryExpertsApproveButton extends Component {
     );
   }
 
-  // TODO (glimmer-post-menu): Remove this static method and move the code into the button action after the widget code is removed
-  static approveCategoryExpertPost(post, appEvents) {
-    setPostCategoryExpertAttributes(post, appEvents, {
-      approved: true,
-    });
-  }
-
   @service appEvents;
 
   get showLabel() {
@@ -28,10 +21,9 @@ export default class CategoryExpertsApproveButton extends Component {
 
   @action
   approveCategoryExpertPost() {
-    CategoryExpertsApproveButton.approveCategoryExpertPost(
-      this.args.post,
-      this.appEvents
-    );
+    setPostCategoryExpertAttributes(this.args.post, this.appEvents, {
+      approved: true,
+    });
   }
 
   <template>

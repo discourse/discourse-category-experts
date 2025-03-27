@@ -14,13 +14,6 @@ export default class CategoryExpertsUnapproveButton extends Component {
     );
   }
 
-  // TODO (glimmer-post-menu): Remove this static method and move the code into the button action after the widget code is removed
-  static unapproveCategoryExpertPost(post, appEvents) {
-    setPostCategoryExpertAttributes(post, appEvents, {
-      approved: false,
-    });
-  }
-
   @service appEvents;
 
   get showLabel() {
@@ -29,10 +22,9 @@ export default class CategoryExpertsUnapproveButton extends Component {
 
   @action
   unapproveCategoryExpertPost() {
-    CategoryExpertsUnapproveButton.unapproveCategoryExpertPost(
-      this.args.post,
-      this.appEvents
-    );
+    setPostCategoryExpertAttributes(this.args.post, this.appEvents, {
+      approved: false,
+    });
   }
 
   <template>
