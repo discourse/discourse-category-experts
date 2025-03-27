@@ -53,7 +53,7 @@ function initializeWithApi(api) {
 }
 
 function customizePostMenu(api) {
-  const transformerRegistered = api.registerValueTransformer(
+  api.registerValueTransformer(
     "post-menu-buttons",
     ({
       value: dag,
@@ -82,59 +82,6 @@ function customizePostMenu(api) {
       );
     }
   );
-
-  const silencedKey =
-    transformerRegistered && "discourse.post-menu-widget-overrides";
-
-  withSilencedDeprecations(silencedKey, () => customizeWidgetPostMenu(api));
-}
-
-function customizeWidgetPostMenu(api) {
-  api.addPostMenuButton("category-expert-post-approval", (attrs) => {
-    if (!attrs.can_manage_category_expert_posts) {
-      return;
-    }
-
-    if (
-      attrs.needs_category_expert_approval &&
-      !attrs.category_expert_approved_group
-    ) {
-      return {
-        action: "approveCategoryExpertPost",
-        icon: "thumbs-up",
-        className: "approve-category-expert-post",
-        title: "category_experts.approve",
-        label: "category_experts.approve",
-        position: "first",
-      };
-    } else if (
-      attrs.category_expert_approved_group &&
-      !attrs.needs_category_expert_approval
-    ) {
-      return {
-        action: "unapproveCategoryExpertPost",
-        icon: "thumbs-down",
-        className: "unapprove-category-expert-post",
-        title: "category_experts.unapprove",
-        position: "second-last-hidden",
-      };
-    }
-  });
-
-  const appEvents = api.container.lookup("service:app-events");
-  api.attachWidgetAction("post", "approveCategoryExpertPost", function () {
-    CategoryExpertsApproveButton.approveCategoryExpertPost(
-      this.model,
-      appEvents
-    );
-  });
-
-  api.attachWidgetAction("post", "unapproveCategoryExpertPost", function () {
-    CategoryExpertsUnapproveButton.unapproveCategoryExpertPost(
-      this.model,
-      appEvents
-    );
-  });
 }
 
 export default {
