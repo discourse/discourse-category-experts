@@ -1,5 +1,4 @@
 import { next } from "@ember/runloop";
-import { withSilencedDeprecations } from "discourse/lib/deprecated";
 import { iconNode } from "discourse/lib/icon-library";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import CategoryExpertsApproveButton from "../components/category-experts-approve-button";
