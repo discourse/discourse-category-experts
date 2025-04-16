@@ -5,6 +5,7 @@ require "webmock/rspec"
 
 describe CategoryExperts::PostHandler do
   fab!(:user) { Fabricate(:user, refresh_auto_groups: true) }
+  fab!(:admin)
   fab!(:expert) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:second_expert) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:category)
@@ -90,6 +91,26 @@ describe CategoryExperts::PostHandler do
             ],
           ).count
         }
+      end
+
+      describe "when changed ownership of the post" do
+        it "updates the category experts custom fields of the post" do
+          post = create_post(topic_id: topic.id, user: expert)
+          CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+
+          expect(post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
+
+          PostOwnerChanger.new(
+            post_ids: [post.id],
+            topic_id: topic.id,
+            new_owner: user,
+            acting_user: admin,
+          ).change_owner!
+
+          expect(post.reload.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(
+            true,
+          )
+        end
       end
     end
   end
