@@ -34,7 +34,7 @@ module CategoryExperts
 
       post.custom_fields.delete(CategoryExperts::POST_APPROVED_GROUP_NAME)
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = true
-      post.save_custom_fields
+      post.save!
 
       correct_topic_custom_fields_after_removal(group_name: post_group_name, new_post: new_post)
     end
