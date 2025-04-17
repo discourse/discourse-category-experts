@@ -10,12 +10,14 @@ module CategoryExperts
       @user = user || post&.user
     end
 
-    def process_new_post(skip_validations: false)
+    def process_new_post(skip_validations: false, previously_approved: false)
       if !skip_validations
         return unless ensure_poster_is_category_expert
       end
 
       return unless post.post_type == Post.types[:regular]
+
+      return mark_post_as_approved(skip_validations: skip_validations) if previously_approved
 
       if SiteSetting.category_experts_posts_require_approval
         mark_post_for_approval(skip_validations: skip_validations)

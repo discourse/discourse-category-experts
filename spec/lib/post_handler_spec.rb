@@ -96,7 +96,7 @@ describe CategoryExperts::PostHandler do
 
     describe "when changed ownership of the post" do
       describe "from category expert to another expert" do
-        it "deletes the post approved group name" do
+        it "updates the post approved group name" do
           post = create_post(topic_id: topic.id, user: expert)
           CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
 
@@ -109,7 +109,9 @@ describe CategoryExperts::PostHandler do
             acting_user: admin,
           ).change_owner!
 
-          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
+          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            second_group.name,
+          )
         end
       end
 
