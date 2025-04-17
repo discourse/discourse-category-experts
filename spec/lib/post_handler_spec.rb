@@ -145,7 +145,9 @@ describe CategoryExperts::PostHandler do
             acting_user: admin,
           ).change_owner!
 
-          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
+          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            group.name,
+          )
         end
       end
     end
