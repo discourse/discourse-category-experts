@@ -94,7 +94,7 @@ describe CategoryExperts::PostHandler do
       end
     end
 
-    describe "when changed ownership of the post" do
+    describe "When post ownership is changed" do
       describe "from category expert to another expert" do
         it "updates the post approved group name" do
           post = create_post(topic_id: topic.id, user: expert)
@@ -190,7 +190,7 @@ describe CategoryExperts::PostHandler do
       )
     end
 
-    describe "when changed ownership of the post" do
+    describe "When post ownership is changed" do
       describe "from category expert to another expert" do
         it "updates the post approved group name" do
           post = create_post(topic_id: topic.id, user: expert)
