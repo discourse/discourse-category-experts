@@ -344,6 +344,16 @@ after_initialize do
     end
   end
 
+  on(:post_owner_changed) do |post, old_owner, new_owner|
+    previously_approved = !post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]
+    post.custom_fields.delete(CategoryExperts::POST_APPROVED_GROUP_NAME)
+    post.custom_fields.delete(CategoryExperts::POST_PENDING_EXPERT_APPROVAL)
+    post.save!
+    CategoryExperts::PostHandler.new(post: post, user: new_owner).process_new_post(
+      previously_approved: previously_approved,
+    )
+  end
+
   add_to_class(:group, :category_expert_category_ids) do
     category_ids = []
 

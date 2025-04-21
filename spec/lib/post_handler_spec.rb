@@ -5,6 +5,7 @@ require "webmock/rspec"
 
 describe CategoryExperts::PostHandler do
   fab!(:user) { Fabricate(:user, refresh_auto_groups: true) }
+  fab!(:admin)
   fab!(:expert) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:second_expert) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:category)
@@ -92,6 +93,64 @@ describe CategoryExperts::PostHandler do
         }
       end
     end
+
+    describe "When post ownership is changed" do
+      describe "from category expert to another expert" do
+        it "updates the post approved group name" do
+          post = create_post(topic_id: topic.id, user: expert)
+          CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+
+          expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+
+          PostOwnerChanger.new(
+            post_ids: [post.id],
+            topic_id: topic.id,
+            new_owner: second_expert,
+            acting_user: admin,
+          ).change_owner!
+
+          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            second_group.name,
+          )
+        end
+      end
+
+      describe "from category expert to not an expert" do
+        it "deletes the post approved group name" do
+          post = create_post(topic_id: topic.id, user: expert)
+          CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+
+          expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+
+          PostOwnerChanger.new(
+            post_ids: [post.id],
+            topic_id: topic.id,
+            new_owner: user,
+            acting_user: admin,
+          ).change_owner!
+
+          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
+        end
+      end
+
+      describe "from not a category expert to an expert" do
+        it "deletes the post approved group name" do
+          post = create_post(topic_id: topic.id, user: user)
+          expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
+
+          PostOwnerChanger.new(
+            post_ids: [post.id],
+            topic_id: topic.id,
+            new_owner: expert,
+            acting_user: admin,
+          ).change_owner!
+
+          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            group.name,
+          )
+        end
+      end
+    end
   end
 
   describe "SiteSetting.category_experts_posts_require_approval disabled" do
@@ -129,6 +188,64 @@ describe CategoryExperts::PostHandler do
       expect(result.post.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]).to eq(
         "#{group.name}|#{second_group.name}",
       )
+    end
+
+    describe "When post ownership is changed" do
+      describe "from category expert to another expert" do
+        it "updates the post approved group name" do
+          post = create_post(topic_id: topic.id, user: expert)
+          CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+
+          expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+
+          PostOwnerChanger.new(
+            post_ids: [post.id],
+            topic_id: topic.id,
+            new_owner: second_expert,
+            acting_user: admin,
+          ).change_owner!
+
+          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            second_group.name,
+          )
+        end
+      end
+
+      describe "from category expert to not an expert" do
+        it "deletes the post approved group name" do
+          post = create_post(topic_id: topic.id, user: expert)
+          CategoryExperts::PostHandler.new(post: post).mark_post_as_approved
+
+          expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(group.name)
+
+          PostOwnerChanger.new(
+            post_ids: [post.id],
+            topic_id: topic.id,
+            new_owner: user,
+            acting_user: admin,
+          ).change_owner!
+
+          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
+        end
+      end
+
+      describe "from not a category expert to an expert" do
+        it "updates the post approved group name" do
+          post = create_post(topic_id: topic.id, user: user)
+          expect(post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(nil)
+
+          PostOwnerChanger.new(
+            post_ids: [post.id],
+            topic_id: topic.id,
+            new_owner: expert,
+            acting_user: admin,
+          ).change_owner!
+
+          expect(post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            group.name,
+          )
+        end
+      end
     end
   end
 
