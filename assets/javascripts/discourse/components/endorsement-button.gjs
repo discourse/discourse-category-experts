@@ -2,7 +2,9 @@ import Component from "@ember/component";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { tagName } from "@ember-decorators/component";
+import DButton from "discourse/components/d-button";
 import discourseComputed from "discourse/lib/decorators";
+import { i18n } from "discourse-i18n";
 import EndorseUserModal from "./modal/endorse-user";
 
 @tagName("")
@@ -67,4 +69,28 @@ export default class EndorsementButton extends Component {
       },
     });
   }
+
+  <template>
+    {{#unless this.disabled}}
+      {{#if this.endorsements}}
+        <div class="category-expert-existing-endorsements">
+          {{i18n
+            "category_experts.existing_endorsements"
+            count=this.endorsementsCount
+          }}
+          <DButton
+            @action={{action "openEndorsementModal"}}
+            class="btn-flat category-expert-endorse-edit"
+            @label="category_experts.edit"
+          />
+        </div>
+      {{else}}
+        <DButton
+          @action={{action "openEndorsementModal"}}
+          class="category-expert-endorse-btn"
+          @label="category_experts.endorse"
+        />
+      {{/if}}
+    {{/unless}}
+  </template>
 }

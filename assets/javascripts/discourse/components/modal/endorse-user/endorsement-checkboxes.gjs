@@ -1,10 +1,17 @@
-import Component from "@ember/component";
+import Component, { Input } from "@ember/component";
+import { fn } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { lt } from "@ember/object/computed";
 import { later } from "@ember/runloop";
+import DButton from "discourse/components/d-button";
+import DModal from "discourse/components/d-modal";
+import icon from "discourse/helpers/d-icon";
+import loadingSpinner from "discourse/helpers/loading-spinner";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import discourseComputed, { bind } from "discourse/lib/decorators";
+import { i18n } from "discourse-i18n";
 
 export default class EndorsementCheckboxes extends Component {
   user = null;
@@ -137,4 +144,68 @@ export default class EndorsementCheckboxes extends Component {
   isDisabled(categoryId) {
     return this.get("endorsements")?.find((e) => e.category_id === categoryId);
   }
+
+  <template>
+    <DModal
+      @title={{i18n "category_experts.manage_endorsements.title"}}
+      @closeModal={{@closeModal}}
+      class="endorse-user-modal"
+    >
+      <:body>
+        <h3>{{i18n
+            "category_experts.manage_endorsements.subtitle"
+            username=this.user.username
+          }}</h3>
+
+        {{#if this.loading}}
+          {{loadingSpinner size="large"}}
+        {{else}}
+          {{#if this.showingSuccess}}
+            <div class="endorsement-successful">
+              {{icon "check"}}
+            </div>
+          {{else}}
+            {{#each this.categories as |category|}}
+              <label class="category-experts-endorsement-row">
+                <Input
+                  @type="checkbox"
+                  @checked={{this.isChecked category.id}}
+                  {{on "change" (fn this.checkboxChanged category.id)}}
+                  disabled={{this.isDisabled category.id}}
+                  name="category"
+                  class="category-endorsement-checkbox"
+                  id="category-endorsement-{{category.id}}"
+                />
+                {{category.name}}
+              </label>
+            {{/each}}
+          {{/if}}
+        {{/if}}
+      </:body>
+      <:footer>
+        {{#unless this.loading}}
+          {{#if this.outOfEndorsements}}
+            <div class="alert alert-danger out-of-endorsements-alert">
+              {{i18n "category_experts.out_of_endorsements"}}
+            </div>
+          {{else}}
+            <DButton
+              class="btn-primary category-endorsement-save"
+              @action={{action "save"}}
+              @disabled={{this.saveDisabled}}
+              @label="category_experts.endorse"
+            />
+            {{#unless this.currentUser.staff}}
+              <div class="remaining-endorsements-notice">
+                {{i18n
+                  "category_experts.remaining_endorsements"
+                  count=this.remainingEndorsements
+                }}
+              </div>
+            {{/unless}}
+          {{/if}}
+        {{/unless}}
+      </:footer>
+    </DModal>
+  </template>
 }
