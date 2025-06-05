@@ -1,7 +1,9 @@
-import Component from "@ember/component";
+import Component, { Input } from "@ember/component";
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import discourseComputed from "discourse/lib/decorators";
+import { i18n } from "discourse-i18n";
 
 export default class IsQuestionCheckbox extends Component {
   @service appEvents;
@@ -33,4 +35,17 @@ export default class IsQuestionCheckbox extends Component {
       checked: e.target.checked,
     });
   }
+
+  <template>
+    {{#if this.show}}
+      <label class="checkbox-label is-category-expert-question">
+        <Input
+          @type="checkbox"
+          @checked={{this.model.is_category_expert_question}}
+          {{on "input" this.triggerAppEvent}}
+        />
+        {{i18n "category_experts.ask_category_expert"}}
+      </label>
+    {{/if}}
+  </template>
 }
