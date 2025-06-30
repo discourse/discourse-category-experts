@@ -1,24 +1,53 @@
 import { next } from "@ember/runloop";
+import { withSilencedDeprecations } from "discourse/lib/deprecated";
 import { iconNode } from "discourse/lib/icon-library";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import CategoryExpertPostIndicator from "../components/category-expert-post-indicator";
 import CategoryExpertsApproveButton from "../components/category-experts-approve-button";
 import CategoryExpertsUnapproveButton from "../components/category-experts-unapprove-button";
 
 function initializeWithApi(api) {
+  customizePost(api);
+
   const requiresApproval = api.container.lookup(
     "service:site-settings"
   ).category_experts_posts_require_approval;
 
   if (requiresApproval) {
-    api.includePostAttributes(
-      "needs_category_expert_approval",
-      "category_expert_approved_group",
-      "can_manage_category_expert_posts"
-    );
-
     customizePostMenu(api);
   }
+}
 
+function customizePost(api) {
+  api.addTrackedPostProperties(
+    "needs_category_expert_approval",
+    "category_expert_approved_group",
+    "can_manage_category_expert_posts"
+  );
+
+  api.registerValueTransformer(
+    "post-article-class",
+    ({ value, context: { post } }) => {
+      if (post.category_expert_approved_group) {
+        value.push("category-expert-post");
+        value.push(`category-expert-${post.category_expert_approved_group}`);
+      }
+
+      return value;
+    }
+  );
+
+  api.renderAfterWrapperOutlet(
+    "post-meta-data-poster-name",
+    CategoryExpertPostIndicator
+  );
+
+  withSilencedDeprecations("discourse.post-stream-widget-overrides", () =>
+    customizeWidgetPost(api)
+  );
+}
+
+function customizeWidgetPost(api) {
   api.decorateWidget("post:after", (helper) => {
     const post = helper.getModel();
     next(() => {
@@ -87,7 +116,7 @@ export default {
   name: "discourse-experts-post-decorator",
 
   initialize() {
-    withPluginApi("1.34.0", (api) => {
+    withPluginApi((api) => {
       initializeWithApi(api);
     });
   },
