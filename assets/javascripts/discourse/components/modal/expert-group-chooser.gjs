@@ -41,7 +41,7 @@ export default class ExpertGroupChooserModal extends Component {
     >
       <TapTileGrid>
         {{#each this.groupOptions as |group|}}
-          <TapTile @tileId={{group.id}} @onChange={{action "setGroupId"}}>
+          <TapTile @tileId={{group.id}} @onChange={{this.setGroupId}}>
             {{group.name}}
           </TapTile>
         {{/each}}
