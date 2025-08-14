@@ -81,7 +81,7 @@ export default class CategoryExpertsSettings extends Component {
             @content={{this.allGroups}}
             @value={{this.groupIds}}
             @labelProperty="name"
-            @onChange={{action "onChangeGroupIds"}}
+            @onChange={{this.onChangeGroupIds}}
           />
         </div>
       </section>
