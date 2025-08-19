@@ -1,7 +1,8 @@
 import Component, { Input } from "@ember/component";
-import { hash } from "@ember/helper";
+import { fn, hash } from "@ember/helper";
 import { on } from "@ember/modifier";
 import { action } from "@ember/object";
+import withEventValue from "discourse/helpers/with-event-value";
 import { ajax } from "discourse/lib/ajax";
 import Group from "discourse/models/group";
 import { i18n } from "discourse-i18n";
@@ -96,7 +97,7 @@ export default class CategoryExpertsSettings extends Component {
               @tags={{this.category.custom_fields.category_expert_auto_tag}}
               @categoryId={{this.category.id}}
               @options={{hash limit=1}}
-              @onChange={{action
+              @onChange={{fn
                 (mut this.category.custom_fields.category_expert_auto_tag)
               }}
             />
@@ -117,7 +118,7 @@ export default class CategoryExpertsSettings extends Component {
               @value={{this.category.custom_fields.category_experts_badge_id}}
               @content={{this.badgeOptions}}
               @nameProperty="name"
-              @onChange={{action
+              @onChange={{fn
                 (mut this.category.custom_fields.category_experts_badge_id)
               }}
               @options={{hash none="category_experts.no_badge"}}
@@ -136,8 +137,8 @@ export default class CategoryExpertsSettings extends Component {
               }}
               {{on
                 "change"
-                (action
-                  "onChangeAcceptingExpertEndorsements" value="target.checked"
+                (withEventValue
+                  this.onChangeAcceptingExpertEndorsements "target.checked"
                 )
               }}
             />
@@ -154,8 +155,8 @@ export default class CategoryExpertsSettings extends Component {
               }}
               {{on
                 "change"
-                (action
-                  "onChangeAcceptingExpertQuestions" value="target.checked"
+                (withEventValue
+                  this.onChangeAcceptingExpertQuestions "target.checked"
                 )
               }}
             />
