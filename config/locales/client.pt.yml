@@ -5,13 +5,53 @@
 # https://translate.discourse.org/
 
 pt:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_category_experts: "Discourse Category Experts"
+      web_hooks:
+        post_event:
+          category_experts_approved: "A publicação é marcada como uma publicação de especialistas de categoria"
+          category_experts_unapproved: "A publicação não é marcada como uma publicação de especialistas de categoria"
   js:
     category_experts:
+      title: "Especialistas de Categoria"
+      group: "Grupo de especialistas de categoria"
       badge: "Crachá"
       no_badge: "Nenhuma"
       no_group: "Nenhuma"
+      accepting_endorsements: "Atualmente a aceitar endossos de utilizadores"
+      accepting_questions: "Atualmente a aceitar perguntas para os especialistas de categoria"
+      endorse: "Endossar"
+      out_of_endorsements: "Utilizou todos os seus endossos para o dia."
+      remaining_endorsements: "%{count} endossos restantes para hoje"
+      existing_endorsements: "Endossado em %{count} categorias."
       edit: "Editar"
       approve: "Aprovar"
+      unapprove: "Cancelar Aprovação da Publicação do Especialista de Categoria"
+      ask_category_expert: "Peça a um especialista de categoria para responder"
+      auto_tagging:
+        title: "Etiquetagem automática"
+      manage_endorsements:
+        title: "Endossar utilizador"
       review:
         approve: "Aprovar"
         deny: "Ignorar"
+        endorsed_by: "Endossado por (%{count})"
+      topic_list:
+        response_by_group: "Resposta do especialista"
+        needs_approval: "Precisa de aprovação"
+        question: "Pergunta para o especialista"
+      search:
+        expert_response: "Com resposta do especialista"
+        question: "Pergunta para o especialista"
+        without_post: "Sem publicação do especialista de categoria"
+        unapproved_post: "Com publicação não aprovada"
+    review:
+      types:
+        reviewable_category_expert_suggestion:
+          title: "Sugestão do Especialista de Categoria"
+      expert_group_chooser_modal:
+        title: "Escolher um grupo de especialistas para o utilizador"
+      endorsed_username: "Utilizador endossado"
