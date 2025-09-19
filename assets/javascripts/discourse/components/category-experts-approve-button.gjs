@@ -64,7 +64,6 @@ export async function setPostCategoryExpertAttributes(
         response.topic_needs_category_expert_approval,
       expert_post_group_names: response.topic_expert_post_group_names,
     });
-    appEvents.trigger("post-stream:refresh", { id: post.id });
   } catch (error) {
     popupAjaxError(error);
   }
