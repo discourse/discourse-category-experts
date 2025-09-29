@@ -81,7 +81,7 @@ export default class EndorsementButton extends Component {
           <DButton
             @action={{this.openEndorsementModal}}
             class="btn-flat category-expert-endorse-edit"
-            @label="btn-default category_experts.edit"
+            @label="category_experts.edit"
           />
         </div>
       {{else}}
