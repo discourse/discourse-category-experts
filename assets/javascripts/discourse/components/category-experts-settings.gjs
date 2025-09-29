@@ -26,7 +26,10 @@ export default class CategoryExpertsSettings extends Component {
     );
 
     Group.findAll().then((groups) => {
-      this.set("allGroups", groups.filterBy("automatic", false));
+      this.set(
+        "allGroups",
+        groups.filter((group) => !group.automatic)
+      );
     });
 
     if (this.siteSettings.enable_badges) {
