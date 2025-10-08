@@ -6,8 +6,8 @@ describe CategoryExperts::RemindCategoryExpertsJob do
   subject(:execute) { described_class.new.execute }
 
   fab!(:user)
-  fab!(:expert1) { Fabricate(:user) }
-  fab!(:expert2) { Fabricate(:user) }
+  fab!(:expert1, :user)
+  fab!(:expert2, :user)
 
   fab!(:group1) { Fabricate(:group, users: [expert1, expert2]) }
   fab!(:group2) { Fabricate(:group, users: [expert1]) }

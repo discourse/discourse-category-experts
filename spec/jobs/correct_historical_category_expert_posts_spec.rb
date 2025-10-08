@@ -3,14 +3,14 @@
 require "rails_helper"
 
 describe Jobs::CorrectHistoricalCategoryExpertPosts do
-  fab!(:user1) { Fabricate(:user) }
-  fab!(:user2) { Fabricate(:user) }
+  fab!(:user1, :user)
+  fab!(:user2, :user)
   fab!(:group1) { Fabricate(:group, users: [user1]) }
   fab!(:group2) { Fabricate(:group, users: [user1, user2]) }
-  fab!(:category1) { Fabricate(:category) }
-  fab!(:category2) { Fabricate(:category) }
+  fab!(:category1, :category)
+  fab!(:category2, :category)
   # Create a few topics
-  fab!(:off_topic) { Fabricate(:topic) }
+  fab!(:off_topic, :topic)
   fab!(:topic1) { Fabricate(:topic, category: category1) }
   fab!(:topic2) { Fabricate(:topic, category: category2) }
   # No custom fields needed

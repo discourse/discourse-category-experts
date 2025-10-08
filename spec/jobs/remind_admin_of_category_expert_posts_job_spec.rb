@@ -5,7 +5,7 @@ require "rails_helper"
 describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
   subject(:execute) { described_class.new.execute }
 
-  fab!(:expert) { Fabricate(:user) }
+  fab!(:expert, :user)
   fab!(:group) { Fabricate(:group, users: [expert]) }
   fab!(:category) { fabricate_category_with_category_experts }
 

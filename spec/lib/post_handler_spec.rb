@@ -250,7 +250,7 @@ describe CategoryExperts::PostHandler do
   end
 
   describe "Auto Tagging" do
-    fab!(:auto_tag) { Fabricate(:tag) }
+    fab!(:auto_tag, :tag)
 
     before do
       category.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG] = auto_tag.name
@@ -328,7 +328,7 @@ describe CategoryExperts::PostHandler do
   end
 
   describe "Webhook integration" do
-    fab!(:webhook) { Fabricate(:outgoing_category_experts_web_hook) }
+    fab!(:webhook, :outgoing_category_experts_web_hook)
     fab!(:post) { create_post(topic_id: topic.id, user: expert) }
 
     before do

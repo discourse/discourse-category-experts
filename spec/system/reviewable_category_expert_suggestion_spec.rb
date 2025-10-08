@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 describe "Reviewables - Category expert suggestion", type: :system, js: true do
-  fab!(:current_user) { Fabricate(:user) }
-  fab!(:other_user) { Fabricate(:user) }
+  fab!(:current_user, :user)
+  fab!(:other_user, :user)
   fab!(:category)
   fab!(:group)
   let(:modal) { PageObjects::Modals::Base.new }
@@ -33,7 +33,7 @@ describe "Reviewables - Category expert suggestion", type: :system, js: true do
   end
 
   context "as an admin reviewing endorsements" do
-    fab!(:current_user) { Fabricate(:admin) }
+    fab!(:current_user, :admin)
 
     skip "can approve an endorsement" do
       endorsement =
