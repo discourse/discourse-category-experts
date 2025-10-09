@@ -5,8 +5,8 @@ require "rails_helper"
 describe CategoryExpertsController do
   fab!(:admin)
   fab!(:user)
-  fab!(:other_user) { Fabricate(:user) }
-  fab!(:endorsee) { Fabricate(:user) }
+  fab!(:other_user, :user)
+  fab!(:endorsee, :user)
   fab!(:group) { Fabricate(:group, users: [user]) }
   fab!(:other_group) { Fabricate(:group, users: [other_user]) }
   fab!(:category1) { fabricate_category_with_category_experts }
@@ -152,7 +152,7 @@ describe CategoryExpertsController do
 
     context "when logged in" do
       fab!(:private_category) { fabricate_category_with_category_experts }
-      fab!(:private_group) { Fabricate(:group) }
+      fab!(:private_group, :group)
       fab!(:category3) { fabricate_category_with_category_experts }
 
       before { sign_in(user) }

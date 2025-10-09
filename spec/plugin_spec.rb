@@ -8,7 +8,7 @@ RSpec.describe CategoryExperts do
 
   fab!(:category)
   fab!(:group) { Fabricate(:group, users: [expert]) }
-  fab!(:auto_tag) { Fabricate(:tag) }
+  fab!(:auto_tag, :tag)
 
   fab!(:original_topic) { Fabricate(:topic, category: category, tags: [auto_tag]) }
   fab!(:first_post) { Fabricate(:post, topic: original_topic, user: expert) }

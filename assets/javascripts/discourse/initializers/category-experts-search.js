@@ -88,6 +88,6 @@ export default {
   name: "category-experts-search",
 
   initialize() {
-    withPluginApi("0.8.31", initialize);
+    withPluginApi(initialize);
   },
 };

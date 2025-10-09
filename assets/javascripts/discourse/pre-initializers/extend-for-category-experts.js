@@ -19,7 +19,7 @@ export default {
       "is_category_expert_question"
     );
 
-    withPluginApi("0.8.31", (api) => {
+    withPluginApi((api) => {
       api.modifyClass(
         "model:category",
         (Superclass) =>
