@@ -26,6 +26,10 @@ export default class CategoryExpertsSettings extends Component {
     );
 
     Group.findAll().then((groups) => {
+      if (this.isDestroying || this.isDestroyed) {
+        return;
+      }
+
       this.set(
         "allGroups",
         groups.filter((group) => !group.automatic)
@@ -34,6 +38,10 @@ export default class CategoryExpertsSettings extends Component {
 
     if (this.siteSettings.enable_badges) {
       ajax("/badges.json").then((response) => {
+        if (this.isDestroying || this.isDestroyed) {
+          return;
+        }
+
         const badgeOptions = [];
         response.badges.forEach((badge) => {
           if (badge.enabled) {
