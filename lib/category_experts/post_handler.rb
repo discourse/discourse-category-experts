@@ -127,15 +127,17 @@ module CategoryExperts
       new_category = Category.find_by(id: new_category_id)
 
       # Get all posts in the topic that have expert status
-      expert_post_ids =
-        PostCustomField
-          .where(name: CategoryExperts::POST_APPROVED_GROUP_NAME)
-          .where.not(value: nil)
-          .joins(:post)
-          .where(posts: { topic_id: topic.id })
-          .pluck(:post_id)
-
-      expert_posts = Post.where(id: expert_post_ids).includes(:user)
+      expert_posts =
+        Post
+          .includes(:user, :custom_fields)
+          .joins(:custom_fields)
+          .where(
+            topic_id: topic.id,
+            post_custom_fields: {
+              name: CategoryExperts::POST_APPROVED_GROUP_NAME,
+            },
+          )
+          .where.not(post_custom_fields: { value: nil })
 
       # Re-evaluate each expert post
       expert_posts.each do |expert_post|
