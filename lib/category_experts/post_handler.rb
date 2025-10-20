@@ -129,8 +129,8 @@ module CategoryExperts
       # Get all posts in the topic that have expert status
       expert_posts =
         Post
-          .includes(:user, :custom_fields)
-          .joins(:custom_fields)
+          .includes(:user)
+          .joins(:_custom_fields)
           .where(
             topic_id: topic.id,
             post_custom_fields: {
