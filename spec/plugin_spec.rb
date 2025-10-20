@@ -259,6 +259,7 @@ RSpec.describe CategoryExperts do
           category_b.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group_b.id}"
           category_b.save!
         end
+
         it "updates expert custom fields appropriately when user is not expert in new category" do
           expect(
             original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
