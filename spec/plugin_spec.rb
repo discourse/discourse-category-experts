@@ -219,6 +219,14 @@ RSpec.describe CategoryExperts do
     end
 
     describe "on 'post_edited' with category change" do
+      fab!(:category_b, :category)
+      fab!(:group_b, :group)
+
+      before do
+        category_b.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group_b.id}"
+        category_b.save!
+      end
+
       context "when topic is moved from category with experts to category without experts" do
         it "clears all expert custom fields from posts and topic" do
           expect(
@@ -252,14 +260,6 @@ RSpec.describe CategoryExperts do
       end
 
       context "when topic is moved from one category with experts to another with different experts" do
-        fab!(:category_b, :category)
-        fab!(:group_b, :group)
-
-        before do
-          category_b.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group_b.id}"
-          category_b.save!
-        end
-
         it "updates expert custom fields appropriately when user is not expert in new category" do
           expect(
             original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
