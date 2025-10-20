@@ -354,6 +354,20 @@ after_initialize do
     )
   end
 
+  on(:post_edited) do |post, topic_changed, revisor|
+    # Only handle when it's the first post (topic) and the category changed
+    next if !post.is_first_post?
+    next if !topic_changed
+    next if !revisor.topic_diff.has_key?("category_id")
+
+    old_category_id, new_category_id = revisor.topic_diff["category_id"]
+
+    CategoryExperts::PostHandler.new(topic: post.topic).handle_topic_category_change(
+      old_category_id,
+      new_category_id,
+    )
+  end
+
   add_to_class(:group, :category_expert_category_ids) do
     category_ids = []
 
