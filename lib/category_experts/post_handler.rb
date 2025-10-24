@@ -191,46 +191,11 @@ module CategoryExperts
         end
       end
 
-      # Handle auto-tag swapping for category change
-      handle_auto_tag_swap(old_auto_tag, new_auto_tag)
+      # Handle auto-tag changing for category change
+      handle_auto_tag_change(old_auto_tag, new_auto_tag)
     end
 
     private
-
-    def handle_auto_tag_swap(old_auto_tag, new_auto_tag)
-      return if !SiteSetting.tagging_enabled
-
-      # Reload topic to get latest custom fields
-      topic.reload
-
-      existing_tag_names = topic.tags.map(&:name)
-      modified = false
-
-      # Remove old auto-tag if present
-      if old_auto_tag.present? && existing_tag_names.include?(old_auto_tag)
-        existing_tag_names = existing_tag_names - [old_auto_tag]
-        modified = true
-      end
-
-      # Add new auto-tag if tag is configured and new category has expert groups
-      # (regardless of whether there are currently expert posts, since the topic
-      # had expert posts in the previous category)
-      new_category_has_experts =
-        topic.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].present?
-      if new_auto_tag.present? && new_category_has_experts &&
-           !existing_tag_names.include?(new_auto_tag)
-        existing_tag_names = existing_tag_names + [new_auto_tag]
-        modified = true
-      end
-
-      # Only revise if tags were modified
-      if modified
-        PostRevisor.new(topic.ordered_posts.first).revise!(
-          Discourse.system_user,
-          { tags: existing_tag_names },
-        )
-      end
-    end
 
     def ensure_poster_is_category_expert
       !users_expert_group.nil?
@@ -278,6 +243,41 @@ module CategoryExperts
 
       @auto_tag_for_category =
         @topic.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG]
+    end
+
+    def handle_auto_tag_change(old_auto_tag, new_auto_tag)
+      return if !SiteSetting.tagging_enabled
+
+      # Reload topic to get latest custom fields
+      topic.reload
+
+      existing_tag_names = topic.tags.map(&:name)
+      modified = false
+
+      # Remove old auto-tag if present
+      if old_auto_tag.present? && existing_tag_names.include?(old_auto_tag)
+        existing_tag_names = existing_tag_names - [old_auto_tag]
+        modified = true
+      end
+
+      # Add new auto-tag if tag is configured and new category has expert groups
+      # (regardless of whether there are currently expert posts, since the topic
+      # had expert posts in the previous category)
+      new_category_has_experts =
+        topic.category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].present?
+      if new_auto_tag.present? && new_category_has_experts &&
+           !existing_tag_names.include?(new_auto_tag)
+        existing_tag_names = existing_tag_names + [new_auto_tag]
+        modified = true
+      end
+
+      # Only revise if tags were modified
+      if modified
+        PostRevisor.new(topic.ordered_posts.first).revise!(
+          Discourse.system_user,
+          { tags: existing_tag_names },
+        )
+      end
     end
   end
 end
