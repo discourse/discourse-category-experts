@@ -269,6 +269,7 @@ RSpec.describe CategoryExperts do
           category_without_experts.custom_fields[
             CategoryExperts::CATEGORY_EXPERT_AUTO_TAG
           ] = auto_tag_b.name
+          category_without_experts.save!
 
           PostRevisor.new(original_topic.first_post).revise!(
             admin,
@@ -364,6 +365,7 @@ RSpec.describe CategoryExperts do
         end
 
         it "updates auto-tag appropriately" do
+          group_b.add(expert)
           expect(original_topic.tags.map(&:name)).to include(auto_tag.name)
           expect(original_topic.tags.map(&:name)).not_to include(auto_tag_b.name)
 
