@@ -191,7 +191,7 @@ export default class EndorsementCheckboxes extends Component {
           {{else}}
             <DButton
               class="btn-primary category-endorsement-save"
-              @action={{action "save"}}
+              @action={{this.save}}
               @disabled={{this.saveDisabled}}
               @label="category_experts.endorse"
             />

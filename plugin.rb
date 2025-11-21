@@ -177,7 +177,7 @@ after_initialize do
 
   add_to_class(:topic, :is_category_expert_question?) do
     custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] &&
-      !category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].blank?
+      category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS].present?
   end
 
   reloadable_patch do
@@ -196,7 +196,7 @@ after_initialize do
         serializer,
         :expert_post_group_names,
         include_condition: -> do
-          !object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+          object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].present?
         end,
       ) { object.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|") }
 
@@ -222,7 +222,7 @@ after_initialize do
     :topic_view,
     :expert_post_group_names,
     include_condition: -> do
-      !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+      object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].present?
     end,
   ) { object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].split("|") }
 
@@ -230,7 +230,7 @@ after_initialize do
     :topic_view,
     :expert_post_group_count,
     include_condition: -> do
-      !object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
+      object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].present?
     end,
   ) do
     object.topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES]
@@ -351,6 +351,20 @@ after_initialize do
     post.save!
     CategoryExperts::PostHandler.new(post: post, user: new_owner).process_new_post(
       previously_approved: previously_approved,
+    )
+  end
+
+  on(:post_edited) do |post, topic_changed, revisor|
+    # Only handle when it's the first post (topic) and the category changed
+    next if !post.is_first_post?
+    next if !topic_changed
+    next if !revisor.topic_diff.has_key?("category_id")
+
+    old_category_id, new_category_id = revisor.topic_diff["category_id"]
+
+    CategoryExperts::PostHandler.new(topic: post.topic).handle_topic_category_change(
+      old_category_id,
+      new_category_id,
     )
   end
 

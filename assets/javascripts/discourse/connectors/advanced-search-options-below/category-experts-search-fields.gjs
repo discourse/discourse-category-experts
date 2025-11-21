@@ -1,4 +1,5 @@
 import Component, { Input } from "@ember/component";
+import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { classNames, tagName } from "@ember-decorators/component";
@@ -28,8 +29,8 @@ export default class CategoryExpertsSearchFields extends Component {
   }
 
   @action
-  onChangeCheckBox(path, fn, event) {
-    this.onChangeSearchedTermField(path, fn, event.target.checked);
+  onChangeCheckBox(path, func, event) {
+    this.onChangeSearchedTermField(path, func, event.target.checked);
   }
 
   <template>
@@ -57,8 +58,8 @@ export default class CategoryExpertsSearchFields extends Component {
                 }}
                 {{on
                   "change"
-                  (action
-                    "onChangeCheckBox"
+                  (fn
+                    this.onChangeCheckBox
                     "withCategoryExpertResponse"
                     "updateWithCategoryExpertResponse"
                   )
@@ -78,8 +79,8 @@ export default class CategoryExpertsSearchFields extends Component {
                   }}
                   {{on
                     "change"
-                    (action
-                      "onChangeCheckBox"
+                    (fn
+                      this.onChangeCheckBox
                       "isCategoryExpertQuestion"
                       "updateIsCategoryExpertQuestion"
                     )
@@ -98,8 +99,8 @@ export default class CategoryExpertsSearchFields extends Component {
                   }}
                   {{on
                     "change"
-                    (action
-                      "onChangeCheckBox"
+                    (fn
+                      this.onChangeCheckBox
                       "withoutCategoryExpertPost"
                       "updateWithoutCategoryExpertPost"
                     )
@@ -118,8 +119,8 @@ export default class CategoryExpertsSearchFields extends Component {
                   @checked={{readonly this.searchedTerms.withUnapprovedPost}}
                   {{on
                     "change"
-                    (action
-                      "onChangeCheckBox"
+                    (fn
+                      this.onChangeCheckBox
                       "withUnapprovedPost"
                       "updateWithUnapprovedPost"
                     )

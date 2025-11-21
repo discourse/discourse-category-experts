@@ -4,10 +4,10 @@ require "rails_helper"
 
 describe CategoryExpertEndorsement do
   fab!(:user)
-  fab!(:endorsee) { Fabricate(:user) }
-  fab!(:other) { Fabricate(:user) }
-  fab!(:category1) { Fabricate(:category) }
-  fab!(:category2) { Fabricate(:category) }
+  fab!(:endorsee, :user)
+  fab!(:other, :user)
+  fab!(:category1, :category)
+  fab!(:category2, :category)
 
   describe "#given_endorsements_for" do
     it "returns the proper records" do

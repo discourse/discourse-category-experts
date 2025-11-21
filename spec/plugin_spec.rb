@@ -8,9 +8,9 @@ RSpec.describe CategoryExperts do
 
   fab!(:category)
   fab!(:group) { Fabricate(:group, users: [expert]) }
-  fab!(:auto_tag) { Fabricate(:tag) }
+  fab!(:auto_tag, :tag)
 
-  fab!(:original_topic) { Fabricate(:topic, category: category, tags: [auto_tag]) }
+  fab!(:original_topic) { Fabricate(:topic, category: category) }
   fab!(:first_post) { Fabricate(:post, topic: original_topic, user: expert) }
   fab!(:second_post) { Fabricate(:post, topic: original_topic, user: expert) }
 
@@ -214,6 +214,201 @@ RSpec.describe CategoryExperts do
               destination_topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID],
             ).to eq(destination_topic_expert_post.post_number)
           end
+        end
+      end
+    end
+
+    describe "on 'post_edited' with category change" do
+      fab!(:category_b, :category)
+      fab!(:group_b, :group)
+      fab!(:auto_tag_b, :tag)
+
+      before do
+        SiteSetting.tagging_enabled = true
+        category_b.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = "#{group_b.id}"
+        category_b.custom_fields[CategoryExperts::CATEGORY_EXPERT_AUTO_TAG] = auto_tag_b.name
+        category_b.save!
+      end
+
+      context "when topic is moved from category with experts to category without experts" do
+        it "clears all expert custom fields from posts and topic" do
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+          ).to eq(group.name)
+          expect(original_topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID]).to eq(
+            second_post.post_number,
+          )
+          expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            group.name,
+          )
+
+          category_without_experts = Fabricate(:category)
+
+          PostRevisor.new(original_topic.first_post).revise!(
+            admin,
+            category_id: category_without_experts.id,
+          )
+
+          original_topic.reload
+          second_post.reload
+
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+          ).to be_blank
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID],
+          ).to be_blank
+          expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to be_blank
+        end
+
+        it "removes old auto-tag and do not add new one" do
+          expect(original_topic.tags.map(&:name)).to include(auto_tag.name)
+          expect(original_topic.tags.map(&:name)).not_to include(auto_tag_b.name)
+
+          category_without_experts = Fabricate(:category)
+          category_without_experts.custom_fields[
+            CategoryExperts::CATEGORY_EXPERT_AUTO_TAG
+          ] = auto_tag_b.name
+          category_without_experts.save!
+
+          PostRevisor.new(original_topic.first_post).revise!(
+            admin,
+            category_id: category_without_experts.id,
+          )
+
+          original_topic.reload
+
+          expect(original_topic.tags.map(&:name)).not_to include(auto_tag.name)
+          expect(original_topic.tags.map(&:name)).not_to include(auto_tag_b.name)
+        end
+      end
+
+      context "when topic is moved from one category with experts to another with different experts" do
+        it "updates expert custom fields appropriately when user is not expert in new category" do
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+          ).to eq(group.name)
+          expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            group.name,
+          )
+
+          PostRevisor.new(original_topic.first_post).revise!(admin, category_id: category_b.id)
+
+          original_topic.reload
+          second_post.reload
+
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+          ).to be_blank
+          expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to be_blank
+        end
+
+        it "updates expert group name when user is expert in both categories" do
+          group_b.add(expert)
+
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+          ).to eq(group.name)
+          expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            group.name,
+          )
+
+          PostRevisor.new(original_topic.first_post).revise!(admin, category_id: category_b.id)
+
+          original_topic.reload
+          second_post.reload
+
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+          ).to eq(group_b.name)
+          expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+            group_b.name,
+          )
+        end
+
+        context "with multiple expert posts from different users" do
+          fab!(:expert_2) { Fabricate(:user, refresh_auto_groups: true) }
+          fab!(:third_post) { Fabricate(:post, topic: original_topic, user: expert_2) }
+
+          before do
+            group.add(expert_2)
+            CategoryExperts::PostHandler.new(post: third_post, user: expert_2).mark_post_as_approved
+          end
+
+          it "only keeps expert status for users who are experts in new category" do
+            group_b.add(expert)
+
+            expect(
+              original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+            ).to eq(group.name)
+            expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+              group.name,
+            )
+            expect(third_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+              group.name,
+            )
+
+            PostRevisor.new(original_topic.first_post).revise!(admin, category_id: category_b.id)
+
+            original_topic.reload
+            second_post.reload
+            third_post.reload
+
+            expect(
+              original_topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES],
+            ).to eq(group_b.name)
+            expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+              group_b.name,
+            )
+            expect(third_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to be_blank
+          end
+        end
+
+        it "updates auto-tag appropriately" do
+          group_b.add(expert)
+          expect(original_topic.tags.map(&:name)).to include(auto_tag.name)
+          expect(original_topic.tags.map(&:name)).not_to include(auto_tag_b.name)
+
+          PostRevisor.new(original_topic.first_post).revise!(admin, category_id: category_b.id)
+
+          original_topic.reload
+
+          expect(original_topic.tags.map(&:name)).not_to include(auto_tag.name)
+          expect(original_topic.tags.map(&:name)).to include(auto_tag_b.name)
+        end
+      end
+
+      context "when topic is moved between two categories without experts" do
+        fab!(:category_without_experts_a, :category)
+        fab!(:category_without_experts_b, :category)
+
+        fab!(:topic_without_experts) { Fabricate(:topic, category: category_without_experts_a) }
+        fab!(:post_without_experts) { Fabricate(:post, topic: topic_without_experts) }
+
+        before do
+          category_without_experts_a.custom_fields[
+            CategoryExperts::CATEGORY_EXPERT_AUTO_TAG
+          ] = auto_tag.name
+          category_without_experts_b.custom_fields[
+            CategoryExperts::CATEGORY_EXPERT_AUTO_TAG
+          ] = auto_tag_b.name
+          category_without_experts_a.save!
+          category_without_experts_b.save!
+        end
+
+        it "does not auto-tag" do
+          expect(topic_without_experts.tags.map(&:name)).not_to include(auto_tag.name)
+          expect(topic_without_experts.tags.map(&:name)).not_to include(auto_tag_b.name)
+
+          PostRevisor.new(topic_without_experts.first_post).revise!(
+            admin,
+            category_id: category_without_experts_b.id,
+          )
+
+          topic_without_experts.reload
+
+          expect(topic_without_experts.tags.map(&:name)).not_to include(auto_tag.name)
+          expect(topic_without_experts.tags.map(&:name)).not_to include(auto_tag_b.name)
         end
       end
     end
