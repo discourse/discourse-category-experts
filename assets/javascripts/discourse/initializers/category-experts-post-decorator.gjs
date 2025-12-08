@@ -47,7 +47,7 @@ function customizePostMenu(api) {
       value: dag,
       context: {
         post,
-        firstButtonKey,
+        buttonKeys,
         lastHiddenButtonKey,
         secondLastHiddenButtonKey,
       },
@@ -57,7 +57,7 @@ function customizePostMenu(api) {
       }
 
       dag.add("category-expert-approve-post", CategoryExpertsApproveButton, {
-        before: firstButtonKey,
+        after: buttonKeys.SHOW_MORE,
       });
 
       dag.add(
