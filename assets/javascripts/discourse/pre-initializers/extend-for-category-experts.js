@@ -1,4 +1,5 @@
 import { and } from "@ember/object/computed";
+import { registerReviewableTypeLabel } from "discourse/components/reviewable-refresh/item";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
 import ExpertGroupChooserModal from "../components/modal/expert-group-chooser";
@@ -17,6 +18,11 @@ export default {
     Composer.serializeOnUpdate(
       "is_category_expert_question",
       "is_category_expert_question"
+    );
+
+    registerReviewableTypeLabel(
+      "ReviewableCategoryExpertSuggestion",
+      "review.types.reviewable_category_expert_suggestion.title"
     );
 
     withPluginApi((api) => {
