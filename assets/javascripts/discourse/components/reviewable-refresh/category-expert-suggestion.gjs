@@ -2,7 +2,7 @@
 import Component from "@ember/component";
 import LegacyCategoryExpertSuggestion from "../reviewable-category-expert-suggestion";
 
-export default class ReviewableLegacyCategoryExpertSuggestoin extends Component {
+export default class ReviewableLegacyCategoryExpertSuggestion extends Component {
   <template>
     <div class="review-item__meta-content">
       <LegacyCategoryExpertSuggestion @reviewable={{@reviewable}}>
