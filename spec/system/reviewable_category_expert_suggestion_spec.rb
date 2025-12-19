@@ -6,6 +6,7 @@ describe "Reviewables - Category expert suggestion", type: :system, js: true do
   fab!(:category)
   fab!(:group)
   let(:modal) { PageObjects::Modals::Base.new }
+  let(:refreshed_review_page) { PageObjects::Pages::RefreshedReview.new }
 
   before do
     SiteSetting.enable_category_experts = true
@@ -56,11 +57,11 @@ describe "Reviewables - Category expert suggestion", type: :system, js: true do
       visit "/review"
 
       reviewable = ReviewableCategoryExpertSuggestion.find_by(target: endorsement)
-      expect(page).to have_css(".reviewable-item[data-reviewable-id=\"#{reviewable.id}\"]")
+      expect(page).to have_css(".review-item[data-reviewable-id=\"#{reviewable.id}\"]")
 
-      find(".reviewable-action", text: /Ignore/).click
-      expect(page).to have_content(I18n.t("js.review.none"), wait: 5)
-      expect(reviewable.reload.status).to eq("rejected")
+      find(".category-expert-endorsement-deny-category-expert", text: /Ignore/).click
+
+      expect(refreshed_review_page).to have_reviewable_with_rejected_status(reviewable)
     end
   end
 end
