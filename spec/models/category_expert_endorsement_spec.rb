@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe CategoryExpertEndorsement do
   fab!(:user)
   fab!(:endorsee, :user)

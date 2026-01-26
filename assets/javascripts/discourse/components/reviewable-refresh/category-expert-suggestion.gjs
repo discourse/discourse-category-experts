@@ -1,4 +1,3 @@
-/* eslint-disable ember/no-classic-components */
 import Component from "@ember/component";
 import LegacyCategoryExpertSuggestion from "../reviewable-category-expert-suggestion";
 

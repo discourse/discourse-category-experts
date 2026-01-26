@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe Jobs::UnapprovePastCategoryExpertPosts do
   fab!(:user)
   fab!(:group) { Fabricate(:group, users: [user]) }
