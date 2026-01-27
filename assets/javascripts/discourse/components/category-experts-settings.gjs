@@ -4,6 +4,7 @@ import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import withEventValue from "discourse/helpers/with-event-value";
 import { ajax } from "discourse/lib/ajax";
+import { bind } from "discourse/lib/decorators";
 import Group from "discourse/models/group";
 import { i18n } from "discourse-i18n";
 import ComboBox from "select-kit/components/combo-box";
@@ -81,6 +82,17 @@ export default class CategoryExpertsSettings extends Component {
     );
   }
 
+  @bind
+  onChangeAutoTag(tags) {
+    // TODO(https://github.com/discourse/discourse/pull/36678): The string check can be
+    // removed using .discourse-compatibility once the PR is merged.
+    const tagName = tags?.[0];
+    this.set(
+      "category.custom_fields.category_expert_auto_tag",
+      tagName?.name ?? tagName ?? null
+    );
+  }
+
   <template>
     {{#if this.siteSettings.enable_category_experts}}
       <h3>{{i18n "category_experts.title"}}</h3>
@@ -108,9 +120,7 @@ export default class CategoryExpertsSettings extends Component {
               @tags={{this.category.custom_fields.category_expert_auto_tag}}
               @categoryId={{this.category.id}}
               @options={{hash limit=1}}
-              @onChange={{fn
-                (mut this.category.custom_fields.category_expert_auto_tag)
-              }}
+              @onChange={{this.onChangeAutoTag}}
             />
           </div>
           <div class="instructions">
