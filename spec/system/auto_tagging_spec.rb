@@ -23,6 +23,8 @@ describe "Category Experts Auto Tagging", type: :system do
   end
 
   describe "configuring auto-tag in category settings" do
+    before { sign_in admin }
+
     it "allows selecting/unselecting an auto-tag and saves it correctly" do
       category_page.visit_settings(category)
 
@@ -34,11 +36,13 @@ describe "Category Experts Auto Tagging", type: :system do
 
       category_page.save_settings
 
+      page.refresh
       expect(tag_chooser.value).to eq(auto_tag.name)
 
       tag_chooser.unselect_by_name(auto_tag.name)
       category_page.save_settings
 
+      page.refresh
       expect(tag_chooser.value).to eq("")
     end
   end
@@ -59,8 +63,7 @@ describe "Category Experts Auto Tagging", type: :system do
       composer.fill_content("This is an expert reply to the topic")
       composer.submit
 
-      expect(topic_page).to have_post_number(2)
-      expect(topic.reload.tags).to include(auto_tag)
+      expect(topic_page.topic_tags).to include(auto_tag.name)
     end
   end
 end
