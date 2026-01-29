@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 describe CategoryExperts::RemindAdminOfCategoryExpertsPostsJob do
   subject(:execute) { described_class.new.execute }
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Reviewables - Category expert suggestion", type: :system, js: true do
+describe "Reviewables - Category expert suggestion" do
   fab!(:current_user, :user)
   fab!(:other_user, :user)
   fab!(:category)

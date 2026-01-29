@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe CategoryExperts do
   fab!(:admin)
   fab!(:expert) { Fabricate(:user, refresh_auto_groups: true) }
