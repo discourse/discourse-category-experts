@@ -92,7 +92,7 @@ module CategoryExperts
       end
 
       if topic.custom_fields[CategoryExperts::TOPIC_EXPERT_POST_GROUP_NAMES].blank?
-        if post
+        if post && SiteSetting.category_experts_posts_require_approval
           topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] = post.post_number
         end
         topic.custom_fields.delete(CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID)
