@@ -186,7 +186,7 @@ after_initialize do
         serializer,
         :needs_category_expert_post_approval,
         include_condition: -> do
-          scope.is_staff? &&
+          SiteSetting.category_experts_posts_require_approval && scope.is_staff? &&
             object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] &&
             object.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL] > 0
         end,

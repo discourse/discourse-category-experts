@@ -259,6 +259,40 @@ RSpec.describe CategoryExperts do
           expect(second_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to be_blank
         end
 
+        it "does not set needs_approval when category_experts_posts_require_approval is disabled" do
+          SiteSetting.category_experts_posts_require_approval = false
+
+          category_without_experts = Fabricate(:category)
+
+          PostRevisor.new(original_topic.first_post).revise!(
+            admin,
+            category_id: category_without_experts.id,
+          )
+
+          original_topic.reload
+
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL],
+          ).to be_blank
+        end
+
+        it "sets needs_approval when category_experts_posts_require_approval is enabled" do
+          SiteSetting.category_experts_posts_require_approval = true
+
+          category_without_experts = Fabricate(:category)
+
+          PostRevisor.new(original_topic.first_post).revise!(
+            admin,
+            category_id: category_without_experts.id,
+          )
+
+          original_topic.reload
+
+          expect(
+            original_topic.custom_fields[CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL],
+          ).to eq(second_post.post_number)
+        end
+
         it "removes old auto-tag and do not add new one" do
           expect(original_topic.tags.map(&:name)).to include(auto_tag.name)
           expect(original_topic.tags.map(&:name)).not_to include(auto_tag_b.name)
@@ -408,6 +442,40 @@ RSpec.describe CategoryExperts do
           expect(topic_without_experts.tags.map(&:name)).not_to include(auto_tag.name)
           expect(topic_without_experts.tags.map(&:name)).not_to include(auto_tag_b.name)
         end
+      end
+    end
+  end
+
+  describe "Serializer" do
+    describe "needs_category_expert_post_approval" do
+      it "is not included when category_experts_posts_require_approval is disabled" do
+        SiteSetting.category_experts_posts_require_approval = false
+
+        original_topic.custom_fields[
+          CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL
+        ] = second_post.post_number
+        original_topic.save!
+
+        guardian = Guardian.new(admin)
+        serializer =
+          TopicListItemSerializer.new(original_topic, scope: guardian, root: false).as_json
+
+        expect(serializer[:needs_category_expert_post_approval]).to be_nil
+      end
+
+      it "is included when category_experts_posts_require_approval is enabled" do
+        SiteSetting.category_experts_posts_require_approval = true
+
+        original_topic.custom_fields[
+          CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL
+        ] = second_post.post_number
+        original_topic.save!
+
+        guardian = Guardian.new(admin)
+        serializer =
+          TopicListItemSerializer.new(original_topic, scope: guardian, root: false).as_json
+
+        expect(serializer[:needs_category_expert_post_approval]).to eq(true)
       end
     end
   end
