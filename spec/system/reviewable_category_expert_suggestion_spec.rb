@@ -6,7 +6,7 @@ describe "Reviewables - Category expert suggestion" do
   fab!(:category)
   fab!(:group)
   let(:modal) { PageObjects::Modals::Base.new }
-  let(:refreshed_review_page) { PageObjects::Pages::RefreshedReview.new }
+  let(:review_page) { PageObjects::Pages::Review.new }
 
   before do
     SiteSetting.enable_category_experts = true
@@ -61,7 +61,7 @@ describe "Reviewables - Category expert suggestion" do
 
       find(".category-expert-endorsement-deny-category-expert", text: /Ignore/).click
 
-      expect(refreshed_review_page).to have_reviewable_with_rejected_status(reviewable)
+      expect(review_page).to have_reviewable_with_rejected_status(reviewable)
     end
   end
 end

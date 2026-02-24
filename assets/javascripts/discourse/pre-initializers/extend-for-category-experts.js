@@ -1,5 +1,5 @@
 import { and } from "@ember/object/computed";
-import { registerReviewableTypeLabel } from "discourse/components/reviewable-refresh/item";
+import { registerReviewableTypeLabel } from "discourse/components/reviewable/item";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
 import ExpertGroupChooserModal from "../components/modal/expert-group-chooser";
