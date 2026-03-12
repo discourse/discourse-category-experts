@@ -3,7 +3,7 @@ import { test } from "qunit";
 import { cloneJSON } from "discourse/lib/object";
 import topicFixtures from "discourse/tests/fixtures/topic";
 import userFixtures from "discourse/tests/fixtures/user-fixtures";
-import { acceptance, queryAll } from "discourse/tests/helpers/qunit-helpers";
+import { acceptance } from "discourse/tests/helpers/qunit-helpers";
 
 const groupName = "some-group";
 
@@ -36,13 +36,15 @@ acceptance(
     test("Posts with category_expert_approved have the correct classes", async function (assert) {
       await visit("/t/topic-for-group-moderators/2480");
 
-      const articles = [...queryAll(".topic-post article.onscreen-post")];
+      const articles = [
+        ...document.querySelectorAll(".topic-post article.onscreen-post"),
+      ];
       const lastArticle = articles.at(-1);
 
       assert.dom(lastArticle).hasClass("category-expert-post");
       assert.dom(lastArticle).hasClass(`category-expert-${groupName}`);
 
-      await click("button.show-more-actions", lastArticle);
+      await click(lastArticle.querySelector("button.show-more-actions"));
 
       assert
         .dom(".post-controls .unapprove-category-expert-post")
@@ -88,13 +90,15 @@ acceptance(
     test("The unapprove button is present and works for approved posts", async function (assert) {
       await visit("/t/topic-for-group-moderators/2480");
 
-      const articles = [...queryAll(".topic-post article.onscreen-post")];
+      const articles = [
+        ...document.querySelectorAll(".topic-post article.onscreen-post"),
+      ];
       const lastArticle = articles.at(-1);
 
       assert.dom(lastArticle).hasClass("category-expert-post");
       assert.dom(lastArticle).hasClass(`category-expert-${groupName}`);
 
-      await click("button.show-more-actions", lastArticle);
+      await click(lastArticle.querySelector("button.show-more-actions"));
       await click(".post-controls .unapprove-category-expert-post");
 
       assert.dom(lastArticle).doesNotHaveClass("category-expert-post");
@@ -103,13 +107,17 @@ acceptance(
     test("The approve button is present and works for unapproved posts by category experts", async function (assert) {
       await visit("/t/topic-for-group-moderators/2480");
 
-      const articles = [...queryAll(".topic-post article.onscreen-post")];
+      const articles = [
+        ...document.querySelectorAll(".topic-post article.onscreen-post"),
+      ];
       const article = articles.at(-2);
 
       assert.dom(article).doesNotHaveClass("category-expert-post");
       assert.dom(article).doesNotHaveClass(`category-expert-${groupName}`);
 
-      await click(".post-controls .approve-category-expert-post", article);
+      await click(
+        article.querySelector(".post-controls .approve-category-expert-post")
+      );
 
       assert.dom(article).hasClass("category-expert-post");
       assert.dom(article).hasClass(`category-expert-${groupName}`);
