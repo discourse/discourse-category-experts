@@ -39,7 +39,7 @@ acceptance(
     test("Posts with category_expert_approved have the correct classes", async function (assert) {
       await visit("/t/topic-for-group-moderators/2480");
 
-      const articles = queryAll(".topic-post article.onscreen-post");
+      const articles = [...queryAll(".topic-post article.onscreen-post")];
       const lastArticle = articles.at(-1);
 
       assert.dom(lastArticle).hasClass("category-expert-post");
@@ -91,7 +91,7 @@ acceptance(
     test("The unapprove button is present and works for approved posts", async function (assert) {
       await visit("/t/topic-for-group-moderators/2480");
 
-      const articles = queryAll(".topic-post article.onscreen-post");
+      const articles = [...queryAll(".topic-post article.onscreen-post")];
       const lastArticle = articles.at(-1);
 
       assert.dom(lastArticle).hasClass("category-expert-post");
@@ -106,7 +106,7 @@ acceptance(
     test("The approve button is present and works for unapproved posts by category experts", async function (assert) {
       await visit("/t/topic-for-group-moderators/2480");
 
-      const articles = queryAll(".topic-post article.onscreen-post");
+      const articles = [...queryAll(".topic-post article.onscreen-post")];
       const article = articles.at(-2);
 
       assert.dom(article).doesNotHaveClass("category-expert-post");
