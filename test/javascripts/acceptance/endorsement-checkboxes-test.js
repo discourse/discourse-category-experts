@@ -3,7 +3,6 @@ import { test } from "qunit";
 import userFixtures from "discourse/tests/fixtures/user-fixtures";
 import {
   acceptance,
-  exists,
   query,
   queryAll,
 } from "discourse/tests/helpers/qunit-helpers";
@@ -40,14 +39,13 @@ acceptance(
 
       await click(".category-expert-endorse-btn");
 
-      let checkboxRows = queryAll(".category-experts-endorsement-row");
-      assert.equal(checkboxRows.length, 2);
+      assert.dom(".category-experts-endorsement-row").exists({ count: 2 });
 
       let saveBtn = query(".category-endorsement-save");
-      assert.true(saveBtn.disabled);
+      assert.dom(saveBtn).isDisabled();
 
-      await click(checkboxRows[0]);
-      assert.false(saveBtn.disabled);
+      await click(".category-experts-endorsement-row");
+      assert.dom(saveBtn).isNotDisabled();
     });
   }
 );
@@ -90,21 +88,21 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
     await click(".topic-map__users-trigger");
     await click('a[data-user-card="charlie"]');
 
-    assert.equal(queryAll(".category-expert-existing-endorsements").length, 1);
+    assert.dom(".category-expert-existing-endorsements").exists({ count: 1 });
 
     await click(".category-expert-endorse-edit");
 
-    let checkboxes = queryAll(".category-experts-endorsement-row input");
-    assert.equal(checkboxes.length, 2);
+    const checkboxes = queryAll(".category-experts-endorsement-row input");
+    assert.strictEqual(checkboxes.length, 2);
 
-    assert.true(checkboxes[0].disabled);
-    assert.false(checkboxes[1].disabled);
+    assert.dom(checkboxes[0]).isDisabled();
+    assert.dom(checkboxes[1]).isNotDisabled();
 
-    let saveBtn = query(".category-endorsement-save");
-    assert.true(saveBtn.disabled);
+    const saveBtn = query(".category-endorsement-save");
+    assert.dom(saveBtn).isDisabled();
 
     await click(checkboxes[1]);
-    assert.false(saveBtn.disabled);
+    assert.dom(saveBtn).isNotDisabled();
   });
 });
 
@@ -139,8 +137,8 @@ acceptance(
 
       await click(".category-expert-endorse-btn");
 
-      assert.notOk(exists(".category-endorsement-save"));
-      assert.ok(exists(".out-of-endorsements-alert"));
+      assert.dom(".category-endorsement-save").doesNotExist();
+      assert.dom(".out-of-endorsements-alert").exists();
     });
   }
 );

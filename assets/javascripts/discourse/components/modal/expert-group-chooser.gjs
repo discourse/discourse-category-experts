@@ -9,7 +9,6 @@ import { ajax } from "discourse/lib/ajax";
 import { i18n } from "discourse-i18n";
 
 export default class ExpertGroupChooserModal extends Component {
-  @tracked groupId;
   @tracked groupOptions = null;
 
   @action
