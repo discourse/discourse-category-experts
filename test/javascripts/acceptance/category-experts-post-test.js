@@ -17,15 +17,12 @@ acceptance(
     });
 
     needs.pretender((server, helper) => {
-      // deep clone
-      let topicResponse = JSON.parse(
-        JSON.stringify(topicFixtures["/t/2480/1.json"])
-      );
+      const topicResponse = cloneJSON(topicFixtures["/t/2480/1.json"]);
       topicResponse.post_stream.posts[2].category_expert_approved_group =
         groupName;
       server.get("/t/2480.json", () => helper.response(topicResponse));
 
-      let cardResponse = JSON.parse(
+      const cardResponse = JSON.parse(
         JSON.stringify(userFixtures["/u/charlie/card.json"])
       );
       cardResponse.user.username = "normal_user";
