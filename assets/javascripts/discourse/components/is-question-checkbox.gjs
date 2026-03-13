@@ -1,8 +1,8 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component, { Input } from "@ember/component";
 import { on } from "@ember/modifier";
-import { action } from "@ember/object";
+import { action, computed } from "@ember/object";
 import { service } from "@ember/service";
-import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 
 export default class IsQuestionCheckbox extends Component {
@@ -20,13 +20,16 @@ export default class IsQuestionCheckbox extends Component {
     }
   }
 
-  @discourseComputed("model", "model.category")
-  show(model, category) {
-    if (!category || !category.allowingCategoryExpertQuestions) {
+  @computed("model", "model.category")
+  get show() {
+    if (
+      !this.model?.category ||
+      !this.model?.category?.allowingCategoryExpertQuestions
+    ) {
       return false;
     }
 
-    return model.editingFirstPost || model.creatingTopic;
+    return this.model.editingFirstPost || this.model.creatingTopic;
   }
 
   @action

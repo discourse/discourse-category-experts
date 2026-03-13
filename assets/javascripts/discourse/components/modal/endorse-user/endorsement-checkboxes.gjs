@@ -1,7 +1,8 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component, { Input } from "@ember/component";
 import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
-import { action } from "@ember/object";
+import { action, computed } from "@ember/object";
 import { lt } from "@ember/object/computed";
 import { later } from "@ember/runloop";
 import DButton from "discourse/components/d-button";
@@ -10,7 +11,7 @@ import icon from "discourse/helpers/d-icon";
 import loadingSpinner from "discourse/helpers/loading-spinner";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import discourseComputed, { bind } from "discourse/lib/decorators";
+import { bind } from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 
 export default class EndorsementCheckboxes extends Component {
@@ -49,27 +50,25 @@ export default class EndorsementCheckboxes extends Component {
       .catch(popupAjaxError);
   }
 
-  @discourseComputed(
+  @computed(
     "saving",
     "selectedCategoryIds",
     "startingCategoryIds",
     "remainingEndorsements"
   )
-  saveDisabled(
-    saving,
-    categoryIds,
-    startingCategoryIds,
-    remainingEndorsements
-  ) {
+  get saveDisabled() {
     if (
-      remainingEndorsements === 0 ||
-      saving ||
-      !categoryIds ||
-      (categoryIds.length === 0 && startingCategoryIds.length === 0)
+      this.remainingEndorsements === 0 ||
+      this.saving ||
+      !this.selectedCategoryIds ||
+      (this.selectedCategoryIds.length === 0 &&
+        this.startingCategoryIds.length === 0)
     ) {
       return true;
     }
-    return !categoryIds.filter((c) => !startingCategoryIds.includes(c)).length;
+    return !this.selectedCategoryIds.filter(
+      (c) => !this.startingCategoryIds.includes(c)
+    ).length;
   }
 
   @action

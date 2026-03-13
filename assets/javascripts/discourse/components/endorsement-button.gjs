@@ -1,9 +1,9 @@
+/* eslint-disable ember/no-classic-components, ember/no-side-effects */
 import Component from "@ember/component";
-import { action } from "@ember/object";
+import { action, computed } from "@ember/object";
 import { service } from "@ember/service";
 import { tagName } from "@ember-decorators/component";
 import DButton from "discourse/components/d-button";
-import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 import EndorseUserModal from "./modal/endorse-user";
 
@@ -36,13 +36,15 @@ export default class EndorsementButton extends Component {
     }
   }
 
-  @discourseComputed("user.category_expert_endorsements")
-  endorsements(categoryExpertEndorsements) {
+  @computed("user.category_expert_endorsements")
+  get endorsements() {
     let category_ids = this.categoriesAllowingEndorsements.map((c) => c.id);
 
-    let endorsements = categoryExpertEndorsements.filter((endorsement) => {
-      return category_ids.includes(endorsement.category_id);
-    });
+    let endorsements = this.user?.category_expert_endorsements?.filter(
+      (endorsement) => {
+        return category_ids.includes(endorsement.category_id);
+      }
+    );
     this.set("endorsementsCount", endorsements.length);
     return endorsements;
   }

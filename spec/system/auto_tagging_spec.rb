@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Category Experts Auto Tagging", type: :system do
+describe "Category Experts Auto Tagging" do
   fab!(:admin)
   fab!(:expert) { Fabricate(:user, refresh_auto_groups: true) }
   fab!(:category)

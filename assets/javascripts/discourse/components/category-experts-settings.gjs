@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component, { Input } from "@ember/component";
 import { fn, hash } from "@ember/helper";
 import { on } from "@ember/modifier";
@@ -6,10 +7,10 @@ import withEventValue from "discourse/helpers/with-event-value";
 import { ajax } from "discourse/lib/ajax";
 import { bind } from "discourse/lib/decorators";
 import Group from "discourse/models/group";
+import ComboBox from "discourse/select-kit/components/combo-box";
+import GroupChooser from "discourse/select-kit/components/group-chooser";
+import TagChooser from "discourse/select-kit/components/tag-chooser";
 import { i18n } from "discourse-i18n";
-import ComboBox from "select-kit/components/combo-box";
-import GroupChooser from "select-kit/components/group-chooser";
-import TagChooser from "select-kit/components/tag-chooser";
 
 export default class CategoryExpertsSettings extends Component {
   groupIds = null;

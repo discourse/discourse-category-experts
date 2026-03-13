@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
 import { LinkTo } from "@ember/routing";
 import CountI18n from "discourse/components/count-i18n";
