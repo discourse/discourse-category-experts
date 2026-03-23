@@ -7,14 +7,16 @@ export default class CategoryExpertsSettings extends Component {
   @service siteSettings;
 
   <template>
-    {{#if this.siteSettings.enable_simplified_category_creation}}
-      <CategoryExpertsFormKitSettings
-        @category={{@outletArgs.category}}
-        @form={{@outletArgs.form}}
-        @transientData={{@outletArgs.transientData}}
-      />
-    {{else}}
-      <CategoryExpertsLegacySettings @category={{@outletArgs.category}} />
+    {{#if this.siteSettings.enable_category_experts}}
+      {{#if this.siteSettings.enable_simplified_category_creation}}
+        <CategoryExpertsFormKitSettings
+          @category={{@outletArgs.category}}
+          @form={{@outletArgs.form}}
+          @transientData={{@outletArgs.transientData}}
+        />
+      {{else}}
+        <CategoryExpertsLegacySettings @category={{@outletArgs.category}} />
+      {{/if}}
     {{/if}}
   </template>
 }
