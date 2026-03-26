@@ -1,4 +1,4 @@
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
 import { i18n } from "discourse-i18n";
 
 export function categoryExpertQuestionIndicator(topic, currentUser) {
@@ -11,7 +11,7 @@ export function categoryExpertQuestionIndicator(topic, currentUser) {
     (topic.creator && topic.creator.id === currentUser.id) ||
     currentUser.expert_for_category_ids.includes(topic.category_id)
   ) {
-    return htmlSafe(
+    return trustHTML(
       `<a href="/search?q=is:category_expert_question" class='topic-list-category-expert-question'>${i18n(
         "category_experts.topic_list.question"
       )}</a>`
