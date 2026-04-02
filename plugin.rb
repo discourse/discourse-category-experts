@@ -348,7 +348,7 @@ after_initialize do
     previously_approved = !post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]
     post.custom_fields.delete(CategoryExperts::POST_APPROVED_GROUP_NAME)
     post.custom_fields.delete(CategoryExperts::POST_PENDING_EXPERT_APPROVAL)
-    post.save!
+    post.save_custom_fields
     CategoryExperts::PostHandler.new(post: post, user: new_owner).process_new_post(
       previously_approved: previously_approved,
     )
