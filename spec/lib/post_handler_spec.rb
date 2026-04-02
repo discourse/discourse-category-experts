@@ -149,6 +149,21 @@ describe CategoryExperts::PostHandler do
           )
         end
       end
+
+      describe "when the post has content that doesn't pass validations" do
+        it "does not raise an error" do
+          post = topic.add_small_action(expert, "invited_user")
+
+          expect {
+            PostOwnerChanger.new(
+              post_ids: [post.id],
+              topic_id: topic.id,
+              new_owner: second_expert,
+              acting_user: admin,
+            ).change_owner!
+          }.not_to raise_error
+        end
+      end
     end
   end
 

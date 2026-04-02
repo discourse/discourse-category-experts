@@ -36,7 +36,7 @@ module CategoryExperts
 
       post.custom_fields.delete(CategoryExperts::POST_APPROVED_GROUP_NAME)
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = true
-      post.save!
+      post.save_custom_fields
 
       correct_topic_custom_fields_after_removal(group_name: post_group_name, new_post: new_post)
     end
@@ -51,7 +51,7 @@ module CategoryExperts
 
       post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME] = users_expert_group.name
       post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL] = false
-      post.save!
+      post.save_custom_fields
 
       correct_topic_custom_fields_after_addition(new_post: new_post)
 
@@ -63,7 +63,7 @@ module CategoryExperts
       raise Discourse::InvalidParameters unless topic.category.accepting_category_expert_questions?
 
       topic.custom_fields[CategoryExperts::TOPIC_IS_CATEGORY_EXPERT_QUESTION] = true
-      topic.save!
+      topic.save_custom_fields
     end
 
     def correct_topic_custom_fields_after_removal(
@@ -101,7 +101,7 @@ module CategoryExperts
         topic.custom_fields.delete(CategoryExperts::TOPIC_NEEDS_EXPERT_POST_APPROVAL)
       end
 
-      topic.save!
+      topic.save_custom_fields
 
       DiscourseEvent.trigger(:category_experts_unapproved, post) if post && !new_post
 
@@ -119,7 +119,7 @@ module CategoryExperts
         topic.custom_fields[CategoryExperts::TOPIC_FIRST_EXPERT_POST_ID] = post.post_number
       end
 
-      topic.save!
+      topic.save_custom_fields
 
       DiscourseEvent.trigger(:category_experts_approved, post) unless new_post
 
@@ -160,7 +160,7 @@ module CategoryExperts
           old_group_name = expert_post.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]
           expert_post.custom_fields.delete(CategoryExperts::POST_APPROVED_GROUP_NAME)
           expert_post.custom_fields.delete(CategoryExperts::POST_PENDING_EXPERT_APPROVAL)
-          expert_post.save!
+          expert_post.save_custom_fields
 
           # Update topic custom fields to reflect the removal
           CategoryExperts::PostHandler.new(
@@ -180,7 +180,7 @@ module CategoryExperts
             expert_post.custom_fields[
               CategoryExperts::POST_APPROVED_GROUP_NAME
             ] = new_expert_group.name
-            expert_post.save!
+            expert_post.save_custom_fields
 
             # Remove old group from topic custom fields (now that post is updated)
             CategoryExperts::PostHandler.new(
