@@ -13,13 +13,16 @@ describe "Category Experts Auto Tagging" do
   let(:topic_page) { PageObjects::Pages::Topic.new }
   let(:composer) { PageObjects::Components::Composer.new }
   let(:tag_chooser) do
-    PageObjects::Components::SelectKit.new(".category-experts-auto-tagging .tag-chooser")
+    PageObjects::Components::SelectKit.new(
+      "#control-custom_fields-category_expert_auto_tag .tag-chooser",
+    )
   end
 
   before do
     SiteSetting.enable_category_experts = true
     SiteSetting.tagging_enabled = true
     SiteSetting.category_experts_posts_require_approval = false
+    SiteSetting.enable_simplified_category_creation = true
   end
 
   describe "configuring auto-tag in category settings" do
@@ -28,7 +31,7 @@ describe "Category Experts Auto Tagging" do
     it "allows selecting/unselecting an auto-tag and saves it correctly" do
       category_page.visit_settings(category)
 
-      expect(page).to have_css(".category-experts-auto-tagging", wait: 10)
+      expect(page).to have_css("#control-custom_fields-category_expert_group_ids")
 
       tag_chooser.expand
       tag_chooser.search(auto_tag.name)
