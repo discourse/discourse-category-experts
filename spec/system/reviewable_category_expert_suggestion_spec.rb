@@ -36,18 +36,22 @@ describe "Reviewables - Category expert suggestion" do
   context "as an admin reviewing endorsements" do
     fab!(:current_user, :admin)
 
-    skip "can approve an endorsement" do
+    it "can approve an endorsement" do
+      # Approval kicks off a system PM that's slow enough to race the Capybara wait.
+      allow(SystemMessage).to receive(:create_from_system_user)
+
       endorsement =
         Fabricate(:category_expert_endorsement, category: category, endorsed_user: other_user)
       visit "/review"
 
       reviewable = ReviewableCategoryExpertSuggestion.find_by(target: endorsement)
-      expect(page).to have_css(".reviewable-item[data-reviewable-id=\"#{reviewable.id}\"]")
+      expect(page).to have_css(".review-item[data-reviewable-id=\"#{reviewable.id}\"]")
 
-      find(".reviewable-action", text: /Approve/).click
+      find(".category-expert-endorsement-approve-category-expert", text: /Approve/).click
       expect(modal).to have_content(group.name)
       find("#tap_tile_#{group.id}").click
-      expect(page).to have_content(I18n.t("js.review.none"), wait: 5)
+
+      expect(review_page).to have_reviewable_with_approved_status(reviewable)
       expect(reviewable.reload.status).to eq("approved")
     end
 
