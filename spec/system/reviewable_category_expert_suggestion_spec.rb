@@ -51,7 +51,7 @@ describe "Reviewables - Category expert suggestion" do
       expect(modal).to have_content(group.name)
       find("#tap_tile_#{group.id}").click
 
-      expect(review_page).to have_reviewable_with_approved_status(reviewable)
+      expect(review_page).to have_no_reviewable(reviewable)
       expect(reviewable.reload.status).to eq("approved")
     end
 
@@ -65,7 +65,8 @@ describe "Reviewables - Category expert suggestion" do
 
       find(".category-expert-endorsement-deny-category-expert", text: /Ignore/).click
 
-      expect(review_page).to have_reviewable_with_rejected_status(reviewable)
+      expect(review_page).to have_no_reviewable(reviewable)
+      expect(reviewable.reload.status).to eq("rejected")
     end
   end
 end
