@@ -27,6 +27,17 @@ describe CategoryExpertsController do
     category.custom_fields[CategoryExperts::CATEGORY_EXPERT_GROUP_IDS] = group_ids
   end
 
+  def fabricate_private_category_expert_post
+    private_group = Fabricate(:group, users: [user])
+    private_category = Fabricate(:private_category, group: private_group)
+    enable_custom_fields_for(private_category)
+    set_expert_group_for_category(private_category, group.id.to_s)
+    private_category.save!
+
+    private_topic = Fabricate(:topic, category: private_category)
+    create_post(topic_id: private_topic.id, user: user)
+  end
+
   describe "#endorse" do
     it "errors when the current user is not logged in" do
       put(
@@ -207,6 +218,23 @@ describe CategoryExpertsController do
       expect(response.status).to eq(403)
     end
 
+    it "returns a 403 when staff cannot see the post" do
+      sign_in(Fabricate(:moderator))
+      SiteSetting.category_experts_posts_require_approval = true
+      SiteSetting.first_post_can_be_considered_expert_post = true
+
+      private_post = fabricate_private_category_expert_post
+
+      post("/category-experts/approve.json", params: { post_id: private_post.id })
+
+      expect(response.status).to eq(403)
+      expect(response.parsed_body["error_type"]).to eq("invalid_access")
+      expect(private_post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+        nil,
+      )
+      expect(private_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(true)
+    end
+
     context "when correctly configured" do
       before do
         sign_in(admin)
@@ -271,6 +299,24 @@ describe CategoryExpertsController do
       SiteSetting.category_experts_posts_require_approval = false
       post("/category-experts/unapprove.json", params: { post_id: topic.posts.last.id })
       expect(response.status).to eq(403)
+    end
+
+    it "returns a 403 when staff cannot see the post" do
+      sign_in(Fabricate(:moderator))
+      SiteSetting.category_experts_posts_require_approval = true
+      SiteSetting.first_post_can_be_considered_expert_post = true
+
+      private_post = fabricate_private_category_expert_post
+      CategoryExperts::PostHandler.new(post: private_post).mark_post_as_approved
+
+      post("/category-experts/unapprove.json", params: { post_id: private_post.id })
+
+      expect(response.status).to eq(403)
+      expect(response.parsed_body["error_type"]).to eq("invalid_access")
+      expect(private_post.reload.custom_fields[CategoryExperts::POST_APPROVED_GROUP_NAME]).to eq(
+        group.name,
+      )
+      expect(private_post.custom_fields[CategoryExperts::POST_PENDING_EXPERT_APPROVAL]).to eq(false)
     end
 
     context "when correctly configured" do
