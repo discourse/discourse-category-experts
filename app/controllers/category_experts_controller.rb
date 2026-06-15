@@ -125,6 +125,8 @@ class CategoryExpertsController < ApplicationController
     @post = Post.find_by(id: post_id)
 
     raise Discourse::NotFound unless @post
+
+    guardian.ensure_can_see!(@post)
   end
 
   def authenticate_and_find_user
