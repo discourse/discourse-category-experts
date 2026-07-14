@@ -1,11 +1,7 @@
-import { click, visit } from "@ember/test-helpers";
+import { click, findAll, visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import userFixtures from "discourse/tests/fixtures/user-fixtures";
-import {
-  acceptance,
-  query,
-  queryAll,
-} from "discourse/tests/helpers/qunit-helpers";
+import { acceptance, query } from "discourse/tests/helpers/qunit-helpers";
 import categories from "../category-expert-categories";
 
 acceptance(
@@ -92,7 +88,7 @@ acceptance("Discourse Category Experts - Has endorsement", function (needs) {
 
     await click(".category-expert-endorse-edit");
 
-    const checkboxes = queryAll(".category-experts-endorsement-row input");
+    const checkboxes = findAll(".category-experts-endorsement-row input");
     assert.strictEqual(checkboxes.length, 2);
 
     assert.dom(checkboxes[0]).isDisabled();
