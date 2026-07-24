@@ -1,4 +1,3 @@
-import { and } from "@ember/object/computed";
 import { registerReviewableTypeLabel } from "discourse/components/reviewable/item";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import Composer from "discourse/models/composer";
@@ -26,22 +25,26 @@ export default {
     );
 
     withPluginApi((api) => {
-      api.modifyClass(
-        "model:category",
-        (Superclass) =>
-          class extends Superclass {
-            @and(
-              "custom_fields.category_expert_group_ids",
-              "custom_fields.category_accepting_endorsements"
-            )
-            allowingCategoryExpertEndorsements;
+      api.addModelGetter(
+        "category",
+        "allowingCategoryExpertEndorsements",
+        function () {
+          return (
+            this.custom_fields?.category_expert_group_ids &&
+            this.custom_fields?.category_accepting_endorsements
+          );
+        }
+      );
 
-            @and(
-              "custom_fields.category_expert_group_ids",
-              "custom_fields.category_accepting_questions"
-            )
-            allowingCategoryExpertQuestions;
-          }
+      api.addModelGetter(
+        "category",
+        "allowingCategoryExpertQuestions",
+        function () {
+          return (
+            this.custom_fields?.category_expert_group_ids &&
+            this.custom_fields?.category_accepting_questions
+          );
+        }
       );
 
       api.addPluginReviewableParam(
