@@ -72,6 +72,10 @@ article.category-expert-post {
   }
 }
 
+.nested-post:has(.category-expert-indicator) {
+  border-top: 4px solid var(--success);
+}
+
 .category-expert-indicator .d-icon {
   color: var(--success);
 }
